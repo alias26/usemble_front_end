@@ -39,7 +39,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 function handleSubmit() {
-    router.push("/social/detail");
+    router.push("/social/write/detail");
 }
 </script>
 

@@ -30,17 +30,28 @@
             </div>
             <hr />
             <div class="d-flex justify-content-end">
-                <RouterLink to="/social/base" class="btn btn-outline-secondary rounded me-2"
-                    >뒤로가기</RouterLink
+                <button
+                    type="button"
+                    @click="goUrlBack"
+                    class="btn btn-outline-secondary rounded me-2"
                 >
-                <RouterLink to="/social/detail" class="btn btn-next rounded">어셈블</RouterLink>
+                    뒤로가기
+                </button>
+                <RouterLink to="/" class="btn btn-next rounded">어셈블</RouterLink>
             </div>
         </form>
     </div>
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
 import WyswygEditor from "@/components/WyswygEditor.vue";
+
+const router = useRouter();
+
+function goUrlBack() {
+    router.back();
+}
 </script>
 
 <style scoped>

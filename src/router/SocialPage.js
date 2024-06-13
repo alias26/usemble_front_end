@@ -6,17 +6,17 @@ const routes = [
             import(/* webpackChunkName: "SocialPage" */ "../views/SocialPage/SocialList.vue"),
     },
     {
-        path: "/social/base",
+        path: "/social/write/base",
         name: "social1",
         component: () =>
-            import(/* webpackChunkName: "SocialPage" */ "../views/SocialPage/CreateSocialBase.vue"),
+            import(/* webpackChunkName: "SocialPage" */ "../views/SocialPage/WriteSocialBase.vue"),
     },
     {
-        path: "/social/detail",
+        path: "/social/write/detail",
         name: "social2",
         component: () =>
             import(
-                /* webpackChunkName: "SocialPage" */ "../views/SocialPage/CreateSocialDetail.vue"
+                /* webpackChunkName: "SocialPage" */ "../views/SocialPage/WriteSocialDetail.vue"
             ),
     },
 ];
