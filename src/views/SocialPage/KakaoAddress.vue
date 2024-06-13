@@ -4,7 +4,7 @@
             <label class="form-label">주소 검색</label>
             <div class="d-flex mb-2">
                 <input
-                    class="form-control address-text"
+                    class="form-control"
                     type="text"
                     id="sample5_address"
                     placeholder="주소를 입력해주세요"
@@ -17,13 +17,13 @@
                 />
             </div>
         </div>
-        <KakaoMapComponent ref="kakaoMap" />
+        <KakaoMap ref="kakaoMap" />
     </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
-import KakaoMapComponent from "./KakaoMap.vue";
+import KakaoMap from "@/components/KakaoMap.vue";
 
 const kakaoMap = ref(null);
 
@@ -58,9 +58,5 @@ function sample5_execDaumPostcode() {
 .search {
     text-align: left;
     font-weight: bold;
-}
-
-.address-text {
-    width: 75%;
 }
 </style>
