@@ -68,11 +68,28 @@
                     <img class="mt-3" id="contentimg" src="../../assets/와인바3.jpg" alt="" />
                 </div>
             </div>
+            <hr />
+            <div>
+                <h4 id="content-title">오시는 길</h4>
+                <h5 id="location">제주특별자치도 제주시 첨단로 242</h5>
+                <p id="subtext">*정확한 위치는 호스트의 사정에 의해 변경될 수 있습니다.</p>
+                <KakaoMap ref="kakaoMap" />
+            </div>
         </div>
     </div>
 </template>
 <script setup>
-import UserInfo from "../../components/UserInfo";
+import KakaoMap from "@/components/KakaoMap.vue";
+import UserInfo from "@/components/UserInfo";
+import { onMounted, ref } from "vue";
+
+const kakaoMap = ref(null);
+
+onMounted(() => {
+    if (window.kakao && window.kakao.maps) {
+        kakaoMap.value.getAddress("제주특별자치도 제주시 첨단로 242");
+    }
+});
 </script>
 
 <style scoped>
@@ -188,6 +205,13 @@ img {
     font-weight: 900;
     font-size: 25px;
 }
+
+#location {
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
 #contentimg {
     width: 100%;
     height: 350px;
@@ -197,6 +221,10 @@ img {
 #content {
     font-weight: 500;
     margin: 0 auto;
-    width: 80%;
+    width: 100%;
+}
+#subtext {
+    color: #707070;
+    font-weight: 600;
 }
 </style>
