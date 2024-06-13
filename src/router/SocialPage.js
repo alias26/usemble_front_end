@@ -1,5 +1,11 @@
 const routes = [
     {
+        path: "/list",
+        name: "list",
+        component: () =>
+            import(/* webpackChunkName: "SocialPage" */ "../views/SocialPage/SocialList.vue"),
+    },
+    {
         path: "/social/base",
         name: "social1",
         component: () =>
