@@ -1,14 +1,16 @@
 <template>
-    <div class="" style="width: 60%; min-width: 800px">
-            <div class="main-img" style="text-align: center;">
-                <img src="@/assets/usemble.jpg">
-            </div>
+    <div class="ms-auto me-auto" style="width: 70%; min-width: 800px">
+        <div class="main-img" style="text-align: center">
+            <img src="@/assets/usemble.jpg" />
+        </div>
         <div class="category container d-flex">
             <div class="main_category"><img src="@/assets/category/eat.png" />맛집</div>
             <div class="main_category"><img src="@/assets/category/exercise.png" />운동</div>
             <div class="main_category"><img src="@/assets/category/study.png" />스터디</div>
             <div class="main_category"><img src="@/assets/category/friendship.png" />친목</div>
-            <div class="main_category"><img src="@/assets/category/all.png" />전체보기</div>
+            <RouterLink class="main_category no-underline" to="list"
+                ><img src="@/assets/category/all.png" />전체보기</RouterLink
+            >
         </div>
     </div>
 </template>
@@ -38,10 +40,15 @@
     height: 85px;
     border-radius: 50%;
 }
-.carousel-item > img {
+.main_img {
     width: 100%;
     height: 380px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.no-underline {
+    color: black;
+    text-decoration: none;
 }
 </style>

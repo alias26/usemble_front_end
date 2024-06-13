@@ -5,12 +5,14 @@
     />
     <footer>
         <div id="inner">
-            <div id="inner-left">
+            <div id="inner-left" style="margin-left: 50px">
                 <div id="footer-header">
-                    <div class="footer-message">공지사항</div>
-                    <div class="footer-message">이용가이드</div>
-                    <div class="footer-message">이용약관</div>
-                    <div class="footer-message">개인정보 처리방침</div>
+                    <RouterLink to="/notice" class="footer-message">공지사항</RouterLink>
+                    <RouterLink to="/guide" class="footer-message">이용가이드</RouterLink>
+                    <RouterLink to="/policy/usage" class="footer-message">이용약관</RouterLink>
+                    <RouterLink to="/policy/privacy" class="footer-message"
+                        >개인정보 처리방침</RouterLink
+                    >
                 </div>
                 <div id="footer-content">
                     <div class="footer-contact">곽동현: dream@fun-coding.org</div>
@@ -23,7 +25,7 @@
 
                 <div class="footer-copyright">Copyrigh 2024 All ⓒ rights reserved</div>
             </div>
-            <div id="inner-right">
+            <div id="inner-right" style="margin-left: 180px">
                 <div class="footer-message">고객센터</div>
                 <div class="d-flex">
                     <i id="phone" class="bi bi-telephone-fill"></i>
@@ -46,7 +48,7 @@ footer {
     display: flex;
     width: 70%;
     margin: 0 auto;
-    justify-content: space-around;
+    /* justify-content: space-between; */
 }
 
 #footer-header {
@@ -58,6 +60,7 @@ footer {
     font-size: 15px;
     color: #545e6f;
     margin-bottom: 0.3rem;
+    text-decoration: none;
 }
 #footer-content {
     display: flex;

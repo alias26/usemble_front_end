@@ -1,8 +1,8 @@
 <template>
-    <a class="main_category" :style="props.style" href="/">
+    <RouterLink class="main_category" :style="props.style" to="/social/detail">
         <div class="main_list-wrapper">
             <div class="main_styles">
-                <img src="@/assets/us2.jpg"/>
+                <img src="@/assets/us2.jpg" />
             </div>
         </div>
         <div class="main_text">
@@ -15,12 +15,11 @@
                 <span style="margin-bottom: 10px"> 50,000 원~ </span>
             </div>
         </div>
-    </a>
+    </RouterLink>
 </template>
 
 <script setup>
 const props = defineProps(["style"]);
-
 </script>
 
 <style scoped>

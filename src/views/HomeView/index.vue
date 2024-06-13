@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="mainHome">
-            <div class="d-flex" style="justify-content: space-evenly">
+            <div class="ms-auto me-auto">
                 <SocialBanner />
             </div>
             <SocialCardList />
@@ -15,4 +15,3 @@ import SocialBanner from "./SocialBanner.vue";
 </script>
 
 <style scoped></style>
-

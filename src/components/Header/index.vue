@@ -1,26 +1,12 @@
 <template>
-    <!--
-    이미지 가운데 두기
-     <nav>
-        <div id="nav2">
-            <ul>
-                <li><a href="#">어셈블 둘러보기</a></li>
-                <li><a id="usemble" href="#">어셈블!</a></li>
-            </ul>
-        </div>
-        <img alt="Vue logo" src="../../assets/logo.png" />
-        <div id="login_join">
-            <a class="mx-4" href="#">로그인</a>
-            <span>|</span>
-            <a class="mx-4" href="#">회원가입</a>
-        </div>
-    </nav> -->
     <nav>
         <div id="leftmenu">
-            <a id="nav_text" class="mx-4" href="#">어셈블 둘러보기</a>
-            <a id="usemble" class="mx-4" href="#">어셈블!</a>
+            <RouterLink id="nav_text" class="mx-4" to="/list">어셈블 둘러보기</RouterLink>
+            <RouterLink id="usemble" class="mx-4" to="/social/write/base">어셈블!</RouterLink>
         </div>
-        <img id="logoimg" alt="Vue logo" src="../../assets/logo.png" />
+        <RouterLink to="/"
+            ><img id="logoimg" alt="Vue logo" src="../../assets/logo.png"
+        /></RouterLink>
         <div id="rightmenu">
             <a id="nav_text" class="mx-4" href="#">로그인</a>
             <span>|</span>
@@ -44,6 +30,7 @@ nav {
     min-width: 700px;
     text-align: center;
 }
+
 a {
     text-decoration: none;
     color: black;
