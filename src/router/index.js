@@ -40,6 +40,7 @@ const routes = [
         name: "policyUsage",
         component: PolicyUsage,
     },
+    
     ...SocialPage,
     ...UserPage,
 ];

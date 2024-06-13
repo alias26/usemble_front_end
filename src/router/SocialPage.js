@@ -19,6 +19,14 @@ const routes = [
                 /* webpackChunkName: "SocialPage" */ "../views/SocialPage/WriteSocialDetail.vue"
             ),
     },
+    {
+        path: "/social/detail",
+        name: "socialdetail",
+        component: () =>
+            import(
+                /* webpackChunkName: "SocialPage" */ "../views/SocialPage/SocialDetail.vue"
+            ),
+    },
 ];
 
 export default routes;
