@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import KakaoAddress from "@/components/KakaoAddress.vue";
+import KakaoAddress from "./KakaoAddress.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -53,17 +53,9 @@ h5 {
     font-weight: bold;
 }
 
-input {
-    width: 89%;
-}
-
-image {
+/* .image {
     position: relative;
-}
-
-.add-image {
-    position: absolute;
-}
+} */
 
 .btn-next {
     background-color: #558ccf;

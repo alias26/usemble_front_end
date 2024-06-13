@@ -71,9 +71,11 @@
             <hr />
             <div>
                 <h4 id="content-title">오시는 길</h4>
-                <h5 id="location">제주특별자치도 제주시 첨단로 242</h5>
-                <p id="subtext">*정확한 위치는 호스트의 사정에 의해 변경될 수 있습니다.</p>
-                <KakaoMap ref="kakaoMap" />
+                <div id="content">
+                    <h5 id="location">제주특별자치도 제주시 첨단로 242</h5>
+                    <p id="subtext">*정확한 위치는 호스트의 사정에 의해 변경될 수 있습니다.</p>
+                    <KakaoMap ref="kakaoMap" />
+                </div>
             </div>
         </div>
     </div>
@@ -81,6 +83,7 @@
 <script setup>
 import KakaoMap from "@/components/KakaoMap.vue";
 import UserInfo from "@/components/UserInfo";
+import Calendar1 from "@/components/Calendar1.vue";
 import { onMounted, ref } from "vue";
 
 const kakaoMap = ref(null);
@@ -139,7 +142,9 @@ img {
 #join {
     display: flex;
     margin-top: 10px;
+    width: 90%;
     height: 100%;
+    margin: 0 auto;
 }
 #join-right {
     width: 100%;
@@ -221,7 +226,7 @@ img {
 #content {
     font-weight: 500;
     margin: 0 auto;
-    width: 100%;
+    width: 90%;
 }
 #subtext {
     color: #707070;
