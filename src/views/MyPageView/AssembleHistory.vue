@@ -1,8 +1,4 @@
 <template>
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
-    />
     <div class="my-4 d-flex border" id="mypageForm">
         <div class="my-4" id="history">
             <div class="mb-5 text-center fw-bold fs-5">

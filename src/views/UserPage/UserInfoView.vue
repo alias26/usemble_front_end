@@ -81,7 +81,7 @@
 <script setup>
 import { ref } from "vue";
 import Review from "@/components/Review.vue";
-import SocialCard from "@/components/SocialComponents/SocialCard.vue";
+import SocialCard from "@/components/Social/SocialCard.vue";
 
 //멤버 정보
 const member = {

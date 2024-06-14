@@ -59,34 +59,32 @@
             </div>
             <div>
                 <div class="row" style="display: flex; margin-top: 40px">
-                    <SocialCard class="col-4" style="width: 32%;" v-for="n in 9" :key="n"/>
-                    
-                    
+                    <SocialCard class="col-4" style="width: 32%" v-for="n in 9" :key="n" />
                 </div>
             </div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center" style="border: none">
-                        <li class="page">
-                            <a class="page-link text-black" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page"><a class="page-link text-black" href="#">1</a></li>
-                        <li class="page"><a class="page-link text-black" href="#">2</a></li>
-                        <li class="page"><a class="page-link text-black" href="#">3</a></li>
-                        <li class="page">
-                            <a class="page-link text-black" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center" style="border: none">
+                    <li class="page">
+                        <a class="page-link text-black" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page"><a class="page-link text-black" href="#">1</a></li>
+                    <li class="page"><a class="page-link text-black" href="#">2</a></li>
+                    <li class="page"><a class="page-link text-black" href="#">3</a></li>
+                    <li class="page">
+                        <a class="page-link text-black" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </template>
 
 <script setup>
-import SocialCard from '@/components/SocialComponents/SocialCard.vue';
+import SocialCard from "@/components/Social/SocialCard.vue";
 </script>
 
 <style scoped>

@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import TabMenu from "../../components/mypage/TabMenu.vue";
+import TabMenu from "./TabMenu.vue";
 </script>
 
 <style scoped></style>
