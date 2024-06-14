@@ -11,6 +11,7 @@ import PolicyPrivacy from "@/views/FooterPage/PolicyPrivacy.vue";
 import PolicyUsage from "@/views/FooterPage/PolicyUsage.vue";
 import SocialPage from "./SocialPage";
 import UserPage from "./UserPage";
+import AdminPage from "./AdminPage";
 
 const routes = [
     {
@@ -49,6 +50,7 @@ const routes = [
     ...MemberJoin,
     ...MemberLogin,
     ...MyPage,
+    ...AdminPage,
 ];
 
 const router = createRouter({

@@ -11,6 +11,7 @@
             <a id="nav_text" class="mx-4" href="#">로그인</a>
             <span>|</span>
             <a id="nav_text" class="mx-4" href="#">회원가입</a>
+            <RouterLink to="/admin">admin</RouterLink>
         </div>
     </nav>
 </template>
@@ -56,66 +57,4 @@ a {
 #usemble {
     color: #00a3e0;
 }
-/*
-이미지 가운데 두기
- * {
-    padding: 0;
-    margin: 0;
-}
-ul,
-ol {
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-    font-size: 17px;
-}
-#usemble {
-    color: #00a3e0;
-}
-
-img {
-    width: 145px;
-    height: 80px;
-    padding: 0 30px;
-    margin: auto;
-}
-
-nav {
-    display: flex;
-    width: 70%;
-    overflow: hidden;
-    height: 80px;
-    background-color: #ffffff;
-    margin: 0px auto;
-}
-
-#nav2 > a {
-    display: block;
-    float: left;
-    font-size: 30px;
-    font-weight: 900;
-    line-height: 80px;
-    padding: 0 30px;
-}
-
-#nav2 > ul {
-    float: right;
-}
-
-#nav2 > ul li {
-    float: left;
-    line-height: 80px;
-    margin-left: 30px;
-}
-#login_join {
-    float: right;
-    line-height: 80px;
-}
-
-#menu {
-    display: flex;
-} */
 </style>
