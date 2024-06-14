@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView";
+import MemberJoin from "./MemberJoin";
+import MemberLogin from "./MemberLogin";
+import MyPage from "./MyPage";
 import { compile } from "vue";
 import GuideView from "../views/FooterPage/GuideView.vue";
 import NoticeView from "@/views/FooterPage/NoticeView.vue";
@@ -40,9 +43,12 @@ const routes = [
         name: "policyUsage",
         component: PolicyUsage,
     },
-    
+
     ...SocialPage,
     ...UserPage,
+    ...MemberJoin,
+    ...MemberLogin,
+    ...MyPage,
 ];
 
 const router = createRouter({
