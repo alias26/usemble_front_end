@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import SocialCard from "@/components/SocialComponents/SocialCard.vue";
+import SocialCard from "@/components/Social/SocialCard.vue";
 </script>
 
 <style scoped>
