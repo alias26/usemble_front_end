@@ -1,12 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView";
-import MemberJoin from "./MemberJoin";
-import MemberLogin from "./MemberLogin";
-import MyPage from "./MyPage";
+import Home from "../views/Home";
 import { compile } from "vue";
-import GuideView from "../views/FooterPage/GuideView.vue";
-import NoticeView from "@/views/FooterPage/NoticeView.vue";
-import NoticeDetailView from "@/views/FooterPage/NoticeDetailView.vue";
+import GuideList from "../views/FooterPage/GuideList.vue";
+import NoticeList from "@/views/FooterPage/NoticeList.vue";
+import NoticeDetail from "@/views/FooterPage/NoticeDetail.vue";
 import PolicyPrivacy from "@/views/FooterPage/PolicyPrivacy.vue";
 import PolicyUsage from "@/views/FooterPage/PolicyUsage.vue";
 import SocialPage from "./SocialPage";
@@ -17,22 +14,22 @@ const routes = [
     {
         path: "/",
         name: "home",
-        component: HomeView,
+        component: Home,
     },
     {
         path: "/guide",
         name: "guide",
-        component: GuideView,
+        component: GuideList,
     },
     {
         path: "/notice",
         name: "notice",
-        component: NoticeView,
+        component: NoticeList,
     },
     {
         path: "/notice/detail",
         name: "noticeDetail",
-        component: NoticeDetailView,
+        component: NoticeDetail,
     },
     {
         path: "/policy/privacy",
@@ -47,9 +44,6 @@ const routes = [
 
     ...SocialPage,
     ...UserPage,
-    ...MemberJoin,
-    ...MemberLogin,
-    ...MyPage,
     ...AdminPage,
 ];
 

@@ -1,9 +1,9 @@
 <template>
-    <div id="userinfo">
-        <div id="userimg">
-            <img src="../../assets/photo31.jpg" />
-        </div>
-        <div>
+    <div class="d-flex justify-content-between" id="userinfo">
+        <div class="d-flex">
+            <div id="userimg">
+                <img src="@/assets/photo31.jpg" />
+            </div>
             <div>
                 <div id="host">호스트</div>
                 <div id="id">myeonghwan57</div>
@@ -14,6 +14,10 @@
                 </div>
             </div>
         </div>
+        <button class="d-flex btn" id="like-btn">
+            <i class="bi bi-heart-fill text-danger me-2"></i>
+            <div>4</div>
+        </button>
     </div>
 </template>
 <script setup></script>
@@ -43,5 +47,13 @@ img {
     font-size: 14px;
     font-weight: 500;
     color: grey;
+}
+
+#like-btn {
+    justify-content: center;
+    align-items: center;
+    border-color: lightgray;
+    width: 120px;
+    height: 40px;
 }
 </style>

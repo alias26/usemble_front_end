@@ -11,7 +11,7 @@
             <div id="date">2024. 06. 18 (화) 19:00</div>
 
             <hr />
-            <UserInfo></UserInfo>
+            <UserProfile></UserProfile>
             <hr />
             <h4 id="content-title">모임 일정</h4>
             <div id="join">
@@ -82,7 +82,7 @@
 </template>
 <script setup>
 import KakaoMap from "@/components/KakaoMap.vue";
-import UserInfo from "@/components/UserInfo";
+import UserProfile from "@/components/UserProfile.vue";
 import Calendar from "@/components/Calendar.vue";
 import { onMounted, ref } from "vue";
 

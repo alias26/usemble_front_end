@@ -40,9 +40,7 @@
     </div>
 </template>
 
-<script setup>
-import { useRouter } from "vue";
-</script>
+<script setup></script>
 
 <style scoped>
 #click-mypage {

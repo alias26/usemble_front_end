@@ -4,13 +4,13 @@
             <RouterLink id="nav_text" class="mx-4" to="/list">어셈블 둘러보기</RouterLink>
             <RouterLink id="usemble" class="mx-4" to="/social/write/base">어셈블!</RouterLink>
         </div>
-        <RouterLink to="/"
-            ><img id="logoimg" alt="Vue logo" src="../../assets/logo.png"
-        /></RouterLink>
+        <RouterLink to="/"><img id="logoimg" alt="Vue logo" src="@/assets/logo.png" /></RouterLink>
         <div id="rightmenu">
-            <a id="nav_text" class="mx-4" href="#">로그인</a>
+            <RouterLink to="/login" id="nav_text" class="mx-4">로그인</RouterLink>
             <span>|</span>
-            <a id="nav_text" class="mx-4" href="#">회원가입</a>
+            <RouterLink to="/join/joinMember" id="nav_text" class="mx-4" href="#"
+                >회원가입</RouterLink
+            >
             <RouterLink to="/admin">admin</RouterLink>
         </div>
     </nav>
