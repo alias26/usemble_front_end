@@ -12,6 +12,7 @@
                 >회원가입</RouterLink
             >
             <RouterLink to="/admin">admin</RouterLink>
+            <RouterLink class="ms-4" to="/myPage">user</RouterLink>
         </div>
     </nav>
 </template>
