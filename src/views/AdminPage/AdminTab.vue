@@ -1,4 +1,8 @@
 <template>
+    <div id="adminProfile" class="d-flex">
+        <img id="adminImg" src="../../assets/admin.png" alt="" />
+        <span id="adminId">관리자</span>
+    </div>
     <div>
         <RouterLink to="/admin/dashBoard">대시보드</RouterLink>
     </div>
@@ -9,4 +13,21 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 </script>
-<style scoped></style>
+<style scoped>
+#adminProfile {
+    justify-content: center;
+    border: solid;
+}
+#adminImg {
+    width: 60px;
+    margin-right: 10px;
+}
+
+#adminId {
+    align-content: center;
+    font-size: 20px;
+    font-weight: 700;
+}
+</style>
+
+
