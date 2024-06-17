@@ -7,6 +7,11 @@ const routes = [
             path: "dashBoard",
             component: () =>
                 import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage/DashBoard"),
+        },
+        {
+            path: "socialingTable",
+            component: () =>
+                import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage/SocialingTable"),
         }],
     },
 ];
