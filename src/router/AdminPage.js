@@ -17,7 +17,13 @@ const routes = [
             path: "memberTable",
             component: () =>
                 import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage/MemberTable"),
-        }],
+        },
+        {
+            path: "memberDetail",
+            component: () =>
+                import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage/MemberDetail"),
+        },
+    ],
     },
 ];
 

@@ -2,7 +2,7 @@
     <div class="p-3">
         <h4>회원 관리</h4>
         <table class="table table-bordered text-center">
-            <tr style="height: 50px;">
+            <tr style="height: 50px">
                 <th style="width: 40px">번호</th>
                 <th style="width: 40px">프로필</th>
                 <th style="width: 80px">아이디</th>
@@ -17,11 +17,11 @@
                 <td>12345</td>
                 <td>24.06.17</td>
                 <td class="d-flex justify-content-center">
+                    <RouterLink to="/admin/memberDetail">
+                        <button class="btn btn-outline-success btn-md">상세보기</button>
+                    </RouterLink>
                     <div>
-                        <button class="btn btn-outline-success btn-sm me-2">상세보기</button>
-                    </div>
-                    <div>
-                        <button class="btn btn-outline-danger btn-sm">비활성화</button>
+                        <button class="btn btn-outline-danger btn-md">비활성화</button>
                     </div>
                 </td>
             </tr>
@@ -33,8 +33,8 @@
 
 <style scoped>
 img {
-    width: 30px;
-    height: 30px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
 }
 </style>
