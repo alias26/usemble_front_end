@@ -5,9 +5,9 @@
             <div id="login-title">로 로그인하기</div>
         </div>
 
-        <form >
+        <form>
             <div class="d-flex mb-2">
-                <div class="input-group me-2">
+                <div class="input-group">
                     <input
                         type="email"
                         id="form-email"
