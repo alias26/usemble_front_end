@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-4 text-start border">
+    <div class="mt-4 text-start">
         <h3 class="fw-bold ms-3">김명환</h3>
         <p class="ms-3 mb-5" style="font-size: 12px">myeong1709@naver.com</p>
 

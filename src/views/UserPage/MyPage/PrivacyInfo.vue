@@ -1,6 +1,6 @@
 <template>
-    <div class="mt-4 d-flex" id="mypageForm">
-        <div class="mt-4 text-start" id="privacyInfoForm">
+    <div class="d-flex">
+        <div class="text-start" id="privacyInfoForm">
             <div class="mb-4">
                 <h4><strong>개인정보 수정</strong></h4>
             </div>
@@ -106,13 +106,8 @@
 <script setup></script>
 
 <style scoped>
-#mypageForm {
-    width: 70%;
-    margin: 0 auto;
-}
-
 #privacyInfoForm {
-    width: 70%;
+    width: 100%;
     margin: 0 auto;
 }
 

@@ -1,6 +1,6 @@
 <template>
-    <div class="mt-4 d-flex border" id="mypageForm">
-        <div class="mt-4 text-start border" id="profileInfoForm">
+    <div class="d-flex">
+        <div id="pro" class="text-start">
             <div class="mb-2 fs-4 fw-bolder">프로필</div>
 
             <div class="d-flex mb-2">
@@ -21,7 +21,7 @@
             </div>
 
             <div>
-                <div class="bg-light p-4 mb-3" id="info-box">자기소개가 없습니다.</div>
+                <div class="bg-light p-4 mb-3">자기소개가 없습니다.</div>
                 <div class="mt-3 mb-5">
                     <button
                         class="btn border p-2 fw-bold"
@@ -52,19 +52,9 @@
 <script setup></script>
 
 <style scoped>
-#mypageForm {
+#pro {
     width: 100%;
-    margin: 0 auto;
 }
-#profileInfoForm {
-    width: 70%;
-    margin: 0 auto;
-}
-#info-box {
-    width: 100%;
-    height: 100px;
-}
-
 .vl {
     border-left: solid 1px;
     color: #dfd7d7;

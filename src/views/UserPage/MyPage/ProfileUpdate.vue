@@ -1,7 +1,6 @@
 <template>
-    <div class="mt-4 d-flex" id="mypageForm">
-        <div></div>
-        <div class="mt-4 text-start" id="profileInfoUpdate">
+    <div class="d-flex">
+        <div class="text-start" id="profileInfoUpdate">
             <div class="mb-3 fs-4 fw-bold">프로필</div>
             <div class="mb-4 text-secondary">
                 낯선 어셈블로 초대를 받기 위해 어떤 일/공부를 하고 계시는지 회원님에 대해
@@ -28,13 +27,8 @@
 <script setup></script>
 
 <style scoped>
-#mypageForm {
-    width: 70%;
-    margin: 0 auto;
-}
-
 #profileInfoUpdate {
-    width: 70%;
+    width: 100%;
     margin: 0 auto;
 }
 
