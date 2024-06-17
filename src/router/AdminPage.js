@@ -1,7 +1,13 @@
 const routes = [
     {
         path: "/admin",
-        component: () => import(/* webpackChunkName: "admin" */ "@/views/AdminPage"),
+        component: () => import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage"),
+        redirect: "/admin/dashBoard",
+        children: [{
+            path: "dashBoard",
+            component: () =>
+                import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage/DashBoard"),
+        }],
     },
 ];
 
