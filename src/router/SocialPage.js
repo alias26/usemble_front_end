@@ -23,9 +23,13 @@ const routes = [
         path: "/social/detail",
         name: "socialdetail",
         component: () =>
-            import(
-                /* webpackChunkName: "SocialPage" */ "../views/SocialPage/SocialDetail.vue"
-            ),
+            import(/* webpackChunkName: "SocialPage" */ "../views/SocialPage/SocialDetail.vue"),
+    },
+    {
+        path: "/social/pay",
+        name: "socialpay",
+        component: () =>
+            import(/* webpackChunkName: "SocialPage" */ "../views/SocialPage/SocialPay.vue"),
     },
     {
         path: "/search",

@@ -1,99 +1,95 @@
 <template>
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
-    />
+    <div id="container">
+        <div id="detail_content">
+            <img src="../../assets/thum.jpg" />
+            <div id="title">와인, 새로운 만남!</div>
+            <div id="address">경기 성남시 분당구 정자일로 아이파크 3단지 1105호</div>
+            <div id="date">2024. 06. 18 (화) 19:00</div>
 
-        <div id="container">
-            <div id="detail_content">
-                <img src="../../assets/thum.jpg" />
-                <div id="title">와인, 새로운 만남!</div>
-                <div id="address">경기 성남시 분당구 정자일로 아이파크 3단지 1105호</div>
-                <div id="date">2024. 06. 18 (화) 19:00</div>
-
-                <hr />
-                <UserProfile></UserProfile>
-                <hr />
-                <h4 id="content-title">모임 일정</h4>
-                <div id="join">
-                    <Calendar />
-                    <div id="join-right">
-                        <div id="join-right-detail">
-                            <div>
-                                <div id="notice">
-                                    <span id="notice1"
-                                        >방문 일정에 따라 세부 정보가 달라질수 있습니다.</span
-                                    >
-                                    <span id="notice2"
-                                        >날짜에 따라 게스트님을 위한 준비가 달라질 수 있어요.</span
-                                    >
-                                    <span id="notice3"
-                                        >일정을 변경한 경우 세부 정보를 다시 한번 확인해
-                                        주세요.</span
-                                    >
+            <hr />
+            <UserProfile></UserProfile>
+            <hr />
+            <h4 id="content-title">모임 일정</h4>
+            <div id="join">
+                <Calendar />
+                <div id="join-right">
+                    <div id="join-right-detail">
+                        <div>
+                            <div id="notice">
+                                <span id="notice1"
+                                    >방문 일정에 따라 세부 정보가 달라질수 있습니다.</span
+                                >
+                                <span id="notice2"
+                                    >날짜에 따라 게스트님을 위한 준비가 달라질 수 있어요.</span
+                                >
+                                <span id="notice3"
+                                    >일정을 변경한 경우 세부 정보를 다시 한번 확인해 주세요.</span
+                                >
+                            </div>
+                            <div id="join-info">
+                                <div id="join-info-txt">
+                                    <span id="info-txt-time">오후 5시</span>
+                                    <span class="mx-2" id="info-txt-fee">50000원</span>
+                                    <span id="info-txt-member">8인 초대</span>
                                 </div>
-                                <div id="join-info">
-                                    <div id="join-info-txt">
-                                        <span id="info-txt-time">오후 5시</span>
-                                        <span class="mx-2" id="info-txt-fee">50000원</span>
-                                        <span id="info-txt-member">8인 초대</span>
-                                    </div>
-                                    <div>
-                                        <i id="checkicon" class="bi bi-check-circle-fill"></i>
-                                    </div>
+                                <div>
+                                    <i id="checkicon" class="bi bi-check-circle-fill"></i>
                                 </div>
                             </div>
-                            <div id="usbtn">
-                                <button id="btn_us" class="btn mb-2">참여하기</button>
-                            </div>
+                        </div>
+                        <div id="usbtn">
+                            <button id="btn_us" class="btn mb-2" @click="joinSocial">
+                                참여하기
+                            </button>
                         </div>
                     </div>
                 </div>
-                <hr />
-                <div>
-                    <h4 id="content-title">오시는 길</h4>
-                    <div id="content">
-                        <h5 id="location">제주특별자치도 제주시 첨단로 242</h5>
-                        <p id="subtext">*정확한 위치는 호스트의 사정에 의해 변경될 수 있습니다.</p>
-                        <KakaoMap ref="kakaoMap" />
-                    </div>
-                </div>
-                <hr />
-                <div>
-                    <h4 id="content-title">어셈블 소개</h4>
-                    <div id="content" class="d-flex flex-column">
-                        <span
-                            >안녕하세요. 성남 근처에서 작은 와인집을 운영하고 있는 호스트 귀요미
-                            입니다.</span
-                        >
-                        <img class="my-3" id="contentimg" src="../../assets/와인바.jpg" alt="" />
-                        <span>모임 주제는 그리 중요하지 않습니다. 그냥 술 먹으러 오세용.</span>
-                        <img class="my-3" id="contentimg" src="../../assets/와인바2.jpg" alt="" />
-                        <span
-                            >Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text ever
-                            since the 1500s, when an unknown printer took a galley of type and
-                            scrambled it to make a type specimen book. It has survived not only five
-                            centuries, but also the leap into electronic typesetting, remaining
-                            essentially unchanged. It was popularised in the 1960s with the release
-                            of Letraset sheets containing Lorem Ipsum passages, and more recently
-                            with desktop publishing software like Aldus PageMaker including versions
-                            of Lorem Ipsum.
-                        </span>
-                        <img class="mt-3" id="contentimg" src="../../assets/와인바3.jpg" alt="" />
-                    </div>
-                </div>
-                <hr />
             </div>
+            <hr />
+            <div>
+                <h4 id="content-title">오시는 길</h4>
+                <div id="content">
+                    <h5 id="location">제주특별자치도 제주시 첨단로 242</h5>
+                    <p id="subtext">*정확한 위치는 호스트의 사정에 의해 변경될 수 있습니다.</p>
+                    <KakaoMap ref="kakaoMap" />
+                </div>
+            </div>
+            <hr />
+            <div>
+                <h4 id="content-title">어셈블 소개</h4>
+                <div id="content" class="d-flex flex-column">
+                    <span
+                        >안녕하세요. 성남 근처에서 작은 와인집을 운영하고 있는 호스트 귀요미
+                        입니다.</span
+                    >
+                    <img class="my-3" id="contentimg" src="../../assets/와인바.jpg" alt="" />
+                    <span>모임 주제는 그리 중요하지 않습니다. 그냥 술 먹으러 오세용.</span>
+                    <img class="my-3" id="contentimg" src="../../assets/와인바2.jpg" alt="" />
+                    <span
+                        >Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the
+                        1500s, when an unknown printer took a galley of type and scrambled it to
+                        make a type specimen book. It has survived not only five centuries, but also
+                        the leap into electronic typesetting, remaining essentially unchanged. It
+                        was popularised in the 1960s with the release of Letraset sheets containing
+                        Lorem Ipsum passages, and more recently with desktop publishing software
+                        like Aldus PageMaker including versions of Lorem Ipsum.
+                    </span>
+                    <img class="mt-3" id="contentimg" src="../../assets/와인바3.jpg" alt="" />
+                </div>
+            </div>
+            <hr />
         </div>
-
+    </div>
 </template>
 <script setup>
 import KakaoMap from "@/components/KakaoMap.vue";
 import UserProfile from "@/components/UserProfile.vue";
 import Calendar from "@/components/Calendar.vue";
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const kakaoMap = ref(null);
 
 onMounted(() => {
@@ -101,6 +97,10 @@ onMounted(() => {
         kakaoMap.value.getAddress("제주특별자치도 제주시 첨단로 242");
     }
 });
+
+function joinSocial() {
+    router.push("/social/pay");
+}
 </script>
 
 <style scoped>
