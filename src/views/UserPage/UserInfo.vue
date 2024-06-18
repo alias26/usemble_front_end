@@ -145,7 +145,7 @@ function handleLike() {
 }
 
 .theme-color-text {
-    color: #57b17f;
+    color: black;
     font-weight: 700;
     font-size: 14px;
 }
