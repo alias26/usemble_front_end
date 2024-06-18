@@ -10,11 +10,11 @@
         <template v-slot:body>
             <div class="d-flex justify-content-center">
                 <div class="d-flex me-1">
-                    <div type="button" class="me-2 rounded-pill fw-bold" id="ct-btn">모임</div>
+                    <div type="button" class="me-2 rounded-pill fw-bold " id="ct-btn">모임</div>                
                     <div type="button" class="me-2 rounded-pill fw-bold" id="ct-btn">운동</div>
                     <div type="button" class="me-2 rounded-pill fw-bold" id="ct-btn">자기계발</div>
                     <div type="button" class="me-2 rounded-pill fw-bold" id="ct-btn">음식</div>
-                    <div type="button" class=" rounded-pill fw-bold" id="ct-btn">여행</div>
+                    <div type="button" class="rounded-pill fw-bold" id="ct-btn">여행</div>
                 </div>
             </div>
         </template>
@@ -37,7 +37,11 @@ const emit = defineEmits(["close"]);
     border: none;
     color: #558ccf;
     font-size: 16px;
-    padding: 20px 25px;
+    padding: 10px 25px;
     height: 50px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    word-break: keep-all;
 }
 </style>
