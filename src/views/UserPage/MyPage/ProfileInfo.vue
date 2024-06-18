@@ -38,12 +38,12 @@
                                     width: 80px;
                                     height: 40px;
                                     font-size: 15px;
-                                    border-color: lightgray;
-                                "
-                            >
+                                    border-color: lightgray;"
+                                    @click="showCategoryModal">
                                 <i class="bi bi-pencil-fill"></i>
                                 수정
                             </button>
+                            <CategoryModal id="categoryModal" @close="hideCategoryModal"/>
                         </div>
                     </div>
                     <div id="intro_box" class="bg-light p-4 mt-3">자기소개가 없습니다.</div>
@@ -96,6 +96,23 @@
 
 <script setup>
 import SocialCard from "@/components/Social/SocialCard.vue";
+import CategoryModal from "./CategoryModal.vue";
+import { onMounted } from "vue";
+import { Modal } from "bootstrap";
+
+let categoryModal = null;
+
+
+onMounted(() => {
+    categoryModal = new Modal(document.querySelector("#categoryModal"));
+})
+function showCategoryModal() {
+    categoryModal.show();
+}
+
+function hideCategoryModal() {
+    categoryModal.hide();
+}
 </script>
 
 <style scoped>
