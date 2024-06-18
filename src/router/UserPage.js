@@ -61,6 +61,13 @@ const routes = [
                         /* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage/ProfileUpdate"
                     ),
             },
+            {
+                path: "passwordUpdate",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage/PasswordUpdate"
+                    ),
+            },
         ],
     },
 ];

@@ -13,9 +13,11 @@
                 </div>
                 <div class="d-flex mb-5">
                     <h6 style="margin-right: 150px"><strong>비밀번호 변경</strong></h6>
-                    <button class="btn btn-outline-secondary" id="update-btn">
-                        <strong>변경하기</strong>
-                    </button>
+                    <RouterLink to="./passwordUpdate">
+                        <button class="btn btn-outline-secondary" id="update-btn">
+                            <strong>변경하기</strong>
+                        </button>
+                    </RouterLink>
                 </div>
             </div>
             <hr />
