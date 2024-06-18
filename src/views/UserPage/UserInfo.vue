@@ -127,7 +127,7 @@ function handleLike() {
 
     if (like.value) {
         likeEl.classList.remove("bi-heart");
-        likeEl.style.color = "#558CCF";
+        likeEl.style.color = "red";
         likeEl.classList.add("bi-heart-fill");
     } else {
         likeEl.classList.remove("bi-heart-fill");

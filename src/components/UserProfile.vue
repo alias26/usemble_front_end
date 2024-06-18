@@ -19,14 +19,39 @@
             </div>
         </div>
         <div class="d-flex align-items-center">
-            <button class="d-flex btn mx-3" id="like-btn">
-                <i class="bi bi-heart-fill text-danger me-2"></i>
-                <div>4</div>
+            <button class="d-flex btn mx-3" id="like-btn" @click="handleLike">
+                <i id="like" class="bi bi-heart me-2"></i>
+                <div>{{ likeAmount }}</div>
             </button>
         </div>
     </div>
 </template>
-<script setup></script>
+
+<script setup>
+import { ref } from "vue";
+
+//나의 좋아요 상태
+const like = ref(false);
+const likeAmount = ref(3);
+
+function handleLike() {
+    like.value = !like.value;
+    const likeEl = document.getElementById("like");
+
+    if (like.value) {
+        likeEl.classList.remove("bi-heart");
+        likeEl.style.color = "red";
+        likeEl.classList.add("bi-heart-fill");
+        likeAmount.value++;
+    } else {
+        likeEl.classList.remove("bi-heart-fill");
+        likeEl.style.color = "black";
+        likeEl.classList.add("bi-heart");
+        likeAmount.value--;
+    }
+}
+</script>
+
 <style scoped>
 img {
     border-radius: 50%;
