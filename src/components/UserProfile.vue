@@ -14,10 +14,12 @@
                 </div>
             </div>
         </div>
-        <button class="d-flex btn" id="like-btn">
-            <i class="bi bi-heart-fill text-danger me-2"></i>
-            <div>4</div>
-        </button>
+        <div class="d-flex align-items-center">
+            <button class="d-flex btn mx-3" id="like-btn">
+                <i class="bi bi-heart-fill text-danger me-2"></i>
+                <div>4</div>
+            </button>
+        </div>
     </div>
 </template>
 <script setup></script>
@@ -27,6 +29,7 @@ img {
     width: 60px;
 }
 #userinfo {
+    width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
     display: flex;

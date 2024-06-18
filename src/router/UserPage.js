@@ -45,6 +45,22 @@ const routes = [
                     ),
             },
             {
+                //확인을 위한 임시 주소
+                path: "applicationDetail",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage/ApplicationDetail"
+                    ),
+            },
+            {
+                //확인을 위한 임시 주소
+                path: "recruitmentDetail",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage/RecruitmentDetail"
+                    ),
+            },
+            {
                 path: "assembleLike",
                 component: () =>
                     import(/* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage/AssembleLike"),

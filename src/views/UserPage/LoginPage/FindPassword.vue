@@ -1,31 +1,35 @@
 <template>
-    <div class="mt-5" id="findPassword">
-        <div class="mb-5 d-flex">
-            <div id="title-bold"><span class="highlight">비밀번호</span></div>
-            <div id="find-title">&nbsp;찾기</div>
-        </div>
 
-        <form>
-            <div class="d-flex mb-2">
-                <div class="input-group me-2">
-                    <input
-                        type="email"
-                        id="form-email"
-                        class="form-control d-flex"
-                        placeholder="이메일주소 입력"
-                    />
-                </div>
+        <div class="mt-5" id="findPassword">
+            <div class="mb-5 d-flex">
+                <div id="title-bold"><span class="highlight">비밀번호</span></div>
+                <div id="find-title">&nbsp;찾기</div>
             </div>
-        </form>
 
-        <div class="text-center">
-            <button type="submit" id="sub-btn" @click="trasfer"><strong>전송하기</strong></button>
+            <form>
+                <div class="d-flex mb-2">
+                    <div class="input-group me-2">
+                        <input
+                            type="email"
+                            id="form-email"
+                            class="form-control d-flex"
+                            placeholder="이메일주소 입력"
+                        />
+                    </div>
+                </div>
+            </form>
+
+            <div class="text-center">
+                <button type="submit" id="sub-btn" @click="trasfer">
+                    <strong>전송하기</strong>
+                </button>
+            </div>
         </div>
-    </div>
+   
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 const router = useRouter();
 function trasfer() {
     router.push("/");

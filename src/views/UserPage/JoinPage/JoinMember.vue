@@ -144,7 +144,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 function nextStep() {
-    router.push("./joinStep2");
+    router.push("./joinCategory");
 }
 </script>
 

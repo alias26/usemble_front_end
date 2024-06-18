@@ -1,9 +1,10 @@
 <template>
-    <div class="mt-5" id="loginForm">
-        <div class="mb-5 d-flex">
-            <div id="email-bold"><span class="highlight">이메일</span></div>
-            <div id="login-title">로 로그인하기</div>
-        </div>
+ 
+        <div class="mt-5" id="loginForm">
+            <div class="mb-5 d-flex">
+                <div id="email-bold"><span class="highlight">이메일</span></div>
+                <div id="login-title">로 로그인하기</div>
+            </div>
 
         <form>
             <div class="d-flex mb-2">
@@ -26,14 +27,15 @@
             </div>
         </form>
 
-        <div class="mb-3 text-end">
-            혹시, <a id="findpassword-btn" href="./findPassword">비밀번호</a>를 잊으셨나요?
-        </div>
+            <div class="mb-3 text-end">
+                혹시, <a id="findpassword-btn" href="./findPassword">비밀번호</a>를 잊으셨나요?
+            </div>
 
-        <div class="text-center">
-            <button type="submit" id="sub-btn" @click="login"><strong>로그인</strong></button>
+            <div class="text-center">
+                <button type="submit" id="sub-btn" @click="login"><strong>로그인</strong></button>
+            </div>
         </div>
-    </div>
+ 
 </template>
 
 <script setup>

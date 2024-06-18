@@ -8,12 +8,15 @@
             <div class="hr"></div>
             <div class="nav justify-content-around">
                 <div class="nav-item">
-                    <RouterLink class="nav-link fw-bold" aria-current="page" to="ApplicationDedatil"
+                    <RouterLink
+                        class="nav-link fw-bold"
+                        aria-current="page"
+                        to="./ApplicationDetail"
                         >신청 내역</RouterLink
                     >
                 </div>
                 <div class="nav-item">
-                    <RouterLink class="nav-link fw-bold" aria-current="page" to="RecruitmentDedatil"
+                    <RouterLink class="nav-link fw-bold" aria-current="page" to="RecruitmentDetail"
                         >모집 내역</RouterLink
                     >
                 </div>
@@ -30,7 +33,7 @@
                         어셈블 둘러보기
                     </button> -->
                     <!-- <ApplicationDetail /> -->
-                    <RecruitmentDedatil/>
+                    <RecruitmentDedatil />
                 </div>
             </div>
         </div>
@@ -38,8 +41,8 @@
 </template>
 
 <script setup>
-import ApplicationDetail from "./ApplicaionDetail.vue";
-import RecruitmentDedatil from "./RecruitmentDedatil.vue";
+import ApplicationDetail from "./ApplicationDetail.vue";
+import RecruitmentDedatil from "./RecruitmentDetail.vue";
 </script>
 
 <style scoped>

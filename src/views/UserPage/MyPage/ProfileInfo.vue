@@ -2,6 +2,7 @@
     <div class="d-flex">
         <div id="pro" class="text-start">
             <div class="mb-2 fs-4 fw-bolder">프로필</div>
+            <img id="proimg" src="../../../assets/photo31.jpg" alt="" />
 
             <div class="d-flex mb-2">
                 <div class="d-flex me-1">
@@ -25,7 +26,7 @@
                 <div class="mt-3 mb-5">
                     <button
                         class="btn border p-2 fw-bold"
-                        style="font-size: 13px; width: 100px; height: 40px border-color: lightgray"
+                        style="font-size: 13px; width: 100px; height: 40px; border-color: lightgray"
                     >
                         프로필 수정
                     </button>
@@ -70,5 +71,10 @@
     color: #558ccf;
     font-size: 14px;
     padding: 10px 15px;
+}
+#proimg {
+    border-radius: 50%;
+    width: 150px;
+    margin: 10px 0;
 }
 </style>

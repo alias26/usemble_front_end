@@ -29,7 +29,29 @@
                 </div>
                 <div class="d-flex mb-4">
                     <h6 style="margin-right: 180px"><strong>전화번호</strong></h6>
-                    <div id="mphone" style="color: gray">010-7173-1709</div>
+                    <div class="d-flex" id="pnum">
+                        <input
+                            class="form-control"
+                            id="mphone"
+                            style="color: gray"
+                            type="tel"
+                            value="010"
+                        />
+                        <input
+                            class="form-control"
+                            id="mphone"
+                            style="color: gray"
+                            type="tel"
+                            value="7173"
+                        />
+                        <input
+                            class="form-control"
+                            id="mphone"
+                            style="color: gray"
+                            type="tel"
+                            value="1709"
+                        />
+                    </div>
                 </div>
                 <div class="d-flex mb-4">
                     <h6 style="margin-right: 170px"><strong>출생 연도</strong></h6>
@@ -39,14 +61,39 @@
                     <h6 style="margin-right: 210px"><strong>성별</strong></h6>
                     <div id="mssn" style="color: gray">남성</div>
                 </div>
+                <div class="d-flex mb-4">
+                    <h6 style="margin-right: 170px"><strong>계좌정보</strong></h6>
+                    <div class="d-flex">
+                        <div class="me-2">
+                            <input
+                                style="color: gray"
+                                type="text"
+                                class="form-control"
+                                id="form-account"
+                                name="form-account1"
+                                value="카카오"
+                            />
+                        </div>
+                        <div class="">
+                            <input
+                                style="color: gray"
+                                type="text"
+                                class="form-control"
+                                id="form-account"
+                                name="form-account2"
+                                value="1111111111"
+                            />
+                        </div>
+                    </div>
+                </div>
                 <div class="mb-4">
                     <div class="d-flex">
                         <div style="margin-right: 140px; font-size: 16px">
                             <strong>자기소개 입력</strong>
                         </div>
-                        <input
+                        <textarea
                             type="text"
-                            class="mb-3"
+                            class="mb-3 form-control"
                             id="mintroduce"
                             placeholder="예) OOO에서 그래픽 디자이너로 일하고 있습니다. 일상의 무료함을 달래며 영감을 얻기 위해 어셈블을 시작하게 됐어요! 좋은 분들을 만나 즐거운 시간을 보낼 수 있었으면 좋겠습니다."
                         />
@@ -124,6 +171,7 @@
 #mintroduce {
     width: 70%;
     height: 100px;
+    padding: 10px;
 }
 
 input::placeholder {
@@ -150,5 +198,10 @@ input[type="checkbox"]:checked {
     margin-right: 10px;
     border: solid 0.3px #558ccf;
     background-color: #558ccf;
+}
+#mphone {
+    height: 30px;
+    width: 70px;
+    margin-right: 10px;
 }
 </style>

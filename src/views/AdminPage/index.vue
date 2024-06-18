@@ -11,10 +11,8 @@ import AdminTab from "./AdminTab.vue";
 <style scoped>
 #admintab {
     width: 20%;
-    border: solid;
 }
 #admincontent {
     width: 70%;
-    border: solid;
 }
 </style>

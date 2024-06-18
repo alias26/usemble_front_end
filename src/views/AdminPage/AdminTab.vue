@@ -14,12 +14,11 @@
     </div>
 </template>
 <script setup>
-import { RouterLink } from 'vue-router';
+import { RouterLink } from "vue-router";
 </script>
 <style scoped>
 #adminProfile {
     justify-content: center;
-    border: solid;
 }
 #adminImg {
     width: 60px;
@@ -32,5 +31,3 @@ import { RouterLink } from 'vue-router';
     font-weight: 700;
 }
 </style>
-
-

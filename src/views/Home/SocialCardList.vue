@@ -1,5 +1,5 @@
 <template>
-    <div>
+  
         <div class="main ms-auto me-auto" style="height: auto; width: 65%; min-width: 700px">
             <h3 class="new_host mb-3 mt-5">따끈따끈 신규 호스트</h3>
             <h4 class="host_text mb-4">
@@ -12,7 +12,7 @@
                 <SocialCard v-for="n in 4" :key="n" style="width: 24%" class="me-3" />
             </div>
         </div>
-    </div>
+ 
 </template>
 
 <script setup>
