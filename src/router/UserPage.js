@@ -1,21 +1,27 @@
 const routes = [
     {
-        path: "/userinfo",
-        name: "userinfo",
+        path: "/user/info",
+        name: "userInfo",
         component: () =>
-            import(/* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserInfo.vue"),
+            import(
+                /* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserInfo.vue"
+            ),
     },
     {
-        path: "/userinprogress",
+        path: "/user/inprogress",
         name: "userinprogress",
         component: () =>
-            import(/* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserInProgress.vue"),
+            import(
+                /* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserInProgress.vue"
+            ),
     },
     {
-        path: "/userprogressed",
+        path: "/user/progressed",
         name: "userprogressed",
         component: () =>
-            import(/* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserProgressed"),
+            import(
+                /* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserProgressed"
+            ),
     },
     {
         path: "/login",

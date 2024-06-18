@@ -2,13 +2,13 @@
     <div class="d-flex justify-content-between" id="userinfo">
         <div class="d-flex">
             <div id="userimg">
-                <RouterLink to="/userInfo">
+                <RouterLink to="/user/info">
                     <img src="@/assets/photo31.jpg" />
                 </RouterLink>
             </div>
             <div>
                 <div id="host">호스트</div>
-                <RouterLink class="no-underline" to="/userInfo">
+                <RouterLink class="no-underline" to="/user/info">
                     <div id="id">myeonghwan57</div>
                 </RouterLink>
                 <div id="intro">

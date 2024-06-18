@@ -48,7 +48,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h5>사용자이름님이 진행 중인 어셈블</h5>
-                    <RouterLink class="show-more" to="/UserInProgress">더보기</RouterLink>
+                    <RouterLink class="show-more" to="/user/inprogress">더보기</RouterLink>
                 </div>
                 <div class="row mt-3">
                     <SocialCard v-for="index in 2" :key="index" class="col-4" />
@@ -59,7 +59,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h5>사용자이름님이 진행한 어셈블</h5>
-                    <RouterLink class="show-more" to="/UserProgressed">더보기</RouterLink>
+                    <RouterLink class="show-more" to="/user/progressed">더보기</RouterLink>
                 </div>
                 <div class="row mt-3">
                     <SocialCard v-for="index in 3" :key="index" class="col-4" />
