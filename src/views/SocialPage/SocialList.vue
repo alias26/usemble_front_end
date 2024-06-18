@@ -18,24 +18,10 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="#">전체보기</a></li>
-                            <li><a class="dropdown-item" href="#">운동</a></li>
                             <li><a class="dropdown-item" href="#">맛집</a></li>
+                            <li><a class="dropdown-item" href="#">운동</a></li>
                             <li><a class="dropdown-item" href="#">스터디</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown ms-2">
-                        <button
-                            class="btn btn-sm dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            날짜
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">오전</a></li>
-                            <li><a class="dropdown-item" href="#">오후</a></li>
+                            <li><a class="dropdown-item" href="#">친목</a></li>
                         </ul>
                     </div>
                     <div class="dropdown ms-2">
