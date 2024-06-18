@@ -179,4 +179,10 @@ h5 {
     font-size: 14px;
     color: #858585;
 }
+
+.show-more {
+    color: #858585;
+    /* text-decoration: none; */
+    margin: auto 0px;
+}
 </style>
