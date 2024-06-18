@@ -47,8 +47,8 @@
             </div>
 
             <div class="mt-4 mb-3 fs-6"><strong>이름</strong></div>
-            <div class="input-group mb-2">
-                <input type="text" id="form-input" class="form-control" placeholder="이름" />
+            <div class="input-group">
+                <span><input type="text" id="form-input" class="form-control" placeholder="이름" /></span>
             </div>
 
             <div class="mt-4 mb-3 fs-6"><strong>주민번호</strong></div>
@@ -57,7 +57,7 @@
                     <span
                         ><input
                             type="text"
-                            id="form-ssn1"
+                            id="form-input"
                             class="form-control fw-bold"
                             placeholder="주민번호 앞자리"
                     /></span>
@@ -67,7 +67,7 @@
                     <div>
                         <input
                             type="text"
-                            id="form-ssn2"
+                            id="form-input"
                             class="form-control me-1"
                             style="width: 35px"
                         />
@@ -84,7 +84,7 @@
                             <input
                                 type="text"
                                 class="form-control fw-bold"
-                                id="form-mphone"
+                                id="form-input"
                                 placeholder="010"
                                 name="form-mphone"
                             />
@@ -95,7 +95,7 @@
                             ><input
                                 type="text"
                                 class="form-control"
-                                id="form-mphone"
+                                id="form-input"
                                 name="form-mphone"
                         /></span>
                     </div>
@@ -104,7 +104,7 @@
                             ><input
                                 type="text"
                                 class="form-control"
-                                id="form-mphone"
+                                id="form-input"
                                 name="form-mphone"
                         /></span>
                     </div>
@@ -117,7 +117,7 @@
                     <input
                         type="text"
                         class="form-control"
-                        id="form-account"
+                        id="form-input"
                         name="form-account1"
                         placeholder="은행명"
                     />
@@ -126,7 +126,7 @@
                     <input
                         type="text"
                         class="form-control"
-                        id="form-account"
+                        id="form-input"
                         name="form-account2"
                         placeholder="계좌번호"
                     />
@@ -162,7 +162,6 @@ function nextStep() {
 
 #form-input {
     margin-bottom: 5px;
-    width: 700px;
     height: 50px;
     font-weight: bold;
 }
