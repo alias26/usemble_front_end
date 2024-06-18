@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <h5>{{ title }}</h5>
-                <RouterLink class="show-more" to="/user/progressed">더보기</RouterLink>
+                <RouterLink class="show-more" :to="props.link">더보기</RouterLink>
             </div>
             <div class="row mt-3">
                 <SocialCard v-for="index in 3" :key="index" class="col-4" />
@@ -15,7 +15,7 @@
 <script setup>
 import SocialCard from "@/components/Social/SocialCard.vue";
 
-defineProps(["title"]);
+const props = defineProps(["title", "link"]);
 </script>
 
 <style scoped>

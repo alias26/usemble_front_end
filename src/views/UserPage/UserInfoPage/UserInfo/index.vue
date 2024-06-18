@@ -44,8 +44,8 @@
                 </div>
             </div>
         </div>
-        <UserSocialList :title="member.mname + '님이 진행 중인 어셈블'" />
-        <UserSocialList :title="member.mname + '님이 진행한 어셈블'" />
+        <UserSocialList :title="member.mname + '님이 진행 중인 어셈블'" link="/user/inprogress" />
+        <UserSocialList :title="member.mname + '님이 진행한 어셈블'" link="/user/progressed" />
         <div class="card mt-4">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
