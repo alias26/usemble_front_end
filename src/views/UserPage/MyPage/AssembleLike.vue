@@ -4,7 +4,7 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
     />
     <div class="d-flex">
-        <div id="like">
+        <div class="like">
             <div class="mb-5 text-center fw-bold fs-5">
                 <i class="bi bi-heart me-1 fw-bold" style="font-size: 40px"></i>
                 <p>좋아요</p>
@@ -12,7 +12,9 @@
             <div class="hr"></div>
             <ul class="nav justify-content-around">
                 <li class="nav-item">
-                    <RouterLink class="nav-link fw-bold" aria-current="page" to="LikeHost">내가 찜한 호스트</RouterLink>
+                    <RouterLink class="nav-link fw-bold" aria-current="page" to="LikeHost"
+                        >내가 찜한 호스트</RouterLink
+                    >
                 </li>
             </ul>
 
@@ -46,7 +48,7 @@ import UserProfile from "@/components/UserProfile.vue";
     margin: 0 auto;
 } */
 
-#like {
+.like {
     width: 100%;
     margin: 0 auto;
 }

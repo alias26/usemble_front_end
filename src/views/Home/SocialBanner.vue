@@ -1,7 +1,7 @@
 <template>
     <div class="ms-auto me-auto" style="width: 70%; min-width: 800px">
         <div class="main-img" style="text-align: center">
-            <img src="@/assets/usemble.jpg" />
+            <img src="@/assets/usemble.jpg" width="100%" />
         </div>
         <div class="category container d-flex">
             <div class="main_category"><img src="@/assets/category/eat.png" />맛집</div>
