@@ -4,13 +4,20 @@
             <div class="d-flex justify-content-between">
                 <div class="mb-2 fs-4 fw-bolder">프로필</div>
 
-                <div class="">
-                    <button
-                        class="btn border fw-bold"
-                        style="font-size: 13px; width: 100px; height: 40px; border-color: lightgray"
+                <div>
+                    <RouterLink to="./profileUpdate"
+                        ><button
+                            class="btn border fw-bold"
+                            style="
+                                font-size: 13px;
+                                width: 100px;
+                                height: 40px;
+                                border-color: lightgray;
+                            "
+                        >
+                            프로필 수정
+                        </button></RouterLink
                     >
-                        프로필 수정
-                    </button>
                 </div>
             </div>
 
