@@ -3,9 +3,7 @@ const routes = [
         path: "/user/info",
         name: "userInfo",
         component: () =>
-            import(
-                /* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserInfo.vue"
-            ),
+            import(/* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserInfo"),
     },
     {
         path: "/user/inprogress",
@@ -82,12 +80,16 @@ const routes = [
             {
                 path: "assembleReview",
                 component: () =>
-                    import(/* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage/AssembleReview"),
+                    import(
+                        /* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage/AssembleReview"
+                    ),
             },
             {
                 path: "passwordUpdate",
                 component: () =>
-                    import(/* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage/PasswordUpdate"),
+                    import(
+                        /* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage/PasswordUpdate"
+                    ),
             },
         ],
     },

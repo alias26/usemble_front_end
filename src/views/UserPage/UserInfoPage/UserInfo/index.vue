@@ -44,28 +44,8 @@
                 </div>
             </div>
         </div>
-        <div class="card mt-4">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h5>사용자이름님이 진행 중인 어셈블</h5>
-                    <RouterLink class="show-more" to="/user/inprogress">더보기</RouterLink>
-                </div>
-                <div class="row mt-3">
-                    <SocialCard v-for="index in 2" :key="index" class="col-4" />
-                </div>
-            </div>
-        </div>
-        <div class="card mt-4">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h5>사용자이름님이 진행한 어셈블</h5>
-                    <RouterLink class="show-more" to="/user/progressed">더보기</RouterLink>
-                </div>
-                <div class="row mt-3">
-                    <SocialCard v-for="index in 3" :key="index" class="col-4" />
-                </div>
-            </div>
-        </div>
+        <UserSocialList :title="member.mname + '님이 진행 중인 어셈블'" />
+        <UserSocialList :title="member.mname + '님이 진행한 어셈블'" />
         <div class="card mt-4">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
@@ -81,7 +61,7 @@
 <script setup>
 import { ref } from "vue";
 import Review from "@/components/Review.vue";
-import SocialCard from "@/components/Social/SocialCard.vue";
+import UserSocialList from "./UserSocialList.vue";
 
 //멤버 정보
 const member = {
@@ -192,12 +172,6 @@ h5 {
     border: 0;
     background-color: #fff;
     border-radius: 10px;
-}
-
-.show-more {
-    color: #858585;
-    /* text-decoration: none; */
-    margin: auto 0px;
 }
 
 .profile-introduce {
