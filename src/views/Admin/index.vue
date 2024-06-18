@@ -1,6 +1,6 @@
 <template>
-    <div class="d-flex justify-content-center">
-        <div id="admintab"><AdminTab></AdminTab></div>
+    <div class="d-flex">
+        <div><AdminTab></AdminTab></div>
         <div id="admincontent"><RouterView /></div>
     </div>
 </template>
@@ -9,10 +9,8 @@ import AdminTab from "./AdminTab.vue";
 </script>
 
 <style scoped>
-#admintab {
-    width: 20%;
-}
 #admincontent {
-    width: 70%;
+    width: 80%;
+    margin: 0 auto;
 }
 </style>

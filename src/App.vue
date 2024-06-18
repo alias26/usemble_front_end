@@ -1,7 +1,8 @@
 <template>
-    <Header />
-    <router-view />
-    <Footer />
+    <Header v-if="!$route.path.startsWith('/admin')" />
+    <div id="wrap"><router-view /></div>
+
+    <Footer v-if="!$route.path.startsWith('/admin')" />
 </template>
 
 <script setup>
@@ -21,5 +22,8 @@ import Footer from "@/components/Common/Footer.vue";
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* viewport의 전체 높이를 차지 */
+}
+#wrap {
+    padding-bottom: 150px;
 }
 </style>

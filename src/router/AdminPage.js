@@ -1,29 +1,29 @@
 const routes = [
     {
         path: "/admin",
-        component: () => import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage"),
+        component: () => import(/* webpackChunkName: "Admin" */ "@/views/Admin"),
         redirect: "/admin/dashBoard",
-        children: [{
-            path: "dashBoard",
-            component: () =>
-                import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage/DashBoard"),
-        },
-        {
-            path: "socialingTable",
-            component: () =>
-                import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage/SocialingTable"),
-        },
-        {
-            path: "memberTable",
-            component: () =>
-                import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage/MemberTable"),
-        },
-        {
-            path: "memberDetail",
-            component: () =>
-                import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage/MemberDetail"),
-        },
-    ],
+        children: [
+            {
+                path: "dashBoard",
+                component: () => import(/* webpackChunkName: "Admin" */ "@/views/Admin/DashBoard"),
+            },
+            {
+                path: "socialingTable",
+                component: () =>
+                    import(/* webpackChunkName: "Admin" */ "@/views/Admin/SocialingTable"),
+            },
+            {
+                path: "memberTable",
+                component: () =>
+                    import(/* webpackChunkName: "Admin" */ "@/views/Admin/MemberTable"),
+            },
+            {
+                path: "memberDetail",
+                component: () =>
+                    import(/* webpackChunkName: "Admin" */ "@/views/Admin/MemberDetail"),
+            },
+        ],
     },
 ];
 

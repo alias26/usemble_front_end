@@ -60,6 +60,7 @@ a {
     height: 80px;
     display: flex;
     float: left;
+    margin-right: 25px;
 }
 #usemble {
     color: #00a3e0;
