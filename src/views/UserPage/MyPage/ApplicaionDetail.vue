@@ -1,10 +1,4 @@
 <template>
-    <div class="p-3 text-end">
-        <button class="btn" id="available-btn">
-            <i class="bi bi-check-circle-fill me-1"></i>
-            신청할 수 있는 어셈블만
-        </button>
-    </div>
     <div class="d-flex justify-content-between" id="socialinfo">
         <div class="d-flex">
             <div id="socialimg">
@@ -20,11 +14,8 @@
             </div>
         </div>
         <div>
-            <button class="d-flex btn me-4 mb-2" id="like-btn">
-                <i class="bi bi-heart-fill text-danger me-2"></i>
-                <div>4</div>
-            </button>
-            <button class="d-flex btn me-4" id="apply-btn">신청하기</button>
+            <button class="d-flex btn me-4" id="review-btn">리뷰작성</button>
+            <button class="d-flex btn mt-2 me-4" id="delete-btn">삭제하기</button>
         </div>
     </div>
 </template>
@@ -61,15 +52,16 @@ img {
 #socialprice {
 }
 
-#like-btn {
-    justify-content: center;
-    align-items: center;
-    border-color: lightgray;
-    width: 120px;
+#available-btn {
+    background-color: #57b17f;
+    color: white;
+    font-weight: 700;
+    width: 190px;
     height: 40px;
+    font-size: 14px;
 }
 
-#apply-btn {
+#review-btn {
     justify-content: center;
     background-color: #558ccf;
     color: white;
@@ -78,12 +70,12 @@ img {
     height: 40px;
 }
 
-#available-btn {
-    background-color: #57b17f;
+#delete-btn {
+    justify-content: center;
+    background-color: black;
     color: white;
     font-weight: 700;
-    width: 190px;
+    width: 120px;
     height: 40px;
-    font-size: 14px;
 }
 </style>

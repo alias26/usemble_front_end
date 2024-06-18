@@ -53,7 +53,7 @@ img {
 
 #delete-btn {
     justify-content: center;
-    background-color: #558ccf;
+    background-color: black;
     color: white;
     font-weight: 700;
     width: 120px;
