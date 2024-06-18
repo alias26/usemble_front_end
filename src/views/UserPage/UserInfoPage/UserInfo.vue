@@ -5,7 +5,7 @@
                 <div class="d-flex justify-content-between">
                     <div class="d-flex">
                         <div class="profile-img me-3">
-                            <img src="../../assets/logo.png" width="100px" height="100px" />
+                            <img src="@/assets/logo.png" width="100px" height="100px" />
                         </div>
                         <div class="profile">
                             <p class="subtext mt-2 mb-2" style="font-size: 16px">사용자</p>
@@ -48,7 +48,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h5>사용자이름님이 진행 중인 어셈블</h5>
-                    <RouterLink class="show-more" to="/">더보기</RouterLink>
+                    <RouterLink class="show-more" to="/UserInProgress">더보기</RouterLink>
                 </div>
                 <div class="row mt-3">
                     <SocialCard v-for="index in 2" :key="index" class="col-4" />
@@ -59,7 +59,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h5>사용자이름님이 진행한 어셈블</h5>
-                    <RouterLink class="show-more" to="/">더보기</RouterLink>
+                    <RouterLink class="show-more" to="/UserProgressed">더보기</RouterLink>
                 </div>
                 <div class="row mt-3">
                     <SocialCard v-for="index in 3" :key="index" class="col-4" />

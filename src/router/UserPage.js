@@ -3,7 +3,19 @@ const routes = [
         path: "/userinfo",
         name: "userinfo",
         component: () =>
-            import(/* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfo.vue"),
+            import(/* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserInfo.vue"),
+    },
+    {
+        path: "/userinprogress",
+        name: "userinprogress",
+        component: () =>
+            import(/* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserInProgress.vue"),
+    },
+    {
+        path: "/userprogressed",
+        name: "userprogressed",
+        component: () =>
+            import(/* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserProgressed"),
     },
     {
         path: "/login",
