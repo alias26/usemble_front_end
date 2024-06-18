@@ -2,11 +2,15 @@
     <div class="d-flex justify-content-between" id="userinfo">
         <div class="d-flex">
             <div id="userimg">
-                <img src="@/assets/photo31.jpg" />
+                <RouterLink to="/userInfo">
+                    <img src="@/assets/photo31.jpg" />
+                </RouterLink>
             </div>
             <div>
                 <div id="host">호스트</div>
-                <div id="id">myeonghwan57</div>
+                <RouterLink class="no-underline" to="/userInfo">
+                    <div id="id">myeonghwan57</div>
+                </RouterLink>
                 <div id="intro">
                     <div>안녕하세요.</div>
                     <div>성남 인근에서 작고 아담한 와인모임을 진행하고 있습니다.</div>
@@ -58,5 +62,10 @@ img {
     border-color: lightgray;
     width: 120px;
     height: 40px;
+}
+
+.no-underline {
+    color: black;
+    text-decoration: none;
 }
 </style>
