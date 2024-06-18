@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-5 ms-auto me-auto" style="width: 70%">
+    <div class="mt-5" style="width: 70%; margin: 50px auto">
         <h1 class="policy-title">어셈블 이용 약관</h1>
         <h2 class="mt-5">제1장 총칙</h2>
         <h3 class="mt-4">제1조 (목적)</h3>

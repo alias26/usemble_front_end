@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 70%; margin: 0 auto">
+    <div style="width: 70%; margin: 50px auto">
         <form class="create" style="width: 60%; margin: 0 auto">
             <h5>기본정보 입력하기</h5>
             <div class="form-group mt-4">

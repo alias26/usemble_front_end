@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-5 ms-auto me-auto" style="width: 70%">
+    <div class="mt-5" style="width: 70%; margin: 50px auto">
         <h1 class="policy-title">어셈블 개인정보 처리방침</h1>
         <h2 class="mt-5">1.개인정보 처리방침의 기본 방향</h2>
         <div class="policy-section">
