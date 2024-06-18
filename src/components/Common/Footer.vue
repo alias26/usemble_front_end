@@ -43,6 +43,8 @@ footer {
     border-top: 1px solid #e4e4e4;
     background-color: #f8f9f4;
     padding: 1rem 0;
+    /* -------하단 고정------- */
+    margin-top: auto;
 }
 #inner {
     display: flex;

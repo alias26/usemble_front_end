@@ -17,5 +17,9 @@ import Footer from "@/components/Common/Footer.vue";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
+    /* ------------------- */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* viewport의 전체 높이를 차지 */
 }
 </style>
