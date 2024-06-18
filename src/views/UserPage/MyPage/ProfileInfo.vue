@@ -52,22 +52,51 @@
 
             <hr class="border-2" />
             <div class="d-flex justify-content-evenly" id="tab-menu">
-                <p class="mt-3 fw-bold fs-6">
-                    <i class="bi bi-house-door me-2 fs-2"></i>
-                    내역
-                </p>
+                <RouterLink class="text-decoration-none" to="./assembleHistory">
+                    <p class="mt-3 fw-bold fs-6">
+                        <i class="bi bi-house-door me-2 fs-2"></i>
+                        내역
+                    </p>
+                </RouterLink>
                 <div class="vl mt-1" style="height: 70px"></div>
-                <p class="mt-3 fw-bold fs-6">
-                    <i class="bi bi-heart me-2 fs-3"></i>
-                    좋아요
-                </p>
+                <RouterLink class="text-decoration-none" to="./assembleLike">
+                    <p class="mt-3 fw-bold fs-6">
+                        <i class="bi bi-heart me-2 fs-2"></i>
+                        좋아요
+                    </p>
+                </RouterLink>
+                <div class="vl mt-1" style="height: 70px"></div>
+                <RouterLink class="text-decoration-none" to="./assembleReview">
+                    <p class="mt-3 fw-bold fs-6">
+                        <i class="bi bi-chat-dots me-2 fs-2"></i>
+                        후기
+                    </p>
+                </RouterLink>
             </div>
             <hr class="border-2" />
+
+            <div class="mt-5">
+                <div class="d-flex justify-content-between">
+                    <div class="fs-4 fw-bolder mb-3">신청한 어셈블</div>
+                    <div>
+                        <RouterLink class="text-decoration-none text-black" to="./assembleHistory">
+                            전체보기 &nbsp;>
+                        </RouterLink>
+                    </div>
+                </div>
+                <div id="socialbox" class="d-flex">
+                    <SocialCard class="me-3" id="social-card" />
+                    <SocialCard class="me-3" id="social-card" />
+                    <SocialCard id="social-card" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import SocialCard from "@/components/Social/SocialCard.vue";
+</script>
 
 <style scoped>
 #pro {
@@ -97,5 +126,17 @@
 }
 #intro_box {
     width: 100%;
+}
+
+p {
+    color: black;
+    text-decoration: none;
+}
+
+#social-card {
+    width: 30%;
+}
+#socialbox{
+    justify-content: center;
 }
 </style>

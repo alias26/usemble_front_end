@@ -78,4 +78,8 @@
     font-size: 14px;
     padding: 10px;
 }
+
+textarea {
+    resize: none;
+}
 </style>

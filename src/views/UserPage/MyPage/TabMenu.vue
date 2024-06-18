@@ -5,31 +5,42 @@
 
         <ul class="nav flex-column text-start" id="tab-bar">
             <li class="nav-item">
-                <a class="nav-link active mb-3" id="click-mypage" aria-current="page">마이페이지</a>
+                <RouterLink
+                    class="nav-link fw-bold mb-3"
+                    style="font-size: 20px; color: black"
+                    to="/mypage/profileInfo"
+                >
+                    마이페이지
+                </RouterLink>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-black"><strong>어셈블 관리</strong></a>
+                <p class="nav-link text-black"><strong>어셈블 관리</strong></p>
             </li>
             <li class="nav-item">
-                <RouterLink to="/mypage/AssembleHistory" class="nav-link" style="font-size: 14px">
+                <RouterLink to="/mypage/assembleHistory" class="nav-link" style="font-size: 14px">
                     내역
                 </RouterLink>
             </li>
-            <li class="nav-item mb-4">
-                <RouterLink to="/mypage/AssembleLike" class="nav-link" style="font-size: 14px">
+            <li class="nav-item">
+                <RouterLink to="/mypage/assembleLike" class="nav-link" style="font-size: 14px">
                     좋아요
+                </RouterLink>
+            </li>
+            <li class="nav-item mb-4">
+                <RouterLink to="/mypage/assembleReview" class="nav-link" style="font-size: 14px">
+                    후기
                 </RouterLink>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled text-black"><strong>계정 관리</strong></a>
             </li>
             <li class="nav-item">
-                <RouterLink to="/mypage/ProfileUpdate" class="nav-link" style="font-size: 14px">
+                <RouterLink to="/mypage/profileUpdate" class="nav-link" style="font-size: 14px">
                     프로필 수정
                 </RouterLink>
             </li>
             <li class="nav-item mb-4">
-                <RouterLink to="/mypage/PrivacyInfo" class="nav-link" style="font-size: 14px">
+                <RouterLink to="/mypage/privacyInfo" class="nav-link" style="font-size: 14px">
                     개인정보 수정
                 </RouterLink>
             </li>
@@ -45,9 +56,8 @@
 <style scoped>
 #click-mypage {
     color: black;
-    font-weight: bolder;
-    text-decoration-line: underline;
-    color: black;
+    font-size: 20px;
+    font-weight: 700;
 }
 
 .nav-link {

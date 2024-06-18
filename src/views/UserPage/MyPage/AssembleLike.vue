@@ -1,8 +1,4 @@
 <template>
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
-    />
     <div class="d-flex">
         <div class="like">
             <div class="mb-5 text-center fw-bold fs-5">
@@ -21,8 +17,8 @@
             <div class="bg-light" style="height: 500px">
                 <div class="hr"></div>
                 <div class="text-secondary align-content-center" style="font-size: 14px">
-                    <!-- <div>아직 찜한 호스트가 없으시네요!</div>
-                    <div class="mb-4">관심 있는 호스트를 찾아보세요.</div>
+                    <!-- 
+                    <div>관심 있는 호스트를 찾아보세요.</div>
                     <button
                         class="p-3 bg-black text-white rounded-1 fw-bold"
                         style="font-size: 14px; border: none"
