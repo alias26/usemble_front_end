@@ -23,6 +23,16 @@ const routes = [
                 component: () =>
                     import(/* webpackChunkName: "Admin" */ "@/views/Admin/MemberDetail"),
             },
+            {
+                path: "reviewTable",
+                component: () =>
+                    import(/* webpackChunkName: "Admin" */ "@/views/Admin/ReviewTable"),
+            },
+            {
+                path: "noticeTable",
+                component: () =>
+                    import(/* webpackChunkName: "Admin" */ "@/views/Admin/NoticeTable"),
+            },
         ],
     },
 ];
