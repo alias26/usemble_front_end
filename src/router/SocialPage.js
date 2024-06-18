@@ -27,6 +27,13 @@ const routes = [
                 /* webpackChunkName: "SocialPage" */ "../views/SocialPage/SocialDetail.vue"
             ),
     },
+    {
+        path: "/search",
+        component: () =>
+            import(
+                /* webpackChunkName: "SearchSocial" */ '@/views/SearchSocial'
+            ),
+    },
 ];
 
 export default routes;

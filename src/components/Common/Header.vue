@@ -6,6 +6,14 @@
         </div>
         <RouterLink to="/"><img id="logoimg" alt="Vue logo" src="@/assets/logo.png" /></RouterLink>
         <div id="rightmenu">
+            <RouterLink
+                to="/search">
+                <button class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 24">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+                </button>
+            </RouterLink>
             <RouterLink to="/login" id="nav_text" class="mx-4">로그인</RouterLink>
             <span id="nav_text">|</span>
             <RouterLink to="/join/joinMember" id="nav_text" class="mx-4" href="#"
