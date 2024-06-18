@@ -1,5 +1,5 @@
 <template>
-    <div class="p-3">
+    <div class="p-3 mt-4">
         <h4>회원 관리</h4>
         <table class="table table-bordered text-center">
             <tr style="height: 50px">
