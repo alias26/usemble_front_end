@@ -37,7 +37,8 @@
                 >
                     뒤로가기
                 </button>
-                <RouterLink to="/" class="btn btn-next rounded">어셈블</RouterLink>
+                <button class="btn btn-next rounded" @click="showAssembleModal">어셈블</button>
+                <AssembleModal id="#assembleModal" @close="hideAssembleModal"/>
             </div>
         </form>
     </div>
@@ -46,11 +47,29 @@
 <script setup>
 import { useRouter } from "vue-router";
 import WyswygEditor from "@/components/WyswygEditor.vue";
+import { onMounted } from "vue";
+import { Modal } from "bootstrap";
+import AssembleModal from "./AssembleModal.vue";
+
+let assembleModal = null;
+
+onMounted(() => {
+    assembleModal = new Modal(document.getElementById("#assembleModal"));
+});
 
 const router = useRouter();
 
 function goUrlBack() {
     router.back();
+}
+
+function showAssembleModal(e) {
+    assembleModal.show();
+    e.preventDefault();
+}
+
+function hideAssembleModal() {
+    assembleModal.hide();
 }
 </script>
 
