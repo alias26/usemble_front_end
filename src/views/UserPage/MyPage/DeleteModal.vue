@@ -1,7 +1,9 @@
 <template>
     <ModalTemplate>
-        <template v-slot:header><span class="header">내역 삭제</span></template>
-        <template v-slot:body>정말로 내역을 삭제하시겠습니까?</template>
+        <template v-slot:header
+            ><span class="header"><h4>내역 삭제</h4></span></template
+        >
+        <template v-slot:body><h5>정말로 내역을 삭제하시겠습니까?</h5></template>
         <template v-slot:footer>
             <button
                 type="button"
