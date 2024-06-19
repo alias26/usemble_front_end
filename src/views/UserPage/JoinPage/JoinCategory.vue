@@ -78,18 +78,30 @@
             </div>
         </div>
         <div class="text-center">
-            <button type="submit" id="join-btn" @click="join">
+            <button id="join-btn" @click="showJoinModal">
                 <strong>가입하기</strong>
             </button>
+            <JoinModal id="joinModal" @close="hideJoinModal" />
         </div>
     </div>
 </template>
 
 <script setup>
-import router from "@/router";
+import JoinModal from "./JoinModal.vue";
+import { onMounted } from "vue";
+import { Modal } from "bootstrap";
 
-function join() {
-    router.push("/");
+let joinModal = null;
+
+onMounted(() => {
+    joinModal = new Modal(document.querySelector("#joinModal"));
+});
+function showJoinModal() {
+    joinModal.show();
+}
+
+function hideJoinModal() {
+    joinModal.hide();
 }
 </script>
 
