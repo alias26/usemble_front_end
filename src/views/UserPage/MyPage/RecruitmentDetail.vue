@@ -13,8 +13,11 @@
                 <div id="socialprice">24,000원</div>
             </div>
         </div>
-        <div class="d-flex justify-content-center align-items-center">
-            <button class="d-flex btn me-4" id="delete-btn" @click="showDelModal">삭제하기</button>
+        <div class="justify-content-center align-items-center">
+            <RouterLink class="text-decoration-none" to="./recruitmentStatus">
+                <button class="d-flex btn me-4 mb-2" id="host-btn">모집 현황</button>
+            </RouterLink>
+            <button class="d-flex btn me-4" id="host-btn" @click="showDelModal">삭제하기</button>
         </div>
         <DeleteModal id="#delModal" @close="hideDelModal" />
     </div>
@@ -72,7 +75,7 @@ img {
 #socialprice {
 }
 
-#delete-btn {
+#host-btn {
     justify-content: center;
     background-color: black;
     color: white;
