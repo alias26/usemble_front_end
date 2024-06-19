@@ -44,4 +44,26 @@ const emit = defineEmits(["close"]);
     align-items: center;
     word-break: keep-all;
 }
+
+#ct-btn:hover {
+    color: white;
+    border: #404643;
+    background-color: #57b17f;
+    padding: 10px 25px;
+    border-radius: 50px;
+    opacity: 70%;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+#ct-btn:focus {
+    color: white;
+    border: #57b17f;
+    background-color: #57b17f;
+    padding: 10px 25px;
+    border-radius: 50px;
+    opacity: 70%;
+    font-size: 16px;
+    font-weight: bolder;
+}
 </style>
