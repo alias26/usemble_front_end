@@ -1,6 +1,10 @@
 <template>
     <Header v-if="!$route.path.startsWith('/admin')" />
-    <div id="wrap"><router-view /></div>
+
+    <div id="wrap">
+        <router-view />
+        <TopButton />
+    </div>
 
     <Footer v-if="!$route.path.startsWith('/admin')" />
 </template>
@@ -8,6 +12,7 @@
 <script setup>
 import Header from "@/components/Common/Header.vue";
 import Footer from "@/components/Common/Footer.vue";
+import TopButton from "@/components/TopButton.vue";
 </script>
 
 <style>
