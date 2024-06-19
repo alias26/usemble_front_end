@@ -8,15 +8,15 @@
 export default {
     data() {
         return {
-            isVisible: false,
+            isVisible: false, //표시할지 여부
         };
     },
     methods: {
         scrollToTop() {
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({ top: 0, behavior: "smooth" }); //스크롤할 위치 설정
         },
         checkVisibility() {
-            this.isVisible = window.scrollY > 200;
+            this.isVisible = window.scrollY > 300; //300넘으면 true
         },
     },
     mounted() {
