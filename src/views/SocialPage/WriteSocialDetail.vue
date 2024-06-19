@@ -16,6 +16,13 @@
                 <input class="form-control" type="text" placeholder="입장료를 입력해 주세요." />
             </div>
             <div class="form-group mt-4">
+                <label class="form-label">입금 계좌</label>
+                <div class="d-flex">
+                    <span class="me-1"><input class="form-control" type="text" placeholder="은행명" /></span>
+                    <input class="form-control" type="text" placeholder="계좌 번호" />
+                </div>
+            </div>
+            <div class="form-group mt-4">
                 <label class="form-label">카테고리</label>
                 <select class="form-select" aria-label="Default select example">
                     <option selected>카테고리를 선택해주세요.</option>
@@ -38,7 +45,7 @@
                     뒤로가기
                 </button>
                 <button class="btn btn-next rounded" @click="showAssembleModal">어셈블</button>
-                <AssembleModal id="#assembleModal" @close="hideAssembleModal"/>
+                <AssembleModal id="#assembleModal" @close="hideAssembleModal" />
             </div>
         </form>
     </div>
