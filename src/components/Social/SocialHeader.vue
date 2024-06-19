@@ -18,10 +18,11 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="#">전체보기</a></li>
-                            <li><a class="dropdown-item" href="#">맛집</a></li>
+                            <li><a class="dropdown-item" href="#">모임</a></li>
                             <li><a class="dropdown-item" href="#">운동</a></li>
-                            <li><a class="dropdown-item" href="#">스터디</a></li>
-                            <li><a class="dropdown-item" href="#">친목</a></li>
+                            <li><a class="dropdown-item" href="#">자기계발</a></li>
+                            <li><a class="dropdown-item" href="#">음식</a></li>
+                            <li><a class="dropdown-item" href="#">여행</a></li>
                         </ul>
                     </div>
                     <div class="dropdown ms-2">
