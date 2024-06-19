@@ -14,7 +14,7 @@
                 </RouterLink>
             </li>
             <li class="nav-item">
-                <p class="nav-link text-black"><strong>어셈블 관리</strong></p>
+                <span class="nav-link text-black"><strong>어셈블 관리</strong></span>
             </li>
             <li class="nav-item">
                 <RouterLink to="/mypage/assembleHistory" class="nav-link" style="font-size: 14px">
@@ -32,7 +32,7 @@
                 </RouterLink>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled text-black"><strong>계정 관리</strong></a>
+                <span class="nav-link disabled text-black"><strong>계정 관리</strong></span>
             </li>
             <li class="nav-item">
                 <RouterLink to="/mypage/profileUpdate" class="nav-link" style="font-size: 14px">
