@@ -13,10 +13,10 @@
 
             <div class="form-group image mt-4 mb-2">
                 <label class="form-label">대표 이미지</label>
-                <div>
-                    <input id="file" type="file" multiple />
+                <div class="thumbnail">
+                    <input id="file" type="file" multiple @change="loadThumb" />
                     <label for="file">
-                        <img src="@/assets/empty_thumbnail.png" width="100%" />
+                        <img id="thumbnail" src="@/assets/empty_thumbnail.png" width="820px" />
                     </label>
                 </div>
             </div>
@@ -41,6 +41,19 @@ const router = useRouter();
 function handleSubmit() {
     router.push("/social/write/detail");
 }
+
+function loadThumb() {
+    const input = document.getElementById("file");
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById("thumbnail").src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        document.getElementById("thumbnail").src = "";
+    }
+}
 </script>
 
 <style scoped>
@@ -53,10 +66,6 @@ h5 {
     font-weight: bold;
 }
 
-/* .image {
-    position: relative;
-} */
-
 .btn-next {
     background-color: #558ccf;
     color: white;
@@ -64,5 +73,11 @@ h5 {
 
 #file {
     display: none;
+}
+
+.thumbnail {
+    width: 820px;
+    height: 422px;
+    overflow: hidden;
 }
 </style>
