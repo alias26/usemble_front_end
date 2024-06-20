@@ -3,8 +3,10 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import Quill from "quill";
+
+defineExpose({ getContent });
 
 onMounted(() => {
     if (!window.Quill) {
@@ -30,7 +32,7 @@ function loadScript() {
 }
 
 function loadEditor() {
-    const quill = new Quill("#editor", {
+    new Quill("#editor", {
         placeholder: "어셈블에 대한 설명을 추가해주세요.",
         theme: "snow",
         modules: {
@@ -42,6 +44,10 @@ function loadEditor() {
             ],
         },
     });
+}
+
+function getContent() {
+    return document.getElementById("editor").querySelector(".ql-editor");
 }
 </script>
 

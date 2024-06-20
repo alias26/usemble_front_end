@@ -18,7 +18,9 @@
             <div class="form-group mt-4">
                 <label class="form-label">입금 계좌</label>
                 <div class="d-flex">
-                    <span class="me-1"><input class="form-control" type="text" placeholder="은행명" /></span>
+                    <span class="me-1"
+                        ><input class="form-control" type="text" placeholder="은행명"
+                    /></span>
                     <input class="form-control" type="text" placeholder="계좌 번호" />
                 </div>
             </div>
@@ -33,7 +35,7 @@
                 </select>
             </div>
             <div class="mt-3">
-                <WyswygEditor />
+                <WyswygEditor ref="quill" />
             </div>
             <hr />
             <div class="d-flex justify-content-end">
@@ -44,8 +46,14 @@
                 >
                     뒤로가기
                 </button>
-                <button class="btn btn-next rounded" @click="showAssembleModal">어셈블</button>
-                <AssembleModal id="#assembleModal" @close="hideAssembleModal" />
+                <button type="button" class="btn btn-next rounded" @click="showAssembleModal">
+                    어셈블
+                </button>
+                <AssembleModal
+                    id="assembleModal"
+                    @close="hideAssembleModal"
+                    @submit="submitHandler"
+                />
             </div>
         </form>
     </div>
@@ -54,14 +62,15 @@
 <script setup>
 import { useRouter } from "vue-router";
 import WyswygEditor from "@/components/WyswygEditor.vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { Modal } from "bootstrap";
 import AssembleModal from "./AssembleModal.vue";
 
 let assembleModal = null;
+const quill = ref(null);
 
 onMounted(() => {
-    assembleModal = new Modal(document.getElementById("#assembleModal"));
+    assembleModal = new Modal(document.getElementById("assembleModal"));
 });
 
 const router = useRouter();
@@ -70,13 +79,25 @@ function goUrlBack() {
     router.back();
 }
 
-function showAssembleModal(e) {
+function showAssembleModal() {
     assembleModal.show();
-    e.preventDefault();
 }
 
 function hideAssembleModal() {
     assembleModal.hide();
+}
+
+function submitHandler() {
+    let content = quill.value.getContent().cloneNode(true).outerHTML;
+    const sources = content
+        .match(/<img [^>]*src="[^"]*"[^>]*>/gm)
+        .map((x) => x.replace(/.*src="([^"]*)".*/, "$1"));
+
+    for (var i = 0; i < sources.length; i++) {
+        content = content.replace(sources[i], "");
+    }
+
+    console.log(content);
 }
 </script>
 
