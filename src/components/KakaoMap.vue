@@ -11,6 +11,9 @@ const map = ref(null);
 const geocoder = ref(null);
 
 defineExpose({ getAddress });
+
+const props = defineProps(["saddress"]);
+
 //마운트 됐을 시
 onMounted(() => {
     //카카오 객체 존재, 맵을 그릴 준비가 됐다면 맵 실행
@@ -27,7 +30,7 @@ onUnmounted(() => {});
 function loadScript() {
     const script = document.createElement("script");
     script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?appkey=INSERTAPPKEY&libraries=services,drawing,clusterer&autoload=false";
+        "//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,drawing,clusterer&autoload=false";
     script.onload = () =>
         window.kakao.maps.load(() => {
             loadMap();
@@ -46,8 +49,9 @@ function loadMap() {
     map.value = new window.kakao.maps.Map(container, options);
     geocoder.value = new window.kakao.maps.services.Geocoder();
 
-    // loadMarker(mapInstance);
-    // getAddress(address);
+    if (props.saddress != null) {
+        getAddress(props.saddress);
+    }
 }
 
 function getAddress(address) {
