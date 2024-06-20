@@ -1,7 +1,7 @@
 <template>
     <div class="mt-4 text-start">
-        <h3 class="fw-bold ms-3">김명환</h3>
-        <p class="ms-3 mb-5" style="font-size: 12px">myeong1709@naver.com</p>
+        <h3 class="fw-bold ms-3">{{ $store.state.mname }}</h3>
+        <p class="ms-3 mb-5" style="font-size: 12px">{{ $store.state.mid }}</p>
 
         <ul class="nav flex-column text-start" id="tab-bar">
             <li class="nav-item">

@@ -10,22 +10,42 @@
                 <th>신청일</th>
             </tr>
 
-            <tr>
+            <tr v-for="(member, index) in members" :key="index">
                 <td>모집중</td>
                 <td>
-                    <RouterLink class="text-decoration-none" to="../user/info"
-                        >김명환</RouterLink
-                    >
+                    <RouterLink class="text-decoration-none" to="../user/info">{{
+                        member.mname
+                    }}</RouterLink>
                 </td>
-                <td>남성</td>
-                <td>1995.06.18</td>
-                <td>24.06.19</td>
+                <td>{{ member.msex }}</td>
+                <td>{{ member.mssn }}</td>
+                <td>{{ member.mdate }}</td>
             </tr>
         </table>
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+function getJoinMember(sno) {
+    const members = [
+        {
+            mname: "김명환1",
+            msex: "male",
+            mssn: "9506181",
+            mdate: "2024.06.19",
+        },
+        {
+            mname: "김명환2",
+            msex: "male",
+            mssn: "9506181",
+            mdate: "2024.06.19",
+        },
+    ];
+    return members;
+}
+
+const members = getJoinMember(1);
+</script>
 
 <style scoped>
 th,

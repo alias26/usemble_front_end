@@ -9,7 +9,7 @@
                 <h5 class="mb-5"><strong>로그인 정보</strong></h5>
                 <div class="d-flex mb-4">
                     <h6 style="margin-right: 200px"><strong>아이디</strong></h6>
-                    <div id="mid" style="color: gray">myeong1709@naver.com</div>
+                    <div id="mid" style="color: gray">{{ member.mid }}</div>
                 </div>
                 <div class="d-flex mb-5">
                     <h6 style="margin-right: 150px"><strong>비밀번호 변경</strong></h6>
@@ -25,7 +25,7 @@
                 <h5 class="mb-5"><strong>회원 정보</strong></h5>
                 <div class="d-flex mb-4">
                     <h6 style="margin-right: 210px"><strong>이름</strong></h6>
-                    <div id="mname" style="color: gray">김명환</div>
+                    <div id="mname" style="color: gray">{{ member.mname }}</div>
                 </div>
                 <div class="d-flex mb-4">
                     <h6 style="margin-right: 180px"><strong>전화번호</strong></h6>
@@ -35,31 +35,31 @@
                             id="mphone"
                             style="color: gray"
                             type="tel"
-                            value="010"
+                            :value="mphone1"
                         />
                         <input
                             class="form-control"
                             id="mphone"
                             style="color: gray"
                             type="tel"
-                            value="7173"
+                            :value="mphone2"
                         />
                         <input
                             class="form-control"
                             id="mphone"
                             style="color: gray"
                             type="tel"
-                            value="1709"
+                            :value="mphone3"
                         />
                     </div>
                 </div>
                 <div class="d-flex mb-4">
                     <h6 style="margin-right: 170px"><strong>출생 연도</strong></h6>
-                    <div id="mssn" style="color: gray">1995년</div>
+                    <div id="mssn" style="color: gray">{{ mbirth }}년</div>
                 </div>
                 <div class="d-flex mb-4">
                     <h6 style="margin-right: 210px"><strong>성별</strong></h6>
-                    <div id="mssn" style="color: gray">남성</div>
+                    <div id="mssn" style="color: gray">{{ msex }}</div>
                 </div>
                 <div class="d-flex mb-4">
                     <h6 style="margin-right: 170px"><strong>계좌정보</strong></h6>
@@ -71,7 +71,7 @@
                                 class="form-control"
                                 id="form-account"
                                 name="form-account1"
-                                value="카카오"
+                                :value="member.mbankName"
                             />
                         </div>
                         <div class="">
@@ -81,7 +81,7 @@
                                 class="form-control"
                                 id="form-account"
                                 name="form-account2"
-                                value="1111111111"
+                                :value="member.mpayAccount"
                             />
                         </div>
                     </div>
@@ -92,10 +92,14 @@
                             <strong>자기소개 입력</strong>
                         </div>
                         <textarea
+                            v-model="member.mintroduce"
                             type="text"
                             class="mb-3 form-control"
                             id="mintroduce"
-                            placeholder="예) OOO에서 그래픽 디자이너로 일하고 있습니다. 일상의 무료함을 달래며 영감을 얻기 위해 어셈블을 시작하게 됐어요! 좋은 분들을 만나 즐거운 시간을 보낼 수 있었으면 좋겠습니다."
+                            placeholder="예)
+                        OOO에서 그래픽 디자이너로 일하고 있습니다. 일상의 무료함을 달래며 영감을
+                        얻기 위해 어셈블을 시작하게 됐어요! 좋은 분들을 만나 즐거운 시간을 보낼 수
+                        있었으면 좋겠습니다."
                         />
                     </div>
                     <div>
@@ -152,7 +156,35 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+function getMemberInfo(mid) {
+    const member = ref({
+        mid: "myeong1709@naver.com",
+        mname: "김명환",
+        mphone: "01071731709",
+        msex: "male",
+        mssn: "9506181",
+        mbankName: "카카오뱅크",
+        mpayAccount: "1111111111",
+        mintroduce: "자기소개",
+    });
+
+    return member;
+}
+
+const member = getMemberInfo("myeong1709@naver.com");
+
+const mphone1 = member.value.mphone.slice(0, 3);
+const mphone2 = ref(member.value.mphone.slice(3, 7));
+const mphone3 = ref(member.value.mphone.slice(7, 11));
+
+const century = member.value.mssn.charAt(6);
+const year = member.value.mssn.slice(0, 2);
+const mbirth = century == "1" || century == "2" ? "19" + year : "20" + year;
+const msex = member.value.msex == "male" ? "남성" : "여성";
+</script>
 
 <style scoped>
 #privacyInfoForm {
