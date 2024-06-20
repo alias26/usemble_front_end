@@ -35,11 +35,29 @@
                 </div>
             </div>
         </div>
-        <button class="btn paybtn">결제하기</button>
+        <button class="btn paybtn" @click="showPayModal">결제하기</button>
+        <PayModal id="#payModal" @close="hidePayModal"/>
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import PayModal from "./PayModal.vue";
+import { onMounted } from "vue";
+import { Modal } from "bootstrap";
+
+let payModal = null;
+
+onMounted(() => {
+    payModal = new Modal(document.getElementById("#payModal"));
+})
+function showPayModal() {
+    payModal.show();
+}
+
+function hidePayModal() {
+    payModal.hide();
+}
+</script>
 
 <style scoped>
 p {
