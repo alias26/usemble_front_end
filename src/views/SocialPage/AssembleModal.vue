@@ -15,10 +15,18 @@
         </template>
         <template v-slot:footer>
             <div>
-                <button class="btn me-3" id="back-btn" @click="emit('close')" data-bs-dismiss="modal">
+                <button
+                    type="button"
+                    class="btn me-3"
+                    id="back-btn"
+                    @click="emit('close')"
+                    data-bs-dismiss="modal"
+                >
                     내용 다시 확인하기
                 </button>
-                <button class="btn" id="sub-btn">어셈블 하기!</button>
+                <button class="btn" id="sub-btn" @click.prevent="emit('submit')">
+                    어셈블 하기!
+                </button>
             </div>
         </template>
     </ModalTemplate>
@@ -27,7 +35,7 @@
 <script setup>
 import ModalTemplate from "@/components/ModalTemplate.vue";
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "submit"]);
 </script>
 
 <style scoped>

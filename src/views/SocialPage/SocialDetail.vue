@@ -120,7 +120,6 @@ function joinSocial() {
     width: 70%;
     min-width: 700px;
     margin: 0 auto;
-    margin-bottom: 90px;
 }
 #detail_content {
     width: 60%;
