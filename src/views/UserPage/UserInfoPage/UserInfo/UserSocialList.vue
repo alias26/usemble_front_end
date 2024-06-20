@@ -6,7 +6,12 @@
                 <RouterLink class="show-more" :to="props.link">더보기</RouterLink>
             </div>
             <div class="row mt-3">
-                <SocialCard v-for="index in 3" :key="index" class="col-4" />
+                <SocialCard
+                    v-for="(social, index) in socials"
+                    :key="index"
+                    class="col-4"
+                    :social="social"
+                />
             </div>
         </div>
     </div>
@@ -15,7 +20,7 @@
 <script setup>
 import SocialCard from "@/components/Social/SocialCard.vue";
 
-const props = defineProps(["title", "link"]);
+const props = defineProps(["title", "link", "socials"]);
 </script>
 
 <style scoped>

@@ -44,8 +44,16 @@
                 </div>
             </div>
         </div>
-        <UserSocialList :title="member.mname + '님이 진행 중인 어셈블'" link="/user/inprogress" />
-        <UserSocialList :title="member.mname + '님이 진행한 어셈블'" link="/user/progressed" />
+        <UserSocialList
+            :title="member.mname + '님이 진행 중인 어셈블'"
+            link="/user/inprogress"
+            :socials="inProgressedeSocials"
+        />
+        <UserSocialList
+            :title="member.mname + '님이 진행한 어셈블'"
+            link="/user/progressed"
+            :socials="progressedeSocials"
+        />
         <div class="card mt-4">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
@@ -60,13 +68,15 @@
 
 <script setup>
 import { ref } from "vue";
+import { useStore } from "vuex";
 import Review from "@/components/Review.vue";
 import UserSocialList from "./UserSocialList.vue";
 
 //멤버 정보
 const member = {
-    mname: "사용자이름",
-    mdate: "2023.01.03",
+    mid: "myeongmyeong1709@naver.com",
+    mname: "김명환",
+    mdate: "2024.06.19",
     mintroduce: "자기소개입니다.",
 };
 
@@ -77,6 +87,56 @@ const like = ref(false);
 const likeCnt = ref(150);
 const usembleCnt = ref(10);
 const reviewCnt = ref(3);
+
+function getInProgressSocials() {
+    const socials = ref([
+        {
+            stitle: "어셈블 이름1",
+            saddress: "주소1",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름2",
+            saddress: "주소2",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름3",
+            saddress: "주소3",
+            sfee: "50000",
+        },
+    ]);
+
+    return socials;
+}
+
+const store = useStore();
+
+const inProgressedeSocials = getInProgressSocials(member.mid);
+
+function getProgressedSocials() {
+    const socials = ref([
+        {
+            stitle: "어셈블 이름1",
+            saddress: "주소1",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름2",
+            saddress: "주소2",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름3",
+            saddress: "주소3",
+            sfee: "50000",
+        },
+    ]);
+
+    return socials;
+}
+
+const progressedeSocials = getProgressedSocials(member.mid);
 
 const review1 = {
     stitle: "어셈블 제목1",
