@@ -13,10 +13,10 @@
 
             <div class="form-group image mt-4 mb-2">
                 <label class="form-label">대표 이미지</label>
-                <div class="thumbnail">
+                <div class="thumbnail-wrapper">
                     <input id="file" type="file" multiple @change="loadThumb" />
                     <label for="file">
-                        <img id="thumbnail" src="@/assets/empty_thumbnail.png" width="820px" />
+                        <img id="thumbnail" class="thumbnail" src="@/assets/empty_thumbnail.png" />
                     </label>
                 </div>
             </div>
@@ -75,9 +75,19 @@ h5 {
     display: none;
 }
 
-.thumbnail {
-    width: 820px;
-    height: 422px;
+.thumbnail-wrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
     overflow: hidden;
+}
+
+.thumbnail-wrapper .thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 </style>
