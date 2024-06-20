@@ -9,8 +9,8 @@
             <div></div>
         </template>
         <template v-slot:footer>
-            <button class="btn" @click="emit('close')" data-bs-dismiss="modal">결제하기</button>
             <button class="btnCancel" @click="emit('close')" data-bs-dismiss="modal">취소</button>
+            <button class="btn" @click="emit('close')" data-bs-dismiss="modal">결제하기</button>
         </template>
     </ModalTemplate>
 </template>
