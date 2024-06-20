@@ -5,24 +5,49 @@
             <span class="headline">새로운 어셈블 소식을 확인해보세요.</span>
         </div>
         <div class="notice-container">
-            <RouterLink class="notice-item pinned no-underline" to="/notice/detail">
-                <div class="notice-item-title">어셈블 착한 수수료정책 (3월시행)</div>
-                <div class="notice-item-date">2023년 02월 02일 (목)</div>
-            </RouterLink>
-            <RouterLink class="notice-item no-underline" to="/notice/detail">
-                <div class="notice-item-title">공지사항 1</div>
-                <div class="notice-item-date">2023년 02월 02일 (목)</div>
-            </RouterLink>
-            <RouterLink class="notice-item no-underline" to="/notice/detail">
-                <div class="notice-item-title">공지사항 2</div>
-                <div class="notice-item-date">2023년 02월 02일 (목)</div>
-            </RouterLink>
+            <div v-for="(notice, index) in noticeList" :key="index">
+                <RouterLink
+                    v-if="index === 0"
+                    class="notice-item pinned no-underline"
+                    to="/notice/detail"
+                >
+                    <div class="notice-item-title">{{ notice.ntitle }}</div>
+                    <div class="notice-item-date">{{ notice.ndate }}</div>
+                </RouterLink>
+                <RouterLink v-else class="notice-item no-underline" to="/notice/detail">
+                    <div class="notice-item-title">{{ notice.ntitle }}</div>
+                    <div class="notice-item-date">{{ notice.ndate }}</div>
+                </RouterLink>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { RouterLink } from "vue-router";
+import { ref } from "vue";
+
+function getNoticeList() {
+    const noticeList = ref([
+        {
+            nno: "1",
+            ntitle: "어셈블 착한 수수료정책 (3월시행)",
+            ndate: "2023년 02월 02일 (목)",
+        },
+        {
+            nno: "2",
+            ntitle: "공지사항 1",
+            ndate: "2023년 02월 02일 (목)",
+        },
+        {
+            nno: "3",
+            ntitle: "공지사항 2",
+            ndate: "2023년 02월 02일 (목)",
+        },
+    ]);
+    return noticeList;
+}
+
+const noticeList = getNoticeList();
 </script>
 
 <style scoped>

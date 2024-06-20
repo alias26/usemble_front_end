@@ -3,7 +3,13 @@
         <SocialHeader title="어셈블하기" />
         <div>
             <div class="row" style="display: flex; margin-top: 40px">
-                <SocialCard class="col-4" style="width: 32%" v-for="n in 9" :key="n" />
+                <SocialCard
+                    class="col-4"
+                    style="width: 32%"
+                    v-for="(social, index) in socials"
+                    :key="index"
+                    :social="social"
+                />
             </div>
         </div>
         <nav aria-label="Page navigation example">
@@ -29,6 +35,61 @@
 <script setup>
 import SocialCard from "@/components/Social/SocialCard.vue";
 import SocialHeader from "@/components/Social/SocialHeader.vue";
+import { ref } from "vue";
+
+function getSocialData(ctno) {
+    const interest = ref([
+        {
+            stitle: "어셈블 이름1",
+            saddress: "주소1",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름2",
+            saddress: "주소2",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름3",
+            saddress: "주소3",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름4",
+            saddress: "주소4",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름5",
+            saddress: "주소5",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름6",
+            saddress: "주소6",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름7",
+            saddress: "주소7",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름8",
+            saddress: "주소8",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름9",
+            saddress: "주소9",
+            sfee: "50000",
+        },
+    ]);
+
+    return interest;
+}
+
+const socials = getSocialData(1);
 </script>
 
 <style scoped>

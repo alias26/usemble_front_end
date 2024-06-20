@@ -2,11 +2,11 @@
     <div class="mt-5 ms-auto me-auto" style="width: 70%">
         <span class="headline">공지사항</span>
         <div class="notice-detail-title">
-            <div class="notice-detail-name mb-2">남의집 착한 수수료정책 (3월시행)</div>
-            <div class="notice-detail-date mb-2">2023년 02월 02일 (목)</div>
+            <div class="notice-detail-name mb-2">{{ noticeDetail.ntitle }}</div>
+            <div class="notice-detail-date mb-2">{{ noticeDetail.ndate }}</div>
         </div>
         <div class="notice-detail-content">
-            <span>수수료정책</span>
+            <span>{{ noticeDetail.ncontent }}</span>
         </div>
         <div class="d-flex justify-content-center mt-5">
             <button @click="goNoticeList" class="rounded listbtn">목록으로</button>
@@ -16,12 +16,26 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 const router = useRouter();
 
 function goNoticeList() {
     router.back();
 }
+
+function getNoticeDetail() {
+    const noticeDetail = ref({
+        nno: "1",
+        ntitle: "남의집 착한 수수료정책 (3월시행)",
+        ndate: "2023년 02월 02일 (목)",
+        ncontent: "수수료 정책",
+    });
+
+    return noticeDetail;
+}
+
+const noticeDetail = getNoticeDetail();
 </script>
 
 <style scoped>

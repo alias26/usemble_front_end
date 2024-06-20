@@ -5,12 +5,12 @@
                 <img src="@/assets/와인바.jpg" />
             </div>
             <div>
-                <div id="socialtitle">현대식 분재 그리고 와인</div>
+                <div id="socialtitle">{{ props.recruitment.stitle }}</div>
                 <div id="socialcontent">
-                    <div class="mb-1">분재를 현대식으로 좀 더 쉽게 배워보세요.</div>
-                    <div class="mb-1">서울특별시 노원구 공릉로26길 26</div>
+                    <!-- <div class="mb-1">분재를 현대식으로 좀 더 쉽게 배워보세요.</div> -->
+                    <div class="mb-1">{{ props.recruitment.saddress }}</div>
                 </div>
-                <div id="socialprice">24,000원</div>
+                <div id="socialprice">{{ props.recruitment.sfee }}원</div>
             </div>
         </div>
         <div class="justify-content-center align-items-center">
@@ -27,6 +27,8 @@
 import { onMounted } from "vue";
 import DeleteModal from "./DeleteModal.vue";
 import { Modal } from "bootstrap";
+
+const props = defineProps(["recruitment"]);
 
 let delModal = null;
 

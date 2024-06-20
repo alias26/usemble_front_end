@@ -38,12 +38,14 @@
                                     width: 80px;
                                     height: 40px;
                                     font-size: 15px;
-                                    border-color: lightgray;"
-                                    @click="showCategoryModal">
+                                    border-color: lightgray;
+                                "
+                                @click="showCategoryModal"
+                            >
                                 <i class="bi bi-pencil-fill"></i>
                                 수정
                             </button>
-                            <CategoryModal id="categoryModal" @close="hideCategoryModal"/>
+                            <CategoryModal id="categoryModal" @close="hideCategoryModal" />
                         </div>
                     </div>
                     <div id="intro_box" class="bg-light p-4 mt-3">자기소개가 없습니다.</div>
@@ -84,10 +86,14 @@
                         </RouterLink>
                     </div>
                 </div>
-                <div id="socialbox" class="d-flex">
-                    <SocialCard class="me-3" id="social-card" />
-                    <SocialCard class="me-3" id="social-card" />
-                    <SocialCard id="social-card" />
+                <div class="d-flex row">
+                    <SocialCard
+                        class="me-3 col-4"
+                        id="social-card"
+                        v-for="(assemble, index) in joinAssembles"
+                        :key="index"
+                        :social="assemble"
+                    />
                 </div>
             </div>
         </div>
@@ -97,15 +103,15 @@
 <script setup>
 import SocialCard from "@/components/Social/SocialCard.vue";
 import CategoryModal from "./CategoryModal.vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { Modal } from "bootstrap";
 
 let categoryModal = null;
 
-
 onMounted(() => {
     categoryModal = new Modal(document.querySelector("#categoryModal"));
-})
+});
+
 function showCategoryModal() {
     categoryModal.show();
 }
@@ -113,6 +119,25 @@ function showCategoryModal() {
 function hideCategoryModal() {
     categoryModal.hide();
 }
+
+function getJoinAssemble() {
+    const interest = ref([
+        {
+            stitle: "어셈블 이름1",
+            saddress: "주소1",
+            sfee: "50000",
+        },
+        {
+            stitle: "어셈블 이름2",
+            saddress: "주소2",
+            sfee: "50000",
+        },
+    ]);
+
+    return interest;
+}
+
+const joinAssembles = getJoinAssemble();
 </script>
 
 <style scoped>
@@ -152,8 +177,5 @@ p {
 
 #social-card {
     width: 30%;
-}
-#socialbox{
-    justify-content: center;
 }
 </style>

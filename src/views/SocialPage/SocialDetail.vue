@@ -2,12 +2,12 @@
     <div id="container">
         <div id="detail_content">
             <img src="../../assets/thum.jpg" />
-            <div id="title">와인, 새로운 만남!</div>
-            <div id="address">경기 성남시 분당구 정자일로 아이파크 3단지 1105호</div>
-            <div id="date">2024. 06. 18 (화) 19:00</div>
+            <div id="title">{{ social.stitle }}</div>
+            <div id="address">{{ social.saddress }}</div>
+            <div id="date">{{ social.swriteDate }}</div>
 
             <hr />
-            <UserProfile></UserProfile>
+            <UserProfile :mid="social.mid"></UserProfile>
             <hr />
             <h4 id="content-title">모임 일정</h4>
             <div id="join">
@@ -29,8 +29,8 @@
                             <div id="join-info">
                                 <div id="join-info-txt">
                                     <span id="info-txt-time">오후 5시</span>
-                                    <span class="mx-2" id="info-txt-fee">50000원</span>
-                                    <span id="info-txt-member">8인 초대</span>
+                                    <span class="mx-2" id="info-txt-fee">{{ social.sfee }}원</span>
+                                    <span id="info-txt-member">{{ social.smemberCount }}인</span>
                                 </div>
                                 <div>
                                     <i id="checkicon" class="bi bi-check-circle-fill"></i>
@@ -49,9 +49,9 @@
             <div>
                 <h4 id="content-title">오시는 길</h4>
                 <div id="content">
-                    <h5 id="location">제주특별자치도 제주시 첨단로 242</h5>
+                    <h5 id="location">{{ social.saddress }}</h5>
                     <p id="subtext">*정확한 위치는 호스트의 사정에 의해 변경될 수 있습니다.</p>
-                    <KakaoMap ref="kakaoMap" />
+                    <KakaoMap ref="kakaoMap" :saddress="social.saddress" />
                 </div>
             </div>
             <hr />
@@ -92,11 +92,23 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const kakaoMap = ref(null);
 
-onMounted(() => {
-    if (window.kakao && window.kakao.maps) {
-        kakaoMap.value.getAddress("제주특별자치도 제주시 첨단로 242");
-    }
-});
+function getSocialDetail() {
+    const social = ref({
+        stitle: "와인, 새로운 만남!",
+        scontent: "",
+        swriteDate: "2024.06.18 (화) 19:00",
+        sstartDate: "2024.06.20",
+        sendDate: "2024.06.20",
+        sfee: 50000,
+        saddress: "경기 성남시 분당구 정자일로 239",
+        mid: "myeonghwan57",
+        smemberCount: 7,
+    });
+
+    return social;
+}
+
+const social = getSocialDetail();
 
 function joinSocial() {
     router.push("/social/pay");

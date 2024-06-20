@@ -32,8 +32,16 @@
                     >
                         어셈블 둘러보기
                     </button> -->
-                    <!-- <ApplicationDetail /> -->
-                    <RecruitmentDedatil />
+                    <ApplicationDetail
+                        v-for="(application, index) in applications"
+                        :key="index"
+                        :application="application"
+                    />
+                    <RecruitmentDedatil
+                        v-for="(recruitment, index) in recruitments"
+                        :key="index"
+                        :recruitment="recruitment"
+                    />
                 </div>
             </div>
         </div>
@@ -43,6 +51,40 @@
 <script setup>
 import ApplicationDetail from "./ApplicationDetail.vue";
 import RecruitmentDedatil from "./RecruitmentDetail.vue";
+import { ref } from "vue";
+
+function getApplications() {
+    const applications = ref([
+        {
+            stitle: "현대식 분재 그리고 와인1",
+            saddress: "서울특별시 노원구 공릉로26길 26",
+            sfee: "24000",
+        },
+        {
+            stitle: "현대식 분재 그리고 와인2",
+            saddress: "서울특별시 노원구 공릉로26길 26",
+            sfee: "24000",
+        },
+    ]);
+
+    return applications;
+}
+
+const applications = getApplications();
+
+function getRecruitments() {
+    const recruitments = ref([
+        {
+            stitle: "현대식 분재 그리고 와인1",
+            saddress: "서울특별시 노원구 공릉로26길 26",
+            sfee: "24000",
+        },
+    ]);
+
+    return recruitments;
+}
+
+const recruitments = getRecruitments();
 </script>
 
 <style scoped>

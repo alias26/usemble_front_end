@@ -26,7 +26,7 @@
                         어셈블 둘러보기
                     </button> -->
                     <div id="like-host" class="d-flex p-2">
-                        <UserProfile />
+                        <UserProfile mid="myeonghwan57" />
                     </div>
                 </div>
             </div>

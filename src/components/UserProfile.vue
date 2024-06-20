@@ -30,6 +30,20 @@
 <script setup>
 import { ref } from "vue";
 
+const props = defineProps(["mid"]);
+
+function getUserProfile(mid) {
+    const user = ref({
+        mid: "myeonghwan57",
+        mintroduce:
+            "안녕하세요.성남 인근에서 작고 아담한 와인모임을 진행하고 있습니다.와인에 관심있으시면 참여해주세요.",
+    });
+
+    return user;
+}
+
+const writer = getUserProfile(props.mid);
+
 //나의 좋아요 상태
 const like = ref(false);
 const likeAmount = ref(3);

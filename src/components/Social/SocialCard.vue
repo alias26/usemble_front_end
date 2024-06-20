@@ -6,20 +6,20 @@
             </div>
         </div>
         <div class="main_text">
-            <h3>나의태양 김주희 희망강연: 어이 곽씨 코드가져와!</h3>
-            <h5 style="margin-bottom: 15px">나의빛 나의어둠 나의희망 나의절망</h5>
+            <h3>{{ props.social.stitle }}</h3>
+            <!-- <h5 style="margin-bottom: 15px">나의빛 나의어둠 나의희망 나의절망</h5> -->
         </div>
         <div class="main_additional mb-4">
             <div class="caption mt-3">
-                <p>송파구 IT벤처타워 서관 16층</p>
-                <span style="margin-bottom: 10px"> 50,000 원~ </span>
+                <p>{{ props.social.saddress }}</p>
+                <span style="margin-bottom: 10px"> {{ props.social.sfee }} 원~ </span>
             </div>
         </div>
     </RouterLink>
 </template>
 
 <script setup>
-const props = defineProps(["style"]);
+const props = defineProps(["style", "social"]);
 </script>
 
 <style scoped>
