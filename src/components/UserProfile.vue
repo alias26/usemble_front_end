@@ -25,6 +25,7 @@
             </button>
         </div>
     </div>
+    <hr class="mx-2"/>
 </template>
 
 <script setup>

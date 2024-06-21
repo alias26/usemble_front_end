@@ -24,6 +24,7 @@
         <ReviewModal id="#reviewModal" @close="hideReviewModal" />
         <DeleteModal id="#delModal" @close="hideDelModal" />
     </div>
+    <hr class="mx-3"/>
 </template>
 <script setup>
 import { onMounted } from "vue";

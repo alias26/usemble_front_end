@@ -21,6 +21,7 @@
         </div>
         <DeleteModal id="#delModal" @close="hideDelModal" />
     </div>
+    <hr class="mx-3"/>
 </template>
 
 <script setup>
