@@ -8,6 +8,9 @@ import Quill from "quill";
 
 defineExpose({ getContent });
 
+const props = defineProps(["content"]);
+const quill = ref(null);
+
 onMounted(() => {
     if (!window.Quill) {
         loadScript();
@@ -32,18 +35,23 @@ function loadScript() {
 }
 
 function loadEditor() {
-    new Quill("#editor", {
-        placeholder: "어셈블에 대한 설명을 추가해주세요.",
+    quill.value = new Quill("#editor", {
+        placeholder: "내용을 작성해주세요.",
         theme: "snow",
         modules: {
             toolbar: [
                 [{ header: [1, 2, 3, false] }],
-                ["bold", "underline", { color: ["black", "grey", "#558CCF"] }],
+                ["bold", "underline"],
+                [{ color: ["black", "grey", "#558CCF"] }, { background: ["#EEF1F4"] }],
                 ["image", "link"],
                 ["clean"],
             ],
         },
     });
+
+    if (props.content != null) {
+        document.querySelector(".ql-editor").innerHTML = props.content;
+    }
 }
 
 function getContent() {
