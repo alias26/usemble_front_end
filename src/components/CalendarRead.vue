@@ -6,17 +6,19 @@
             mode="dateTime"
             is-required
             :initial-page="{ month: month, year: year }"
+            :disabled-dates="disabledDates"
         ></vc-date-picker>
     </div>
 </template>
 
 <script setup>
-// import { ref } from "vue";
+import { ref } from "vue";
+const props = defineProps(["sstartDate"]);
 import "v-calendar/style.css";
-
-let today = new Date();
+let today = new Date(props.sstartDate);
 let month = today.getMonth() + 1;
 let year = today.getFullYear();
+const disabledDates = ref([{ start: null, end: new Date(props.sstartDate) - 1 }]);
 </script>
 
 <style>
