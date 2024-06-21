@@ -54,9 +54,20 @@ function handleCancel() {
 const quill = ref(null);
 
 function handleSubmit() {
-    notice.ncontent = quill.value.getContent();
+    let content = quill.value.getContent().cloneNode(true).outerHTML;
+    const sourcesUrl = content.match(/<img [^>]*src="[^"]*"[^>]*>/gm);
+    if (sourcesUrl != null) {
+        const sources = sourcesUrl.map((x) => x.replace(/.*src="([^"]*)".*/, "$1"));
 
-    console.log(notice);
+        for (var i = 0; i < sources.length; i++) {
+            if (sources[i].startsWith("")) {
+                continue;
+            }
+            content = content.replace(sources[i], "");
+        }
+    }
+
+    notice.ncontent = quill.value.getContent();
 }
 </script>
 
