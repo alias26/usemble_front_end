@@ -15,8 +15,12 @@
                 <label class="form-label">입장료</label>
                 <div class="input-group">
                     <label data-domain="원">
-                        <input class="form-control" type="text" placeholder="입장료를 입력해 주세요." 
-                        oninput="this.value = this.value.replace(/^0+|\D+/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');"/>
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder="입장료를 입력해 주세요."
+                            oninput="this.value = this.value.replace(/^0+|\D+/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');"
+                        />
                     </label>
                 </div>
             </div>
@@ -95,17 +99,15 @@ function hideAssembleModal() {
 
 function submitHandler() {
     let content = quill.value.getContent().cloneNode(true).outerHTML;
-    const sources = content
-        .match(/<img [^>]*src="[^"]*"[^>]*>/gm)
-        .map((x) => x.replace(/.*src="([^"]*)".*/, "$1"));
+    const sourcesUrl = content.match(/<img [^>]*src="[^"]*"[^>]*>/gm);
+    if (sourcesUrl != null) {
+        const sources = sourcesUrl.map((x) => x.replace(/.*src="([^"]*)".*/, "$1"));
 
-    for (var i = 0; i < sources.length; i++) {
-        content = content.replace(sources[i], "");
+        for (var i = 0; i < sources.length; i++) {
+            content = content.replace(sources[i], "");
+        }
     }
-
-    console.log(content);
 }
-
 </script>
 
 <style scoped>
@@ -138,9 +140,8 @@ span {
     width: 100%;
 }
 
-
 .input-group > label::after {
-    content: '' attr(data-domain);
+    content: "" attr(data-domain);
     position: absolute;
     top: 7px;
     left: 95%;
