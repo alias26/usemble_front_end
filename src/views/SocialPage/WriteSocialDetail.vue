@@ -13,7 +13,12 @@
             </div>
             <div class="form-group mt-4">
                 <label class="form-label">입장료</label>
-                <input class="form-control" type="text" placeholder="입장료를 입력해 주세요." />
+                <div class="input-group">
+                    <label data-domain="원">
+                        <input class="form-control" type="text" placeholder="입장료를 입력해 주세요." 
+                        oninput="this.value = this.value.replace(/^0+|\D+/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');"/>
+                    </label>
+                </div>
             </div>
             <div class="form-group mt-4">
                 <label class="form-label">입금 계좌</label>
@@ -100,6 +105,7 @@ function submitHandler() {
 
     console.log(content);
 }
+
 </script>
 
 <style scoped>
@@ -125,5 +131,22 @@ span {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+/* 입장료 input */
+.input-group > label {
+    width: 100%;
+}
+
+
+.input-group > label::after {
+    content: '' attr(data-domain);
+    position: absolute;
+    top: 7px;
+    left: 95%;
+    font-size: 16px;
+    display: block;
+    color: black;
+    font-weight: bold;
 }
 </style>

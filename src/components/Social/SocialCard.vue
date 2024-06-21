@@ -7,12 +7,11 @@
         </div>
         <div class="main_text">
             <h3>{{ props.social.stitle }}</h3>
-            <!-- <h5 style="margin-bottom: 15px">나의빛 나의어둠 나의희망 나의절망</h5> -->
         </div>
         <div class="main_additional mb-4">
-            <div class="caption mt-3">
+            <div class="caption mt-2">
                 <p>{{ props.social.saddress }}</p>
-                <span style="margin-bottom: 10px"> {{ props.social.sfee }} 원~ </span>
+                <span style="margin-bottom: 10px"> {{ Number(props.social.sfee).toLocaleString() }}원~ </span>
             </div>
         </div>
     </RouterLink>
@@ -20,6 +19,8 @@
 
 <script setup>
 const props = defineProps(["style", "social"]);
+
+
 </script>
 
 <style scoped>
@@ -31,11 +32,11 @@ const props = defineProps(["style", "social"]);
     border-style: none;
 }
 .main_styles {
-    margin-bottom: 30px;
+    margin-bottom: 8px;
 }
 .main_styles > img {
     height: 230px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     width: 100%;
     position: relative;
     object-fit: cover;
@@ -54,7 +55,7 @@ const props = defineProps(["style", "social"]);
 .main_text > h3 {
     font-size: 18px;
     font-weight: 800;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
