@@ -32,6 +32,7 @@
                             <option value="운동">운동</option>
                             <option value="스터디">스터디</option>
                             <option value="친목">친목</option>
+                            <option value="여행">여행</option>
                         </select>
                     </div>
                     <!-- <div class="dropdown ms-2">
@@ -64,6 +65,8 @@
 
 <script setup>
 defineProps(["title"]);
+
+
 </script>
 
 <style scoped>

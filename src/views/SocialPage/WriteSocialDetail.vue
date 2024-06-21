@@ -32,6 +32,7 @@
                     <option value="2">운동</option>
                     <option value="3">스터디</option>
                     <option value="4">친목</option>
+                    <option value="5">여행</option>
                 </select>
             </div>
             <div class="mt-3">

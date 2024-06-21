@@ -3,7 +3,7 @@
         <h3 class="new_host mb-3 mt-5">따끈따끈 신규 호스트</h3>
         <h4 class="host_text mb-4">
             초보 호스트님들은 기대하고 설레~
-            <RouterLink to="/list" style="text-decoration-line: none; color: black"
+            <RouterLink to="/list" style="text-decoration-line: none; color: black; margin-right: 15px;"
                 >전체보기</RouterLink
             >
         </h4>
