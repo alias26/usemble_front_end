@@ -7,23 +7,24 @@
             </div>
             <div class="hr"></div>
             <div class="nav justify-content-around">
-                <div class="nav-item">
-                    <RouterLink
-                        class="nav-link fw-bold"
-                        aria-current="page"
-                        to="./ApplicationDetail"
-                        >신청 내역</RouterLink
+                <div class="fw-bold">
+                    <button
+                        class="nav-link"
+                        @click="applyClick"
+                        :class="{ active: apply }"
                     >
+                        신청 내역
+                    </button>
                 </div>
-                <div class="nav-item">
-                    <RouterLink class="nav-link fw-bold" aria-current="page" to="RecruitmentDetail"
-                        >모집 내역</RouterLink
-                    >
+                <div class="fw-bold">
+                    <button class="nav-link" @click="recruitClick" :class="{ active: recruit }">
+                        모집 내역
+                    </button>
                 </div>
             </div>
             <div class="bg-light text-center" style="height: 500px">
                 <div class="hr"></div>
-                <div id="txt" class="text-secondary text-start" style="font-size: 14px">
+                <div id="tabContent" class="text-secondary text-start" style="font-size: 14px">
                     <!-- <div>아직 신청한 어셈블이 없으시네요!</div>
                     <div class="mb-4">지금 바로 어셈블에 놀러가 보세요.</div>
                     <button
@@ -32,16 +33,20 @@
                     >
                         어셈블 둘러보기
                     </button> -->
-                    <ApplicationDetail
-                        v-for="(application, index) in applications"
-                        :key="index"
-                        :application="application"
-                    />
-                    <RecruitmentDedatil
-                        v-for="(recruitment, index) in recruitments"
-                        :key="index"
-                        :recruitment="recruitment"
-                    />
+                    <div v-if="apply">
+                        <ApplicationDetail
+                            v-for="(application, index) in applications"
+                            :key="index"
+                            :application="application"
+                        />
+                    </div>
+                    <div v-if="recruit">
+                        <RecruitmentDedatil
+                            v-for="(recruitment, index) in recruitments"
+                            :key="index"
+                            :recruitment="recruitment"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,6 +57,19 @@
 import ApplicationDetail from "./ApplicationDetail.vue";
 import RecruitmentDedatil from "./RecruitmentDetail.vue";
 import { ref } from "vue";
+// 신청 내역이 활성화 되어 있는 상태
+const apply = ref(true);
+const recruit = ref(false);
+
+const applyClick = () => {
+    apply.value = true;
+    recruit.value = false;
+};
+
+const recruitClick = () => {
+    apply.value = false;
+    recruit.value = true;
+};
 
 function getApplications() {
     const applications = ref([
@@ -92,7 +110,7 @@ const recruitments = getRecruitments();
     width: 100%;
     margin: 0 auto;
 }
-#txt {
+#tabContent {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -107,13 +125,25 @@ const recruitments = getRecruitments();
     color: gray;
 }
 
+.nav-link:active {
+    color: black;
+    border-width: 100%;
+    border-bottom: 3px solid black;
+}
+
+.active {
+    color: black;
+    border-width: 100%;
+    border-bottom: 3px solid black;
+}
+
 .nav-link:focus {
     color: black;
     border-width: 100%;
     border-bottom: 3px solid black;
 }
 
-.nav {
+.nav .nav {
     display: flex;
 }
 </style>

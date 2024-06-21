@@ -8,17 +8,18 @@
             <div class="hr"></div>
             <div class="nav justify-content-around">
                 <div class="nav-item">
-                    <RouterLink
-                        class="nav-link fw-bold"
-                        aria-current="page"
-                        to="./ApplicationDetail"
-                        >나에게 작성된 후기</RouterLink
-                    >
+                    <button class="nav-link fw-bold" @click="toMeClick" :class="{ active: toMe }">
+                        나에게 작성된 후기
+                    </button>
                 </div>
                 <div class="nav-item">
-                    <RouterLink class="nav-link fw-bold" aria-current="page" to="RecruitmentDetail"
-                        >내가 작성한 후기</RouterLink
+                    <button
+                        class="nav-link fw-bold"
+                        @click="fromMeClick"
+                        :class="{ active: fromMe }"
                     >
+                        내가 작성한 후기
+                    </button>
                 </div>
             </div>
             <div class="bg-light text-center" style="height: 500px">
@@ -37,12 +38,20 @@
                     >
                         어셈블 둘러보기
                     </button> -->
-                    <!-- <ApplicationDetail /> -->
-                    <RecruitmentDedatil
-                        v-for="(recruitment, index) in recruitments"
-                        :key="index"
-                        :recruitment="recruitment"
-                    />
+                    <div v-if="toMe">
+                        <Review
+                            v-for="(toMeReview, index) in toMeReviews"
+                            :key="index"
+                            :review="toMeReview"
+                        />
+                    </div>
+                    <div v-if="fromMe">
+                        <Review
+                            v-for="(fromMeReview, index) in fromMeReviews"
+                            :key="index"
+                            :review="fromMeReview"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,23 +59,54 @@
 </template>
 
 <script setup>
-import ApplicationDetail from "./ApplicationDetail.vue";
-import RecruitmentDedatil from "./RecruitmentDetail.vue";
+import Review from "@/components/Review.vue";
 import { ref } from "vue";
+const toMe = ref(true);
+const fromMe = ref(false);
 
-function getRecruitments() {
-    const recruitments = ref([
+const toMeClick = () => {
+    toMe.value = true;
+    fromMe.value = false;
+};
+
+const fromMeClick = () => {
+    fromMe.value = true;
+    toMe.value = false;
+};
+
+function getToMeReviews() {
+    const toMeReviews = ref([
         {
             stitle: "현대식 분재 그리고 와인1",
-            saddress: "서울특별시 노원구 공릉로26길 26",
-            sfee: "24000",
+            mname: "귀요미",
+            sddate: "24.06.21",
+            rcontent:
+                "호스트님이 어색하지 않게 잘 리드해주시는 점이 좋았습니다! 처음 이런거 참여해봤는데 신선하고 재미있는 경험이였습니다. 호스트님이 어색하지 않게 잘 리드해주시는 점이 좋았습니다! 처음 이런거 참여해봤는데 신선하고 재미있는 경험이였습니다. ",
+        },
+        {
+            stitle: "현대식 분재 그리고 와인1",
+            mname: "귀요미",
+            sddate: "24.06.21",
+            rcontent:
+                "호스트님이 어색하지 않게 잘 리드해주시는 점이 좋았습니다! 처음 이런거 참여해봤는데 신선하고 재미있는 경험이였습니다. ",
         },
     ]);
-
-    return recruitments;
+    return toMeReviews;
 }
+const toMeReviews = getToMeReviews();
 
-const recruitments = getRecruitments();
+function getFromMeReviews() {
+    const fromMeReviews = ref([
+        {
+            stitle: "현대식 분재 그리고 와인2",
+            mname: "호스트",
+            sddate: "24.06.21",
+            rcontent: "너무 즐거웠어요~",
+        },
+    ]);
+    return fromMeReviews;
+}
+const fromMeReviews = getFromMeReviews();
 </script>
 
 <style scoped>
@@ -87,6 +127,12 @@ const recruitments = getRecruitments();
     text-align: center;
     width: 465px;
     color: gray;
+}
+
+.active {
+    color: black;
+    border-width: 100%;
+    border-bottom: 3px solid black;
 }
 
 .nav-link:focus {
