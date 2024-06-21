@@ -15,7 +15,7 @@
                 <td>24.06.17</td>
                 <td>user1@naver.com</td>
                 <td class="d-flex justify-content-center">
-                    <RouterLink to="">
+                    <RouterLink to="/admin/noticeUpdate">
                         <button class="btn btn-outline-success btn-md">수정하기</button>
                     </RouterLink>
                     <div>
@@ -24,6 +24,11 @@
                 </td>
             </tr>
         </table>
+        <div class="d-flex justify-content-end">
+            <RouterLink to="/admin/noticeWrite">
+                <button class="btn btn-success">작성하기</button>
+            </RouterLink>
+        </div>
     </div>
 </template>
 
