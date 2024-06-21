@@ -29,7 +29,7 @@
                             <div id="join-info">
                                 <div id="join-info-txt">
                                     <span id="info-txt-time">오후 5시</span>
-                                    <span class="mx-2" id="info-txt-fee">{{ social.sfee }}원</span>
+                                    <span class="mx-2" id="info-txt-fee">{{ Number(social.sfee).toLocaleString() }}원</span>
                                     <span id="info-txt-member">{{ social.smemberCount }}인</span>
                                 </div>
                                 <div>
@@ -118,7 +118,7 @@ function getSocialDetail() {
 const social = getSocialDetail();
 
 function joinSocial() {
-    router.push("/social/pay");
+    router.push("/social/pay?sno=1");
 }
 </script>
 

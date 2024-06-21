@@ -10,7 +10,7 @@
                     <!-- <div class="mb-1">분재를 현대식으로 좀 더 쉽게 배워보세요.</div> -->
                     <div class="mb-1">{{ props.recruitment.saddress }}</div>
                 </div>
-                <div id="socialprice">{{ props.recruitment.sfee }}원</div>
+                <div id="socialprice">{{ Number(props.recruitment.sfee).toLocaleString }}원</div>
             </div>
         </div>
         <div class="justify-content-center align-items-center">

@@ -5,15 +5,15 @@
             <div class="mt-4">
                 <div class="d-flex justify-content-between mb-4">
                     <div class="d-flex flex-column justify-content-between">
-                        <h2>20대의 이색소개팅</h2>
+                        <h2>{{ pay.stitle }}</h2>
                         <div>
                             <div class="d-flex">
                                 <p class="subtext">날짜&nbsp;&nbsp;</p>
-                                <p>2023.06.15</p>
+                                <p>{{ pay.sstartDate }}</p>
                             </div>
                             <div class="d-flex">
                                 <p class="subtext">장소&nbsp;&nbsp;</p>
-                                <p>서울특별시 마포구 와우산로29가길 84</p>
+                                <p>{{ pay.saddress }}</p>
                             </div>
                         </div>
                     </div>
@@ -27,11 +27,11 @@
             <div>
                 <div class="d-flex justify-content-between">
                     <p class="subtext">결제금액</p>
-                    <p class="paytext">25,000원</p>
+                    <p class="paytext">{{ Number(pay.sfee).toLocaleString() }}원</p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="subtext">총 금액</p>
-                    <p class="subtext">25,000원</p>
+                    <p class="subtext">{{ Number(pay.sfee).toLocaleString() }}원</p>
                 </div>
             </div>
         </div>
@@ -44,6 +44,7 @@
 import PayModal from "./PayModal.vue";
 import { onMounted } from "vue";
 import { Modal } from "bootstrap";
+import { ref } from "vue";
 
 let payModal = null;
 
@@ -57,6 +58,18 @@ function showPayModal() {
 function hidePayModal() {
     payModal.hide();
 }
+
+function getSocialPay() {
+    const pay = ref({
+        stitle: "와인, 새로운 만남!",
+        sfee: 50000,
+        sstartDate: "2024.06.20",
+        saddress: "경기 성남시 분당구 정자일로 239",
+    });
+
+    return pay;
+}
+const pay = getSocialPay();
 </script>
 
 <style scoped>
