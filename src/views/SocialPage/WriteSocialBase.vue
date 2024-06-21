@@ -22,6 +22,11 @@
             </div>
             <KakaoAddress />
             <hr />
+            <div class="mb-3">
+                <CalendarWrite />
+                
+            </div>
+
             <div class="d-flex justify-content-end">
                 <button class="btn btn-outline-secondary rounded me-2">저장하기</button>
                 <button type="button" @click.prevent="handleSubmit" class="btn btn-next rounded">
@@ -34,7 +39,10 @@
 
 <script setup>
 import KakaoAddress from "./KakaoAddress.vue";
+import CalendarWrite from "@/components/CalendarWrite.vue";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
+const date = ref(new Date());
 
 const router = useRouter();
 
@@ -90,4 +98,5 @@ h5 {
     width: 100%;
     height: 100%;
 }
+
 </style>

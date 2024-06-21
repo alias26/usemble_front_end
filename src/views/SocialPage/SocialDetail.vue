@@ -11,7 +11,7 @@
             <hr />
             <h4 id="content-title">모임 일정</h4>
             <div id="join">
-                <Calendar />
+                <CalendarRead />
                 <div id="join-right">
                     <div id="join-right-detail">
                         <div>
@@ -85,7 +85,7 @@
 <script setup>
 import KakaoMap from "@/components/KakaoMap.vue";
 import UserProfile from "@/components/UserProfile.vue";
-import Calendar from "@/components/Calendar.vue";
+import CalendarRead from "@/components/CalendarRead.vue";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
@@ -252,4 +252,5 @@ img {
     color: #707070;
     font-weight: 600;
 }
+
 </style>

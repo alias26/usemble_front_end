@@ -1,5 +1,5 @@
 <template>
-    <div id="custom-calendar">
+    <div class="CalendarRead">
         <vc-date-picker
             color="white"
             v-model="today"
@@ -20,42 +20,42 @@ let year = today.getFullYear();
 </script>
 
 <style>
-.vc-day {
+.CalendarRead .vc-day {
     font-weight: bold;
     color: black;
 }
 
-.vc-container {
+.CalendarRead .vc-container {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
 }
-.vc-container .vc-weekday-1,
-.vc-container .vc-weekday-7 {
+.CalendarRead .vc-container .vc-weekday-1,
+.CalendarRead .vc-container .vc-weekday-7 {
     color: red;
 }
 
-.vc-title span {
+.CalendarRead .vc-title span {
     background-color: #fff;
 }
-.vc-title {
+.CalendarRead .vc-title {
     background-color: #fff;
 }
-.vc-arrow {
+.CalendarRead .vc-arrow {
     background-color: #fff;
 }
-.vc-highlights {
+.CalendarRead .vc-highlights {
     background-color: #558ccf;
     border-radius: 50%;
 }
-.vc-time-header {
+.CalendarRead .vc-time-header {
     margin-top: 8px;
 }
-.vc-time-header span {
+.CalendarRead .vc-time-header span {
     font-size: 20px;
 }
-.vc-time-select-group {
+.CalendarRead .vc-time-select-group {
     display: none;
 }
 </style>
