@@ -6,6 +6,7 @@
             expanded
             is-required
             :initial-page="{ month: month, year: year }"
+            is24hr
         ></vc-date-picker>
     </div>
 </template>
