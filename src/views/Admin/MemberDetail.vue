@@ -6,7 +6,6 @@
                 <tr class="border">
                     <td>이름</td>
                     <td>아이디</td>
-                    <td>비밀번호</td>
                     <td>휴대전화</td>
                     <td>주민번호</td>
                     <td>성별</td>
@@ -16,7 +15,6 @@
                 <tr class="border">
                     <td>감자바</td>
                     <td>user1@naver.com</td>
-                    <td>12345</td>
                     <td>010-1234-1234</td>
                     <td>990302-1******</td>
                     <td>남성</td>

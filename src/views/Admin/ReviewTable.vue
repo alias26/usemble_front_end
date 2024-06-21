@@ -5,7 +5,7 @@
             <tr style="height: 50px">
                 <th style="width: 40px">번호</th>
                 <th style="width: 200px">참여한 소셜링</th>
-                <th style="width: 200px">제목</th>
+                <th style="width: 200px">내용</th>
                 <th style="width: 40px">날짜</th>
                 <th style="width: 40px">작성자</th>
                 <th style="width: 40px">관리</th>

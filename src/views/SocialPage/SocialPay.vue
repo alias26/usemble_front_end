@@ -36,7 +36,7 @@
             </div>
         </div>
         <button class="btn paybtn" @click="showPayModal">결제하기</button>
-        <PayModal id="#payModal" @close="hidePayModal"/>
+        <PayModal id="#payModal" @close="hidePayModal" />
     </div>
 </template>
 
@@ -49,7 +49,7 @@ let payModal = null;
 
 onMounted(() => {
     payModal = new Modal(document.getElementById("#payModal"));
-})
+});
 function showPayModal() {
     payModal.show();
 }
@@ -82,8 +82,7 @@ h2 {
     width: 50%;
     min-width: 700px;
     margin: 0 auto;
-    margin-bottom: auto;
-    margin-top: auto;
+    padding-top: 5%;
 }
 
 .subtext {
