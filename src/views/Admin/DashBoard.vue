@@ -151,33 +151,37 @@
                         <th style="width: 40px">날짜</th>
                         <th style="width: 40px">작성자</th>
                     </tr>
-                    <tr>
+                    <tr style="height: 35px">
                         <td>1</td>
-                        <td><RouterLink to="">너무 재밌었어요~</RouterLink></td>
+                        <td><RouterLink to="" id="table_title">너무 재밌었어요~</RouterLink></td>
                         <td>24.06.17</td>
                         <td>김명환</td>
                     </tr>
-                    <tr>
+                    <tr style="height: 35px">
                         <td>1</td>
-                        <td><RouterLink to="">다양한 사람들을 볼수 있어요</RouterLink></td>
+                        <td>
+                            <RouterLink to="" id="table_title"
+                                >다양한 사람들을 볼수 있어요</RouterLink
+                            >
+                        </td>
                         <td>24.06.17</td>
                         <td>김명환</td>
                     </tr>
-                    <tr>
+                    <tr style="height: 35px">
                         <td>1</td>
-                        <td><RouterLink to="">흥미로운 주제 추천합니다.</RouterLink></td>
+                        <td>
+                            <RouterLink to="" id="table_title"
+                                >흥미로운 주제 추천합니다.</RouterLink
+                            >
+                        </td>
                         <td>24.06.17</td>
                         <td>김명환</td>
                     </tr>
-                    <tr>
+                    <tr style="height: 35px">
                         <td>1</td>
-                        <td><RouterLink to="">생각보다 재미 없었어요</RouterLink></td>
-                        <td>24.06.17</td>
-                        <td>김명환</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><RouterLink to="">너무 재밌었어요~</RouterLink></td>
+                        <td>
+                            <RouterLink to="" id="table_title">생각보다 재미 없었어요</RouterLink>
+                        </td>
                         <td>24.06.17</td>
                         <td>김명환</td>
                     </tr>
@@ -195,34 +199,32 @@
                             <th style="width: 40px">날짜</th>
                             <th style="width: 40px">작성자</th>
                         </tr>
-                        <tr>
+                        <tr style="height: 35px">
                             <td>1</td>
-                            <td><RouterLink to="">후기 작성 및 이벤트 참여 관련</RouterLink></td>
+                            <td>
+                                <RouterLink to="" id="table_title"
+                                    >후기 작성 및 이벤트 참여 관련</RouterLink
+                                >
+                            </td>
                             <td>24.06.17</td>
                             <td>user1@naver.com</td>
                         </tr>
-                        <tr>
+                        <tr style="height: 35px">
                             <td>2</td>
-                            <td><RouterLink to="">결제 관련</RouterLink></td>
+                            <td><RouterLink to="" id="table_title">결제 관련</RouterLink></td>
                             <td>24.06.18</td>
                             <td>user1@naver.com</td>
                         </tr>
-                        <tr>
+                        <tr style="height: 35px">
                             <td>3</td>
-                            <td><RouterLink to="">호스트 관련</RouterLink></td>
+                            <td><RouterLink to="" id="table_title">호스트 관련</RouterLink></td>
                             <td>24.06.19</td>
                             <td>user1@naver.com</td>
                         </tr>
-                        <tr>
+                        <tr style="height: 35px">
                             <td>4</td>
-                            <td><RouterLink to="">문의 관련</RouterLink></td>
+                            <td><RouterLink to="" id="table_title">문의 관련</RouterLink></td>
                             <td>24.06.20</td>
-                            <td>user1@naver.com</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td><RouterLink to="">후기 작성 및 이벤트 참여 관련</RouterLink></td>
-                            <td>24.06.21</td>
                             <td>user1@naver.com</td>
                         </tr>
                     </table>
@@ -378,5 +380,8 @@
 }
 #circle_title {
     font-size: 14px;
+}
+#table_title {
+    text-decoration: none;
 }
 </style>
