@@ -3,18 +3,22 @@
         <vc-date-picker
             color="white"
             v-model="today"
-            mode="dateTime"
             is-required
             :initial-page="{ month: month, year: year }"
             :disabled-dates="disabledDates"
-        ></vc-date-picker>
+            :masks="{
+                title: 'YYYY/MM',
+            }"
+        >
+        </vc-date-picker>
     </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-const props = defineProps(["sstartDate"]);
 import "v-calendar/style.css";
+
+const props = defineProps(["sstartDate"]);
 let today = new Date(props.sstartDate);
 let month = today.getMonth() + 1;
 let year = today.getFullYear();

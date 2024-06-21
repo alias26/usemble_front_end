@@ -28,12 +28,31 @@
                             </div>
                             <div id="join-info">
                                 <div id="join-info-txt">
-                                    <span id="info-txt-time">오후 5시</span>
-                                    <span class="mx-2" id="info-txt-fee">{{ Number(social.sfee).toLocaleString() }}원</span>
-                                    <span id="info-txt-member">{{ social.smemberCount }}인</span>
-                                </div>
-                                <div>
-                                    <i id="checkicon" class="bi bi-check-circle-fill"></i>
+                                    <div class="d-flex">
+                                        <div class="me-5">
+                                            <span class="date">{{ social.sstartDate }}</span>
+                                            <span
+                                                v-if="social.sstartDate != social.sendDate"
+                                                class="date"
+                                            >
+                                                ~ {{ social.sendDate }}</span
+                                            >
+                                            <div>
+                                                <span id="info-txt-time">오후 5시</span>
+                                                <span class="mx-2" id="info-txt-fee"
+                                                    >{{
+                                                        Number(social.sfee).toLocaleString()
+                                                    }}원</span
+                                                >
+                                                <span id="info-txt-member"
+                                                    >{{ social.smemberCount }}인</span
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="mb-auto mt-auto">
+                                            <i id="checkicon" class="bi bi-check-circle-fill"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -211,6 +230,7 @@ img {
 }
 #checkicon {
     color: #558ccf;
+    font-size: 22px;
 }
 #join-right-detail {
     display: flex;
