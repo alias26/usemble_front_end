@@ -37,6 +37,7 @@
                 혹시, <a id="findpassword-btn" href="./findPassword">비밀번호</a>를 잊으셨나요?
             </div>
         </div>
+        <div id="loginWarn" class="text-danger" style="font-size: 13px"></div>
 
         <div class="text-center">
             <button type="submit" id="sub-btn" @click.prevent="handleLogin">
@@ -61,31 +62,45 @@ const member = ref({
 });
 
 async function handleLogin() {
-    try {
-        const data = JSON.parse(JSON.stringify(member.value));
-        const response = await memberAPI.login(data);
-        if (response.data.result == "success") {
-            const payload = {
-                mid: response.data.mid,
-                mname: response.data.mname,
-                accessToken: response.data.accessToken,
-            };
-            if (document.getElementById("autoLogin").checked) {
-                store.dispatch("saveAuthLocal", payload);
+    const warning = document.getElementById("loginWarn");
+
+    if (member.value.mid.length == 0) {
+        warning.innerHTML = "아이디를 입력해주세요.";
+    } else if (member.value.mpassword.length == 0) {
+        warning.innerHTML = "비밀번호를 입력해주세요.";
+    } else {
+        try {
+            const data = JSON.parse(JSON.stringify(member.value));
+            const response = await memberAPI.login(data);
+            if (response.data.result == "success") {
+                const payload = {
+                    mid: response.data.mid,
+                    mname: response.data.mname,
+                    accessToken: response.data.accessToken,
+                };
+                if (document.getElementById("autoLogin").checked) {
+                    store.dispatch("saveAuthLocal", payload);
+                } else {
+                    store.dispatch("saveAuthSession", payload);
+                }
+                router.push("/");
             } else {
-                store.dispatch("saveAuthSession", payload);
+                if (response.data.reason == "id") {
+                    warning.innerHTML = "존재하지 않는 아이디입니다.";
+                } else {
+                    warning.innerHTML = "잘못된 비밀번호를 입력하셨습니다.";
+                }
             }
-            router.push("/");
+        } catch (error) {
+            console.log(error);
         }
-    } catch (error) {
-        console.log(error);
     }
 }
 </script>
 
 <style scoped>
 #loginForm {
-    width: 70%;
+    width: 50%;
     margin: 0 auto;
 }
 
