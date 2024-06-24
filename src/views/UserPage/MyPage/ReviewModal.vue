@@ -9,7 +9,7 @@
                 @click="emit('close')"
                 data-bs-dismiss="modal"
             >
-                Close
+                닫기
             </button>
             <button type="button" class="btn btn-delete">작성하기</button>
         </template>

@@ -8,11 +8,7 @@
             <div class="hr"></div>
             <div class="nav justify-content-around">
                 <div class="fw-bold">
-                    <button
-                        class="nav-link"
-                        @click="applyClick"
-                        :class="{ active: apply }"
-                    >
+                    <button class="nav-link" @click="applyClick" :class="{ active: apply }">
                         신청 내역
                     </button>
                 </div>
@@ -74,11 +70,13 @@ const recruitClick = () => {
 function getApplications() {
     const applications = ref([
         {
+            sno: 1,
             stitle: "현대식 분재 그리고 와인1",
             saddress: "서울특별시 노원구 공릉로26길 26",
             sfee: "24000",
         },
         {
+            sno: 2,
             stitle: "현대식 분재 그리고 와인2",
             saddress: "서울특별시 노원구 공릉로26길 26",
             sfee: "24000",
@@ -93,6 +91,7 @@ const applications = getApplications();
 function getRecruitments() {
     const recruitments = ref([
         {
+            sno: 1,
             stitle: "현대식 분재 그리고 와인1",
             saddress: "서울특별시 노원구 공릉로26길 26",
             sfee: "24000",

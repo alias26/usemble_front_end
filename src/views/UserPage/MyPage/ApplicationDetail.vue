@@ -21,10 +21,10 @@
                 삭제하기
             </button>
         </div>
-        <ReviewModal id="#reviewModal" @close="hideReviewModal" />
-        <DeleteModal id="#delModal" @close="hideDelModal" />
+        <ReviewModal :id="'reviewModal' + props.application.sno" @close="hideReviewModal" />
+        <DeleteModal :id="'delModal' + props.application.sno" @close="hideDelModal" />
     </div>
-    <hr class="mx-3"/>
+    <hr class="mx-3" />
 </template>
 <script setup>
 import { onMounted } from "vue";
@@ -38,8 +38,8 @@ let reviewModal = null;
 let delModal = null;
 
 onMounted(() => {
-    reviewModal = new Modal(document.getElementById("#reviewModal"));
-    delModal = new Modal(document.getElementById("#delModal"));
+    reviewModal = new Modal(document.getElementById("reviewModal" + props.application.sno));
+    delModal = new Modal(document.getElementById("delModal" + props.application.sno));
 });
 
 function showReviewModal() {

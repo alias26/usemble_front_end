@@ -19,9 +19,9 @@
             </RouterLink>
             <button class="d-flex btn me-4" id="host-btn" @click="showDelModal">삭제하기</button>
         </div>
-        <DeleteModal id="#delModal" @close="hideDelModal" />
+        <DeleteModal :id="'delModal' + props.recruitment.sno" @close="hideDelModal" />
     </div>
-    <hr class="mx-3"/>
+    <hr class="mx-3" />
 </template>
 
 <script setup>
@@ -34,7 +34,7 @@ const props = defineProps(["recruitment"]);
 let delModal = null;
 
 onMounted(() => {
-    delModal = new Modal(document.getElementById("#delModal"));
+    delModal = new Modal(document.getElementById("delModal" + props.recruitment.sno));
 });
 
 function showDelModal() {
