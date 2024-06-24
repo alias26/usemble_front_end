@@ -88,6 +88,9 @@ export default createStore({
             localStorage.removeItem("mid");
             localStorage.removeItem("mname");
             localStorage.removeItem("accessToken");
+            sessionStorage.removeItem("mid");
+            sessionStorage.removeItem("mname");
+            sessionStorage.removeItem("accessToken");
             axiosConfig.removeAuthHeader();
         },
     },

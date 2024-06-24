@@ -14,7 +14,7 @@
                         height="20"
                         fill="currentColor"
                         class="bi bi-search"
-                        viewBox="0 0 16 14"
+                        viewBox="0 0 16 24"
                     >
                         <path
                             d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
@@ -37,9 +37,9 @@
                 >
                     로그아웃
                 </button>
+                <RouterLink class="nav_text" to="/admin">admin</RouterLink>
+                <RouterLink class="nav_text ms-4" to="/myPage">user</RouterLink>
             </div>
-            <RouterLink class="nav_text" to="/admin">admin</RouterLink>
-            <RouterLink class="nav_text ms-4" to="/myPage">user</RouterLink>
         </div>
     </nav>
 </template>
@@ -50,7 +50,6 @@ import { useStore } from "vuex";
 const store = useStore();
 
 function handleLogout() {
-    console.log(store.state.mid);
     store.dispatch("deleteAuth");
 }
 </script>
