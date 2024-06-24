@@ -1,3 +1,4 @@
+import axiosConfig from "@/apis/axiosConfig";
 import { createStore } from "vuex";
 
 export default createStore({
@@ -9,9 +10,12 @@ export default createStore({
         getMname(state, getters, rootState, rootGetters) {
             return state.mname;
         },
+        getAccessToken(state, getters, rootState, rootGetters) {
+            return state.accessToken;
+        },
     },
     mutations: {
-        setMId(state, payload) {
+        setMid(state, payload) {
             state.mid = payload;
         },
         setMname(state, payload) {
@@ -36,6 +40,55 @@ export default createStore({
                 .catch((error) => {
                     console.log("로그인 실패");
                 });
+        },
+        loadAuthLocal(context, payload) {
+            context.commit("setMid", localStorage.getItem("mid") || "");
+            context.commit("setMname", localStorage.getItem("mname") || "");
+            const accessToken = localStorage.getItem("accessToken") || "";
+            context.commit("setAccessToken", accessToken);
+
+            if (accessToken !== "") {
+                axiosConfig.addAuthHeader(accessToken);
+            }
+        },
+        loadAuthSession(context, payload) {
+            context.commit("setMid", sessionStorage.getItem("mid") || "");
+            context.commit("setMname", sessionStorage.getItem("mname") || "");
+            const accessToken = sessionStorage.getItem("accessToken") || "";
+            context.commit("setAccessToken", accessToken);
+
+            if (accessToken !== "") {
+                axiosConfig.addAuthHeader(accessToken);
+            }
+        },
+        saveAuthLocal(context, payload) {
+            context.commit("setMid", payload.mid);
+            context.commit("setMname", payload.mname);
+            context.commit("setAccessToken", payload.accessToken);
+
+            localStorage.setItem("mid", payload.mid);
+            localStorage.setItem("mname", payload.mname);
+            localStorage.setItem("accessToken", payload.accessToken);
+            axiosConfig.addAuthHeader(payload.accessToken);
+        },
+        saveAuthSession(context, payload) {
+            context.commit("setMid", payload.mid);
+            context.commit("setMname", payload.mname);
+            context.commit("setAccessToken", payload.accessToken);
+
+            sessionStorage.setItem("mid", payload.mid);
+            sessionStorage.setItem("mname", payload.mname);
+            sessionStorage.setItem("accessToken", payload.accessToken);
+            axiosConfig.addAuthHeader(payload.accessToken);
+        },
+        deleteAuth(context, payload) {
+            context.commit("setMid", "");
+            context.commit("setMname", "");
+            context.commit("setAccessToken", "");
+            localStorage.removeItem("mid");
+            localStorage.removeItem("mname");
+            localStorage.removeItem("accessToken");
+            axiosConfig.removeAuthHeader();
         },
     },
     modules: {},

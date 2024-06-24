@@ -28,8 +28,14 @@
             </div>
         </form>
 
-        <div class="mb-3 text-end">
-            혹시, <a id="findpassword-btn" href="./findPassword">비밀번호</a>를 잊으셨나요?
+        <div class="d-flex justify-content-between mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="1" id="autoLogin" />
+                <label class="form-check-label" for="autoLogin"> 자동 로그인 </label>
+            </div>
+            <div class="">
+                혹시, <a id="findpassword-btn" href="./findPassword">비밀번호</a>를 잊으셨나요?
+            </div>
         </div>
 
         <div class="text-center">
@@ -61,8 +67,14 @@ async function handleLogin() {
         if (response.data.result == "success") {
             const payload = {
                 mid: response.data.mid,
+                mname: response.data.mname,
                 accessToken: response.data.accessToken,
             };
+            if (document.getElementById("autoLogin").checked) {
+                store.dispatch("saveAuthLocal", payload);
+            } else {
+                store.dispatch("saveAuthSession", payload);
+            }
             router.push("/");
         }
     } catch (error) {

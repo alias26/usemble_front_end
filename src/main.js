@@ -10,6 +10,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import VCalendar from "v-calendar";
 
+store.dispatch("loadAuthSession");
+store.dispatch("loadAuthLocal");
+
 const app = createApp(App);
 app.use(VCalendar, {
     componentPrefix: "vc", // 사용할 경우, 기본 컴포넌트 접두사입니다.

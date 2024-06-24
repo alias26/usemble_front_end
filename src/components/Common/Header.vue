@@ -1,31 +1,59 @@
 <template>
     <nav>
         <div id="leftmenu">
-            <RouterLink id="nav_text" class="mx-4" to="/list">어셈블 둘러보기</RouterLink>
+            <RouterLink class="mx-4 nav_text" to="/list">어셈블 둘러보기</RouterLink>
             <RouterLink id="usemble" class="mx-4" to="/social/write/base">어셈블!</RouterLink>
         </div>
         <RouterLink to="/"><img id="logoimg" alt="Vue logo" src="@/assets/logo.png" /></RouterLink>
         <div id="rightmenu">
-            <RouterLink
-                to="/search">
-                <button class="btn" style=" border: none; outline: none;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 24">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            <RouterLink to="/search">
+                <button class="btn" style="border: none; outline: none">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        fill="currentColor"
+                        class="bi bi-search"
+                        viewBox="0 0 16 14"
+                    >
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+                        />
                     </svg>
                 </button>
             </RouterLink>
-            <RouterLink to="/login" id="nav_text" class="mx-4">로그인</RouterLink>
-            <span id="nav_text">|</span>
-            <RouterLink to="/join/joinMember" id="nav_text" class="mx-4" href="#"
-                >회원가입</RouterLink
-            >
-            <RouterLink id="nav_text" to="/admin">admin</RouterLink>
-            <RouterLink id="nav_text" class="ms-4" to="/myPage">user</RouterLink>
+            <div class="d-flex" v-if="$store.state.mid === ''">
+                <RouterLink to="/login" class="mx-4 nav_text">로그인</RouterLink>
+                <span class="nav_text">|</span>
+                <RouterLink to="/join/joinMember" class="mx-4 nav_text" href="#"
+                    >회원가입</RouterLink
+                >
+            </div>
+            <div v-if="$store.state.mid !== ''">
+                <button
+                    @click="handleLogout"
+                    class="mx-4"
+                    style="border: none; background-color: white"
+                >
+                    로그아웃
+                </button>
+            </div>
+            <RouterLink class="nav_text" to="/admin">admin</RouterLink>
+            <RouterLink class="nav_text ms-4" to="/myPage">user</RouterLink>
         </div>
     </nav>
 </template>
 
-<script setup></script>
+<script setup>
+import { useStore } from "vuex";
+
+const store = useStore();
+
+function handleLogout() {
+    console.log(store.state.mid);
+    store.dispatch("deleteAuth");
+}
+</script>
 
 <style scoped>
 * {
@@ -66,7 +94,8 @@ a {
     color: #00a3e0;
     margin-top: 30px;
 }
-#nav_text {
+
+.nav_text {
     margin-top: 30px;
 }
 </style>
