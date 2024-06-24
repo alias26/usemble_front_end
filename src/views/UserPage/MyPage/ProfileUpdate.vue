@@ -1,13 +1,13 @@
 <template>
     <div class="d-flex">
         <div class="text-start" id="profileInfoUpdate">
-            <div class="mb-3 fs-4 fw-bold">프로필</div>
-            <div class="mb-4 text-secondary">
+            <div class="mb-2 fs-4 fw-bold">프로필</div>
+            <div class="mb-3 text-secondary">
                 낯선 어셈블로 초대를 받기 위해 어떤 일/공부를 하고 계시는지 회원님에 대해
                 알려주세요.
             </div>
             <hr />
-            <img id="proimg" src="../../../assets/photo31.jpg" alt="" />
+            <img class="mt-2" id="proimg" src="../../../assets/photo31.jpg" alt="" />
             <div class="mx-2 my-3">
                 <input id="file" type="file" multiple />
                 <label for="file">
@@ -51,7 +51,7 @@
 
 #sub-btn {
     align-items: center;
-    width: 100%;
+    width: 50%;
     height: 45px;
     background-color: #558ccf;
     border: none;
@@ -76,7 +76,7 @@
     border-radius: 7px 7px;
     font-weight: bold;
     font-size: 14px;
-    padding: 10px;
+    padding: 5px 7px;
 }
 
 textarea {

@@ -2,7 +2,7 @@
     <div class="mt-5" id="joinForm">
         <div class="d-flex my-2" id="join-step">
             <div style="color: #cecac8">
-                <h6><strong>1. 이메일 입력&nbsp; > &nbsp;</strong></h6>
+                <h6><strong>1. 회원정보 입력&nbsp; > &nbsp;</strong></h6>
             </div>
             <div>
                 <h6><strong>2. 카테고리 선택</strong></h6>
@@ -107,7 +107,7 @@ function hideJoinModal() {
 
 <style scoped>
 #joinForm {
-    width: 70%;
+    width: 50%;
     margin: 0 auto;
     text-align: left;
 }

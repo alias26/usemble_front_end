@@ -7,6 +7,7 @@
                 <div>
                     <RouterLink to="./profileUpdate"
                         ><button
+                            id="update-btn"
                             class="btn border fw-bold"
                             style="
                                 font-size: 13px;
@@ -177,5 +178,9 @@ p {
 
 #social-card {
     width: 30%;
+}
+
+#update-btn:hover {
+    color: black;
 }
 </style>

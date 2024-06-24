@@ -8,9 +8,9 @@
 
             <hr />
             <UserProfile :mid="social.mid"></UserProfile>
-            <hr />
+            
             <h4 id="content-title">모임 일정</h4>
-            <div id="join">
+            <div class="mt-3 mb-4" id="join">
                 <CalendarRead :sstartDate="social.sstartDate" />
                 <div id="join-right">
                     <div id="join-right-detail">
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <div id="usbtn">
-                            <button id="btn_us" class="btn mb-2" @click="joinSocial">
+                            <button id="btn_us" class="btn mb-3" @click="joinSocial">
                                 참여하기
                             </button>
                         </div>
@@ -198,7 +198,7 @@ img {
     border-radius: 5px;
 }
 #notice {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 #notice1 {
     display: block;

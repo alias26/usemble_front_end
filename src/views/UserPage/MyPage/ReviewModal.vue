@@ -1,7 +1,7 @@
 <template>
     <ModalTemplate>
-        <template v-slot:header><span class="header">리뷰 작성</span></template>
-        <template v-slot:body><textarea>리뷰를 작성해주세요.</textarea></template>
+        <template v-slot:header><span class="header fs-4">리뷰 작성</span></template>
+        <template v-slot:body><textarea class="p-3">리뷰를 작성해주세요.</textarea></template>
         <template v-slot:footer>
             <button
                 type="button"

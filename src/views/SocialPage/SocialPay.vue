@@ -22,7 +22,7 @@
             </div>
         </div>
         <hr />
-        <div class="mt-4 mb-2">
+        <div class="mt-4 mb-5">
             <h2>결제금액</h2>
             <div>
                 <div class="d-flex justify-content-between">
@@ -73,6 +73,10 @@ const pay = getSocialPay();
 </script>
 
 <style scoped>
+.container {
+    width: 70%;
+}
+
 p {
     margin: auto 0;
 }
@@ -108,6 +112,7 @@ h2 {
 }
 
 .paybtn {
+    width: 100%;
     padding: 0 45%;
     height: 60px;
     color: #fff;

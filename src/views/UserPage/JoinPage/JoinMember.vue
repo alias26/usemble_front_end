@@ -9,13 +9,30 @@
             </div>
         </div>
 
-        <div class="mb-5 d-flex">
+        <div class="mb-4 d-flex">
             <div id="email-bold"><span class="highlight">회원가입</span></div>
             <div id="step1-title">하기</div>
         </div>
 
         <form>
-            <div class="mb-3 fs-6"><strong>아이디/비밀번호</strong></div>
+            <div class="mb-4">
+                <img src="../../../assets/photo31.jpg" id="img-info" />
+                <button id="camera">
+                    <i class="bi bi-camera-fill text-white"></i>
+                </button>
+            </div>
+            <div class="mt-4">
+                <div class="mb-2 fs-6 fw-bold">자기소개 입력</div>
+                <div class="rounded fw-bold">
+                    <textarea
+                        type="text"
+                        id="text-box"
+                        placeholder="예) OOO에서 그래픽 디자이너로 일하고 있습니다. 일상의 무료함을 달래며 영감을 얻기 위해 어셈블을 시작하게 됐어요! 좋은 분들을 만나 즐거운 시간을 보낼 수 있었으면 좋겠습니다."
+                    />
+                </div>
+            </div>
+
+            <div class="mt-4 mb-3 fs-6"><strong>아이디/비밀번호</strong></div>
             <div class="d-flex mb-2">
                 <div class="input-group me-2">
                     <input
@@ -48,7 +65,9 @@
 
             <div class="mt-4 mb-3 fs-6"><strong>이름</strong></div>
             <div class="input-group">
-                <span><input type="text" id="form-input" class="form-control" placeholder="이름" /></span>
+                <span
+                    ><input type="text" id="form-input" class="form-control" placeholder="이름"
+                /></span>
             </div>
 
             <div class="mt-4 mb-3 fs-6"><strong>주민번호</strong></div>
@@ -99,7 +118,7 @@
                                 name="form-mphone"
                         /></span>
                     </div>
-                    <div class="mb-5">
+                    <div class="mb-4">
                         <span
                             ><input
                                 type="text"
@@ -150,7 +169,7 @@ function nextStep() {
 
 <style scoped>
 #joinForm {
-    width: 70%;
+    width: 50%;
     margin: 0 auto;
 }
 
@@ -205,5 +224,32 @@ input::placeholder {
     color: white;
     font-size: 15px;
     border-radius: 7px 7px;
+}
+
+#img-info {
+    border-radius: 50%;
+    width: 100px;
+}
+
+#camera {
+    width: 30px;
+    height: 30px;
+    background-color: #558ccf;
+    border: none;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-90%, 240%);
+}
+
+#text-box {
+    width: 100%;
+    font-size: 14px;
+    padding: 20px 20px;
+}
+
+textarea {
+    resize: none;
+    border-color: lightgray;
+    border-radius: 7px;
 }
 </style>

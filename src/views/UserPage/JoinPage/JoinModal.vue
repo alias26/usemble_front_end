@@ -1,6 +1,8 @@
 <template>
     <ModalTemplate>
-        <template v-slot:header><i id="check" class="bi bi-check-circle-fill"></i></template>
+        <template v-slot:header>
+            <i id="check" class="bi bi-check-circle-fill"></i>
+        </template>
 
         <template v-slot:body
             ><h4>축하드립니다!</h4>
