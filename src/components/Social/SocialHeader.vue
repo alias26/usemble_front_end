@@ -6,55 +6,22 @@
         <div class="pageCategory container">
             <div class="wrapper">
                 <div class="pageOption">
-                    <!-- <div class="dropdown">
-                        <button
-                            class="btn btn-sm dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            카테고리
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">전체보기</a></li>
-                            <li><a class="dropdown-item" href="#">모임</a></li>
-                            <li><a class="dropdown-item" href="#">운동</a></li>
-                            <li><a class="dropdown-item" href="#">자기계발</a></li>
-                            <li><a class="dropdown-item" href="#">음식</a></li>
-                            <li><a class="dropdown-item" href="#">여행</a></li>
-                        </ul>
-                    </div> -->
                     <div class="custom-select me-2">
-                        <select class="dropdown-select">
-                            <option value="카테고리" selected>카테고리</option>
-                            <option value="맛집">맛집</option>
-                            <option value="운동">운동</option>
-                            <option value="스터디">스터디</option>
-                            <option value="친목">친목</option>
-                            <option value="여행">여행</option>
+                        <select class="dropdown-select" v-model.trim="viewSelects.viewCategory">
+                            <option :value="all" selected>카테고리</option>
+                            <option value="eat">맛집</option>
+                            <option value="exercise">운동</option>
+                            <option value="study">스터디</option>
+                            <option value="friendship">친목</option>
+                            <option value="travel">여행</option>
                         </select>
                     </div>
-                    <!-- <div class="dropdown ms-2">
-                        <button
-                            class="btn btn-sm dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            정렬
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">최신순</a></li>
-                            <li><a class="dropdown-item" href="#">마감임박순</a></li>
-                        </ul>
-                    </div> -->
                     <div class="custom-select">
-                        <select class="dropdown-select">
+                        <!-- <select class="dropdown-select" v-model="viewSelects.viewSort"> -->
+                        <select class="dropdown-select" v-model="viewSelects.viewSort">
                             <option value="정렬" selected>정렬</option>
-                            <option value="최신순" >최신순</option>
-                            <option value="마감임박순" >마감임박순</option>
+                            <option value="최신순">최신순</option>
+                            <option value="마감임박순">마감임박순</option>
                         </select>
                     </div>
                 </div>
@@ -64,8 +31,34 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+import { useRouter , useRoute } from "vue-router";
+
 defineProps(["title"]);
 
+// const router = useRouter();
+
+// const viewSelects = ref({
+//     viewCategory: "카테고리",
+//     viewSort: "정렬",
+// });
+
+// function handleRouting() {
+//     // viewSelects.value.viewCategory = router.query.category;
+//     console.log(viewSelects.value.viewCategory);
+//     if(viewSelects.value.viewCategory === "카테고리"){
+//         router.push("/");
+//     }
+// }
+
+const route = useRoute();
+
+const viewSelects = ref({
+    viewCategory: "all",
+    viewSort: "정렬",
+});
+
+viewSelects.value.viewCategory = route.query.category;
 
 </script>
 
@@ -95,23 +88,23 @@ defineProps(["title"]);
 
 /* select css */
 .custom-select {
-  position: relative;
+    position: relative;
 }
 
 .dropdown-select {
-  appearance: none;
-  /*  safari  */
-  -webkit-appearance: none;
-  /*  other styles for aesthetics */
-  width: 100px;
-  font-size: 15px;
-  padding: 5px 5px 5px 8px;
-  background-color: #558CCF;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  border: none;
-  outline: none;
+    appearance: none;
+    /*  safari  */
+    -webkit-appearance: none;
+    /*  other styles for aesthetics */
+    width: 100px;
+    font-size: 15px;
+    padding: 5px 5px 5px 8px;
+    background-color: #558ccf;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    outline: none;
 }
 .custom-select::after {
     --size: 0.3rem;

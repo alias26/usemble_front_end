@@ -149,6 +149,12 @@
                             있습니다.
                         </div>
                         <div>· 탈퇴 후 7일 간은 동일한 계정으로 재가입이 불가합니다.</div>
+                        <br/>
+                        <br/>
+                        <div style="text-align: right;">
+                            <button style="border: none; background-color: #fff;" @click="showWithdrawModal">탈퇴하기</button>
+                            <WithdrawModal id="#withdrawModal" @close="hideWithdrawModal" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,6 +164,24 @@
 
 <script setup>
 import { ref } from "vue";
+import { onMounted } from "vue";
+import { Modal } from "bootstrap";
+import WithdrawModal from "./WithdrawModal.vue";
+
+const emit = defineEmits(["close"]);
+
+let withdrawModal = null;
+
+onMounted(() => {
+    withdrawModal = new Modal(document.getElementById("#withdrawModal"));
+});
+function showWithdrawModal() {
+    withdrawModal.show();
+}
+
+function hideWithdrawModal() {
+    withdrawModal.hide();
+}
 
 function getMemberInfo(mid) {
     const member = ref({

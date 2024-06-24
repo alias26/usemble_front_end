@@ -4,12 +4,22 @@
             <img src="@/assets/usemble.jpg" width="100%" />
         </div>
         <div class="category container d-flex">
-            <div class="main_category"><img src="@/assets/category/eat.png" />맛집</div>
-            <div class="main_category"><img src="@/assets/category/exercise.png" />운동</div>
-            <div class="main_category"><img src="@/assets/category/study.png" />스터디</div>
-            <div class="main_category"><img src="@/assets/category/friendship.png" />친목</div>
-            <div class="main_category"><img src="@/assets/category/travel.png" />여행</div>
-            <RouterLink class="main_category no-underline" to="list"
+            <RouterLink class="main_category" to="list?category=eat"
+                ><img src="@/assets/category/eat.png" />맛집</RouterLink
+            >
+            <RouterLink class="main_category" to="list?category=exercise"
+                ><img src="@/assets/category/exercise.png" />운동</RouterLink
+            >
+            <RouterLink class="main_category" to="list?category=study"
+                ><img src="@/assets/category/study.png" />스터디</RouterLink
+            >
+            <RouterLink class="main_category" to="list?category=friendship"
+                ><img src="@/assets/category/friendship.png" />친목</RouterLink
+            >
+            <RouterLink class="main_category" to="list?category=travel"
+                ><img src="@/assets/category/travel.png" />여행</RouterLink
+            >
+            <RouterLink class="main_category" to="list"
                 ><img src="@/assets/category/all.png" />전체보기</RouterLink
             >
         </div>
@@ -25,7 +35,6 @@
     justify-content: center;
 }
 
-
 .main_category {
     cursor: pointer;
     width: 70%;
@@ -33,6 +42,8 @@
     display: inline-grid;
     font-size: 16px;
     font-weight: 600;
+    color: black;
+    text-decoration: none;
     /* margin-left: 50px;
     margin-right: 50px; */
 }
@@ -52,10 +63,5 @@
     height: 380px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.no-underline {
-    color: black;
-    text-decoration: none;
 }
 </style>
