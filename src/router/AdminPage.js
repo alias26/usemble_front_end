@@ -34,6 +34,10 @@ const routes = [
                     import(/* webpackChunkName: "Admin" */ "@/views/Admin/NoticeTable"),
             },
             {
+                path: "noticeRead",
+                component: () => import(/* webpackChunkName: "Admin" */ "@/views/Admin/NoticeRead"),
+            },
+            {
                 path: "noticeWrite",
                 component: () =>
                     import(/* webpackChunkName: "Admin" */ "@/views/Admin/NoticeWrite"),

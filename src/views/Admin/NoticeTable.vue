@@ -11,7 +11,9 @@
             </tr>
             <tr>
                 <td>1</td>
-                <td><RouterLink to="">후기 작성 및 이벤트 참여 관련</RouterLink></td>
+                <td>
+                    <RouterLink to="/admin/noticeRead">후기 작성 및 이벤트 참여 관련</RouterLink>
+                </td>
                 <td>24.06.17</td>
                 <td>user1@naver.com</td>
                 <td class="d-flex justify-content-center">
