@@ -6,12 +6,7 @@
                     <h5 class="modal-title">
                         <slot name="header">Modal title</slot>
                     </h5>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                  
                 </div>
                 <div class="modal-body border-0">
                     <slot name="body"><p>Modal body text goes here.</p></slot>
