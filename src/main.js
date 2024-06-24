@@ -10,8 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import VCalendar from "v-calendar";
 
-store.dispatch("loadAuthSession");
-store.dispatch("loadAuthLocal");
+store.dispatch("loadAuth");
 
 const app = createApp(App);
 app.use(VCalendar, {

@@ -41,20 +41,21 @@ export default createStore({
                     console.log("로그인 실패");
                 });
         },
-        loadAuthLocal(context, payload) {
-            context.commit("setMid", localStorage.getItem("mid") || "");
-            context.commit("setMname", localStorage.getItem("mname") || "");
-            const accessToken = localStorage.getItem("accessToken") || "";
-            context.commit("setAccessToken", accessToken);
+        loadAuth(context, payload) {
+            const localMid = localStorage.getItem("mid") || "";
+            const localMname = localStorage.getItem("mname") || "";
+            const localAccessToken = localStorage.getItem("accessToken") || "";
 
-            if (accessToken !== "") {
-                axiosConfig.addAuthHeader(accessToken);
-            }
-        },
-        loadAuthSession(context, payload) {
-            context.commit("setMid", sessionStorage.getItem("mid") || "");
-            context.commit("setMname", sessionStorage.getItem("mname") || "");
-            const accessToken = sessionStorage.getItem("accessToken") || "";
+            const sessionMid = sessionStorage.getItem("mid") || "";
+            const sessionMname = sessionStorage.getItem("mname") || "";
+            const sessionAccessToken = sessionStorage.getItem("accessToken") || "";
+
+            const mid = localMid || sessionMid;
+            const mname = localMname || sessionMname;
+            const accessToken = localAccessToken || sessionAccessToken;
+
+            context.commit("setMid", mid);
+            context.commit("setMname", mname);
             context.commit("setAccessToken", accessToken);
 
             if (accessToken !== "") {
