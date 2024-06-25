@@ -14,14 +14,15 @@
                 </li>
             </ul>
 
-            <div class="bg-light" style="height: 500px">
+            <div class="bg-light like-space">
                 <div class="hr"></div>
-                <div class="text-secondary" style="font-size: 14px; text-align: center">
+                <div class="text-secondary like-empty">
                     <div v-if="likeList.mids.length == 0">
                         <div>관심 있는 호스트를 찾아보세요.</div>
                         <button
                             class="p-3 bg-black text-white rounded-1 fw-bold"
                             style="font-size: 14px; border: none"
+                            @click="goAssembleList"
                         >
                             어셈블 둘러보기
                         </button>
@@ -46,6 +47,7 @@
 import UserProfile from "@/components/UserProfile.vue";
 import memberAPI from "@/apis/memberAPI";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -68,6 +70,12 @@ getUserProfileList(store.state.mid);
 function handleLikeHistory(index) {
     document.getElementById("profile" + index).remove();
     getUserProfileList(store.state.mid);
+}
+
+const router = useRouter();
+
+function goAssembleList() {
+    router.push("/list");
 }
 </script>
 
@@ -110,5 +118,19 @@ function handleLikeHistory(index) {
 .nav-link {
     text-align: center;
     color: gray;
+}
+
+.like-space {
+    height: 500px;
+    position: relative;
+}
+
+.like-empty {
+    font-size: 14px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 </style>
