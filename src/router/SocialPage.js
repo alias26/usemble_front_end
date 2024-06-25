@@ -6,20 +6,11 @@ const routes = [
             import(/* webpackChunkName: "SocialPage" */ "../views/SocialPage/SocialList.vue"),
     },
     {
-        path: "/social/write/base",
-        name: "social1",
+        path: "/social/write",
+        name: "socialWrite",
         meta: { authorization: ["ROLE_USER"] },
         component: () =>
-            import(/* webpackChunkName: "SocialPage" */ "../views/SocialPage/WriteSocialBase.vue"),
-    },
-    {
-        path: "/social/write/detail",
-        name: "social2",
-        meta: { authorization: ["ROLE_USER"] },
-        component: () =>
-            import(
-                /* webpackChunkName: "SocialPage" */ "../views/SocialPage/WriteSocialDetail.vue"
-            ),
+            import(/* webpackChunkName: "SocialPage" */ "../views/SocialPage/WriteSocial.vue"),
     },
     {
         path: "/social/detail",
