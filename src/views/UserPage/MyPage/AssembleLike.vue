@@ -16,7 +16,7 @@
 
             <div class="bg-light" style="height: 500px">
                 <div class="hr"></div>
-                <div class="text-secondary align-content-center" style="font-size: 14px">
+                <div class="text-secondary" style="font-size: 14px; text-align: center">
                     <div v-if="likeList.mids.length == 0">
                         <div>관심 있는 호스트를 찾아보세요.</div>
                         <button
