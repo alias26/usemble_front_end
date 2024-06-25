@@ -25,7 +25,7 @@
             <div class="d-flex" v-if="$store.state.mid === ''">
                 <RouterLink to="/login" class="mx-4 nav_text">로그인</RouterLink>
                 <span class="nav_text">|</span>
-                <RouterLink to="/join/joinMember" class="mx-4 nav_text">회원가입</RouterLink>
+                <RouterLink to="/join" class="mx-4 nav_text">회원가입</RouterLink>
             </div>
             <div v-if="$store.state.mid !== ''">
                 <RouterLink v-if="$store.state.mrole === 'ROLE_ADMIN'" class="nav_text" to="/admin"

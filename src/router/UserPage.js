@@ -33,16 +33,17 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: "LoginPage" */ "@/views/UserPage/LoginPage/FindPassword"),
     },
+    // {
+    //     path: "/join/joinMember",
+    //     name: "JoinMember",
+    //     component: () => import(/* webpackChunkName: "Join" */ "@/views/UserPage/Join/JoinMember"),
+    // },
     {
-        path: "/join/joinMember",
-        component: () =>
-            import(/* webpackChunkName: "JoinPage" */ "@/views/UserPage/JoinPage/JoinMember"),
+        path: "/join",
+        name: "Join",
+        component: () => import(/* webpackChunkName: "Join" */ "@/views/UserPage/Join"),
     },
-    {
-        path: "/join/joinCategory",
-        component: () =>
-            import(/* webpackChunkName: "JoinPage" */ "@/views/UserPage/JoinPage/JoinCategory"),
-    },
+
     {
         path: "/myPage",
         component: () => import(/* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage"),

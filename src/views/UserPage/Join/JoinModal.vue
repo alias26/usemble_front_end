@@ -10,15 +10,25 @@
         >
 
         <template v-slot:footer>
-            <button type="button" class="btn" @click="emit('close')" data-bs-dismiss="modal">
-                확인
-            </button>
+            <button type="button" class="btn" @click="goHome">홈으로</button>
+            <button type="button" class="btn" @click="goLogin">로그인</button>
         </template>
     </ModalTemplate>
 </template>
 <script setup>
 import ModalTemplate from "@/components/ModalTemplate.vue";
+import { useRouter } from "vue-router";
+
 const emit = defineEmits(["close"]);
+const router = useRouter();
+function goHome() {
+    emit("close");
+    router.push("/");
+}
+function goLogin() {
+    emit("close");
+    router.push("./login");
+}
 </script>
 <style scoped>
 #check {

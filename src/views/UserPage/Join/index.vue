@@ -1,20 +1,20 @@
 <template>
-    <div class="my-5" id="joinForm">
-        <div class="d-flex mb-2" id="join-step">
-            <div>
-                <h6><strong>1. 회원정보 입력</strong></h6>
+    <form @submit.prevent="handleSubmit">
+        <div v-show="isStep1" class="my-5" id="joinForm">
+            <div class="d-flex mb-2" id="join-step">
+                <div>
+                    <h6><strong>1. 회원정보 입력</strong></h6>
+                </div>
+                <div style="color: #cecac8">
+                    <h6><strong>&nbsp; > &nbsp;2. 카테고리 선택</strong></h6>
+                </div>
             </div>
-            <div style="color: #cecac8">
-                <h6><strong>&nbsp; > &nbsp;2. 카테고리 선택</strong></h6>
+
+            <div class="mb-4 d-flex">
+                <div id="email-bold"><span class="highlight">회원가입</span></div>
+                <div id="step1-title">하기</div>
             </div>
-        </div>
 
-        <div class="mb-4 d-flex">
-            <div id="email-bold"><span class="highlight">회원가입</span></div>
-            <div id="step1-title">하기</div>
-        </div>
-
-        <form @submit.prevent="handleSubmit">
             <div class="mb-4">
                 <img src="../../../assets/photo31.jpg" id="img-info" />
                 <input id="file" type="file" ref="mattach" multiple />
@@ -32,6 +32,7 @@
                         id="text-box"
                         placeholder="예) OOO에서 그래픽 디자이너로 일하고 있습니다. 일상의 무료함을 달래며 영감을 얻기 위해 어셈블을 시작하게 됐어요! 좋은 분들을 만나 즐거운 시간을 보낼 수 있었으면 좋겠습니다."
                         v-model="member.mintroduce"
+                        @change="validateIntro"
                     />
                 </div>
                 <div id="intro_warning" class="text-danger" style="font-size: 13px"></div>
@@ -46,6 +47,7 @@
                             class="form-control d-flex"
                             placeholder="이메일주소 입력"
                             v-model="member.mid"
+                            @change="validateEmail"
                         />
                     </div>
                     <button type="button" class="btn btn-secondary" id="check-btn">
@@ -62,6 +64,7 @@
                     class="form-control"
                     placeholder="비밀번호 (8자 이상)"
                     v-model="mpwd.mpwd1"
+                    @change="validatePwd1"
                 />
             </div>
             <div id="pwd_warning" class="text-danger" style="font-size: 13px"></div>
@@ -73,6 +76,7 @@
                     class="form-control"
                     placeholder="비밀번호 재입력"
                     v-model="mpwd.mpwd2"
+                    @change="validatePwd2"
                 />
             </div>
             <div id="pwd2_warning" class="text-danger" style="font-size: 13px"></div>
@@ -86,6 +90,7 @@
                         class="form-control"
                         placeholder="이름"
                         v-model="member.mname"
+                        @change="validateName"
                 /></span>
             </div>
             <div id="name_warning" class="text-danger" style="font-size: 13px"></div>
@@ -100,6 +105,7 @@
                             class="form-control fw-bold"
                             placeholder="YYMMDD"
                             v-model="member.mbirth"
+                            @change="validateBirth"
                     /></span>
                     <div id="birth_warning" class="text-danger" style="font-size: 13px"></div>
                 </div>
@@ -112,6 +118,7 @@
                             id="inlineRadio1"
                             value="남"
                             v-model="member.msex"
+                            @change="validateSex"
                         />
                         <label class="form-check-label" for="inlineRadio1">남</label>
                     </div>
@@ -123,6 +130,7 @@
                             id="inlineRadio2"
                             value="여"
                             v-model="member.msex"
+                            @change="validateSex"
                         />
                         <label class="form-check-label" for="inlineRadio2">여</label>
                     </div>
@@ -152,6 +160,7 @@
                                 id="form-input"
                                 name="form-mphone"
                                 v-model="mph.m2"
+                                @change="validatePhone1"
                         /></span>
                         <div id="phone_warning1" class="text-danger" style="font-size: 13px"></div>
                     </div>
@@ -163,6 +172,7 @@
                                 id="form-input"
                                 name="form-mphone"
                                 v-model="mph.m3"
+                                @change="validatePhone2"
                         /></span>
                         <div id="phone_warning2" class="text-danger" style="font-size: 13px"></div>
                     </div>
@@ -179,6 +189,7 @@
                         name="form-account1"
                         placeholder="은행명"
                         v-model="member.mbankName"
+                        @change="validateBank"
                     />
                     <div id="bank_warning" class="text-danger" style="font-size: 13px"></div>
                 </div>
@@ -190,22 +201,128 @@
                         name="form-account2"
                         placeholder="계좌번호"
                         v-model="member.mpayAccount"
+                        @change="validateAccount"
                     />
                     <div id="account_warning" class="text-danger" style="font-size: 13px"></div>
                 </div>
             </div>
             <div class="text-center">
-                <button type="submit" id="sub-btn"><strong>다음</strong></button>
+                <button type="button" id="sub-btn" @click="nextStep"><strong>다음</strong></button>
             </div>
-        </form>
-    </div>
+        </div>
+        <!-- ------------------------------------------------------------------ -->
+        <div v-show="isStep2" class="mt-5" id="joinForm">
+            <div class="d-flex my-2" id="join-step">
+                <div style="color: #cecac8">
+                    <h6><strong>1. 회원정보 입력&nbsp; > &nbsp;</strong></h6>
+                </div>
+                <div>
+                    <h6><strong>2. 카테고리 선택</strong></h6>
+                </div>
+            </div>
+            <div class="mt-4 mb-5">
+                <h2>회원가입 마지막 단계!</h2>
+                <h2>관심있는 카테고리를 선택하세요</h2>
+                <p style="color: gray">취향에 맞게 추천해드려요.</p>
+            </div>
+
+            <div class="mb-2">
+                <button type="button" class="btn btn-outline-secondary me-2" id="ct-btn">
+                    인간관계(친목)
+                </button>
+                <button type="button" class="btn btn-outline-secondary me-2" id="ct-btn">
+                    여행
+                </button>
+                <button type="button" class="btn btn-outline-secondary me-2" id="ct-btn">
+                    스포츠/운동
+                </button>
+                <button type="button" class="btn btn-outline-secondary me-2" id="ct-btn">
+                    자기계발/공부
+                </button>
+                <button type="button" class="btn btn-outline-secondary" id="ct-btn">음식</button>
+            </div>
+
+            <div class="mb-5" id="ct-select">*최대 3개(0/3)</div>
+
+            <div class="mt-5 mb-5">
+                <div class="form-check mb-4">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="agreeAll"
+                        name="agreeAll"
+                        value="1"
+                    />
+                    <label class="form-check-label mt-1" for="agreeAll"> 전체 동의하기 </label>
+                </div>
+                <hr style="color: gray" />
+                <div class="form-check mb-4">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="agree1"
+                        name="agree1"
+                        value="1"
+                    />
+                    <label class="form-check-label mt-1" for="agree1"> 이용약관 동의 (필수) </label>
+                </div>
+                <div class="form-check mb-4">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="agree2"
+                        name="agree2"
+                        value="1"
+                    />
+                    <label class="form-check-label mt-1" for="agree2">
+                        개인정보처리방침 동의 (필수)
+                    </label>
+                </div>
+                <div class="form-check mb-4">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="agree3"
+                        name="agree3"
+                        value="1"
+                    />
+                    <label class="form-check-label mt-1" for="agree3">
+                        마케팅 정보 수신 동의 (선택)
+                    </label>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" id="join-btn" @click="showJoinModal">
+                    <strong>가입하기</strong>
+                </button>
+                <JoinModal id="joinModal" @close="hideJoinModal" />
+            </div>
+        </div>
+    </form>
 </template>
 
 <script setup>
 import memberAPI from "@/apis/memberAPI";
 import { ref, watch } from "vue";
-import { useRouter } from "vue-router";
-const router = useRouter();
+import { router } from "vue-router";
+import JoinModal from "./JoinModal.vue";
+import { onMounted } from "vue";
+import { Modal } from "bootstrap";
+
+let joinModal = null;
+onMounted(() => {
+    joinModal = new Modal(document.querySelector("#joinModal"));
+});
+function showJoinModal() {
+    joinModal.show();
+}
+
+function hideJoinModal() {
+    joinModal.hide();
+}
+
+let isStep1 = ref(true);
+let isStep2 = ref(false);
 
 const mph = ref({
     m1: "",
@@ -239,63 +356,174 @@ watch([() => mpwd.value.mpwd1, () => mpwd.value.mpwd2], ([newM1, newM2]) => {
     }
 });
 
-//가입 버튼 클릭시 실행
-async function handleSubmit() {
-    //유효성 검사 작성.
-    const intro_warning = document.getElementById("intro_warning");
-    if (member.value.mintroduce.length == 0) {
-        intro_warning.innerHTML = "자기소개를 입력해 주세요.";
-    }
+function validateEmail() {
+    let flag = true;
     const id_warning = document.getElementById("id_warning");
-    const validate_id = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\.[A-Za-z0-9\\-]+/;
+    const validate_id = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!validate_id.test(member.value.mid) || !member.value.mid) {
+        flag = false;
         id_warning.innerHTML = "아이디(메일)형식을 지켜주세요.";
+    } else {
+        flag = true;
+        id_warning.innerHTML = " ";
     }
+    return flag;
+}
+function validateIntro() {
+    let flag = true;
+    const intro_warning = document.getElementById("intro_warning");
+    if (!member.value.mintroduce) {
+        flag = false;
+        intro_warning.innerHTML = "자기소개를 입력해 주세요.";
+    } else {
+        flag = true;
+        intro_warning.innerHTML = " ";
+    }
+    return flag;
+}
+function validatePwd1() {
+    let flag = true;
     const pwd_warning = document.getElementById("pwd_warning");
     const validate_pwd = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
     if (!validate_pwd.test(mpwd.value.mpwd1) || !mpwd.value.mpwd1) {
+        flag = false;
         pwd_warning.innerHTML = "비밀번호 형식에 맞게 입력해주세요.";
+    } else {
+        flag = true;
+        pwd_warning.innerHTML = " ";
     }
+    return flag;
+}
+function validatePwd2() {
+    let flag = true;
     const pwd2_warning = document.getElementById("pwd2_warning");
     if (mpwd.value.mpwd1 != mpwd.value.mpwd2) {
+        flag = false;
         pwd2_warning.innerHTML = "비밀번호가 일치하지 않습니다.";
+    } else {
+        flag = true;
+        pwd2_warning.innerHTML = " ";
     }
+    return flag;
+}
+function validateName() {
+    let flag = true;
     const name_warning = document.getElementById("name_warning");
-    const validate_name = /^[가-힣]{1,6}$/;
+    const validate_name = /^[가-힣]{2,6}$/;
     if (!validate_name.test(member.value.mname) || !member.value.mname) {
+        flag = false;
         name_warning.innerHTML = "이름을 형식에 맞게 입력해주세요.";
+    } else {
+        flag = true;
+        name_warning.innerHTML = " ";
     }
+    return flag;
+}
+function validateBirth() {
+    let flag = true;
     const birth_warning = document.getElementById("birth_warning");
     const validate_birth = /^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$/;
     if (!validate_birth.test(member.value.mbirth) || !member.value.mbirth) {
+        flag = false;
         birth_warning.innerHTML = "생년월일을 형식에 맞게 입력해주세요.";
+    } else {
+        flag = true;
+        birth_warning.innerHTML = " ";
     }
+    return flag;
+}
+function validateSex() {
+    let flag = true;
     const sex_warning = document.getElementById("sex_warning");
     const is_check_m = document.getElementById("inlineRadio1").checked;
     const is_check_w = document.getElementById("inlineRadio2").checked;
     if (is_check_m == false && is_check_w == false) {
+        flag = false;
         sex_warning.innerHTML = "성별을 선택해 주세요.";
+    } else {
+        flag = true;
+        sex_warning.innerHTML = " ";
     }
+    return flag;
+}
+function validatePhone1() {
+    let flag = true;
     const validate_phone = /^[0-9]{4}$/;
     const phone_warning1 = document.getElementById("phone_warning1");
-    const phone_warning2 = document.getElementById("phone_warning2");
-    if (!validate_phone.test(mph.value.m2) || !mph.value.m2) {
-        phone_warning1.innerHTML = "형식에 맞게 입력하세요.";
-    }
-    if (!validate_phone.test(mph.value.m3) || !mph.value.m3) {
-        phone_warning2.innerHTML = "형식에 맞게 입력하세요.";
-    }
-    const bank_warning = document.getElementById("bank_warning");
-    const validate_bank = /^[가-힣]{1,7}$/;
-    if (!validate_bank.test(member.value.mbankName) || !member.value.mbankName) {
-        bank_warning.innerHTML = "은행명을 형식에 맞게 입력해주세요.";
-    }
-    const account_warning = document.getElementById("account_warning");
-    const validate_account = /^[0-9]{1,20}$/;
-    if (!validate_account.test(member.value.mpayAccount) || !member.value.mpayAccount) {
-        account_warning.innerHTML = "계좌번호를 형식에 맞게 입력해주세요.";
-    }
 
+    if (!validate_phone.test(mph.value.m2) || !mph.value.m2) {
+        flag = false;
+        phone_warning1.innerHTML = "형식에 맞게 입력하세요.";
+    } else {
+        flag = true;
+        phone_warning1.innerHTML = " ";
+    }
+    return flag;
+}
+function validatePhone2() {
+    let flag = true;
+    const validate_phone = /^[0-9]{4}$/;
+
+    const phone_warning2 = document.getElementById("phone_warning2");
+
+    if (!validate_phone.test(mph.value.m3) || !mph.value.m3) {
+        flag = false;
+        phone_warning2.innerHTML = "형식에 맞게 입력하세요.";
+    } else {
+        flag = true;
+        phone_warning2.innerHTML = " ";
+    }
+    return flag;
+}
+function validateBank() {
+    let flag = true;
+    const bank_warning = document.getElementById("bank_warning");
+    const validate_bank = /^[가-힣]{2,7}$/;
+    if (!validate_bank.test(member.value.mbankName) || !member.value.mbankName) {
+        flag = false;
+        bank_warning.innerHTML = "은행명을 형식에 맞게 입력해주세요.";
+    } else {
+        flag = true;
+        bank_warning.innerHTML = " ";
+    }
+    return flag;
+}
+function validateAccount() {
+    let flag = true;
+    const account_warning = document.getElementById("account_warning");
+    const validate_account = /^[0-9]{1,17}$/;
+    if (!validate_account.test(member.value.mpayAccount) || !member.value.mpayAccount) {
+        flag = false;
+        account_warning.innerHTML = "계좌번호를 형식에 맞게 입력해주세요.";
+    } else {
+        flag = true;
+        account_warning.innerHTML = " ";
+    }
+    return flag;
+}
+function nextStep() {
+    //유효성 검사 작성.
+    if (
+        (validateIntro() &
+            validateAccount() &
+            validateName() &
+            validateEmail() &
+            validateBank() &
+            validateBirth() &
+            validatePhone1() &
+            validatePhone2() &
+            validatePwd1() &
+            validatePwd2() &
+            validateSex()) ==
+        true
+    ) {
+        isStep1.value = !isStep1.value;
+        isStep2.value = !isStep2.value;
+    }
+}
+
+//가입 버튼 클릭시 실행
+async function handleSubmit() {
     const formData = new FormData();
     formData.append("mid", member.value.mid);
     formData.append("mname", member.value.mname);
@@ -313,12 +541,6 @@ async function handleSubmit() {
     }
     try {
         const response = await memberAPI.join(formData);
-        router.push({
-            path: "joinCategory",
-            params: {
-                formData: formData,
-            },
-        });
     } catch (error) {
         console.log(error);
     }
@@ -415,5 +637,87 @@ textarea {
 }
 #file {
     display: none;
+}
+
+#joinForm {
+    width: 50%;
+    margin: 0 auto;
+    text-align: left;
+}
+#test {
+    width: 70%;
+    margin: 0 auto;
+}
+h2 {
+    font-weight: bolder;
+    text-align: left;
+}
+
+#ct-btn {
+    border-color: #cecac8;
+    padding: 12px 25px;
+    border-radius: 50px;
+    opacity: 70%;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+#ct-btn:hover {
+    color: white;
+    border: #57b17f;
+    background-color: #57b17f;
+    padding: 12px 25px;
+    border-radius: 50px;
+    opacity: 70%;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+#ct-btn:focus {
+    color: white;
+    border: #57b17f;
+    background-color: #57b17f;
+    padding: 12px 25px;
+    border-radius: 50px;
+    opacity: 70%;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+#ct-select {
+    color: gray;
+    font-size: 13px;
+}
+
+.form-check {
+    font-weight: bolder;
+}
+
+input[type="checkbox"] {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: solid 0.3px #cecac8;
+}
+
+input[type="checkbox"]:checked {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: solid 0.3px #558ccf;
+    background-color: #558ccf;
+}
+
+#join-btn {
+    margin-top: 40px;
+    width: 450px;
+    height: 45px;
+    background-color: #558ccf;
+    border: none;
+    color: white;
+    font-size: 15px;
+    border-radius: 7px 7px;
 }
 </style>
