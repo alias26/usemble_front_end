@@ -3,6 +3,7 @@ const routes = [
         path: "/admin",
         component: () => import(/* webpackChunkName: "Admin" */ "@/views/Admin"),
         redirect: "/admin/dashBoard",
+        meta: { authorization: ["ROLE_ADMIN"] },
         children: [
             {
                 path: "dashBoard",

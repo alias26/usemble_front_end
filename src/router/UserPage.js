@@ -47,6 +47,7 @@ const routes = [
         path: "/myPage",
         component: () => import(/* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage"),
         redirect: "/myPage/profileInfo",
+        meta: { authorization: ["ROLE_USER"] },
         children: [
             {
                 path: "profileInfo",

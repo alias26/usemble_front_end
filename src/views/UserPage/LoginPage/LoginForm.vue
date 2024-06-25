@@ -76,6 +76,7 @@ async function handleLogin() {
                 const payload = {
                     mid: response.data.mid,
                     mname: response.data.mname,
+                    mrole: response.data.mrole,
                     accessToken: response.data.accessToken,
                 };
                 if (document.getElementById("autoLogin").checked) {

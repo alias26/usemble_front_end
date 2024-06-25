@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home";
 import { compile } from "vue";
+import store from "../store";
+import Home from "../views/Home";
 import GuideList from "../views/FooterPage/GuideList.vue";
 import NoticeList from "@/views/FooterPage/NoticeList.vue";
 import NoticeDetail from "@/views/FooterPage/NoticeDetail.vue";
@@ -54,6 +55,22 @@ const router = createRouter({
         // always scroll to top
         return { top: 0, behavior: "instant" };
     },
+});
+
+// const store = useStore();
+router.beforeEach((to, from, next) => {
+    const mrole = store.state.mrole;
+    const { authorization } = to.meta;
+
+    if (authorization) {
+        if (mrole == "") {
+            return next({ path: "/login" });
+        }
+        if (authorization.length && !authorization.includes(mrole)) {
+            return next({ path: "/notFound" });
+        }
+    }
+    next();
 });
 
 export default router;

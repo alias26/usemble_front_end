@@ -35,8 +35,16 @@
                 >
                     로그아웃
                 </button>
-                <RouterLink class="nav_text" to="/admin">admin</RouterLink>
-                <RouterLink class="nav_text ms-4" to="/myPage">user</RouterLink>
+
+                <RouterLink v-if="$store.state.mrole === 'ROLE_ADMIN'" class="nav_text" to="/admin"
+                    >관리자페이지</RouterLink
+                >
+                <RouterLink
+                    v-if="$store.state.mrole === 'ROLE_USER'"
+                    class="nav_text ms-4"
+                    to="/myPage"
+                    >마이페이지</RouterLink
+                >
             </div>
         </div>
     </nav>
