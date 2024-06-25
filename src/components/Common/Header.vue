@@ -51,11 +51,14 @@
 
 <script setup>
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 const store = useStore();
+const router = useRouter();
 
 function handleLogout() {
     store.dispatch("deleteAuth");
+    router.push("/");
 }
 </script>
 
