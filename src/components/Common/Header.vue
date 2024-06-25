@@ -28,14 +28,6 @@
                 <RouterLink to="/join/joinMember" class="mx-4 nav_text">회원가입</RouterLink>
             </div>
             <div v-if="$store.state.mid !== ''">
-                <button
-                    @click="handleLogout"
-                    class="mx-4"
-                    style="border: none; background-color: white"
-                >
-                    로그아웃
-                </button>
-
                 <RouterLink v-if="$store.state.mrole === 'ROLE_ADMIN'" class="nav_text" to="/admin"
                     >관리자페이지</RouterLink
                 >
@@ -45,6 +37,13 @@
                     to="/myPage"
                     >마이페이지</RouterLink
                 >
+                <button
+                    @click="handleLogout"
+                    class="mx-4"
+                    style="border: none; background-color: white; font-weight: 900; font-size: 17px"
+                >
+                    로그아웃
+                </button>
             </div>
         </div>
     </nav>
