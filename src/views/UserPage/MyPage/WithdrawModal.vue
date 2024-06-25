@@ -12,7 +12,9 @@
             <button class="btnCancel" @click="emit('close')" data-bs-dismiss="modal">
                 취소할게요
             </button>
-            <button class="btn" @click="emit('close')" data-bs-dismiss="modal">탈퇴할게요</button>
+            <button class="btn" @click="emit('withdraw', $store.state.mid)" data-bs-dismiss="modal">
+                탈퇴할게요
+            </button>
         </template>
     </ModalTemplate>
 </template>
@@ -20,7 +22,7 @@
 <script setup>
 import ModalTemplate from "@/components/ModalTemplate.vue";
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "withdraw"]);
 </script>
 
 <style scoped>

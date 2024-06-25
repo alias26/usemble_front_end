@@ -149,11 +149,20 @@
                             있습니다.
                         </div>
                         <div>· 탈퇴 후 7일 간은 동일한 계정으로 재가입이 불가합니다.</div>
-                        <br/>
-                        <br/>
-                        <div style="text-align: right;">
-                            <button style="border: none; background-color: #fff;" @click="showWithdrawModal">탈퇴하기</button>
-                            <WithdrawModal id="#withdrawModal" @close="hideWithdrawModal" />
+                        <br />
+                        <br />
+                        <div style="text-align: right">
+                            <button
+                                style="border: none; background-color: #fff"
+                                @click="showWithdrawModal"
+                            >
+                                탈퇴하기
+                            </button>
+                            <WithdrawModal
+                                id="#withdrawModal"
+                                @close="hideWithdrawModal"
+                                @withdraw="submitWithdraw"
+                            />
                         </div>
                     </div>
                 </div>
@@ -163,24 +172,36 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import { Modal } from "bootstrap";
 import WithdrawModal from "./WithdrawModal.vue";
+import memberAPI from "@/apis/memberAPI";
 
 const emit = defineEmits(["close"]);
 
 let withdrawModal = null;
 
+const store = useStore();
+const router = useRouter();
+
 onMounted(() => {
     withdrawModal = new Modal(document.getElementById("#withdrawModal"));
 });
+
 function showWithdrawModal() {
     withdrawModal.show();
 }
 
 function hideWithdrawModal() {
     withdrawModal.hide();
+}
+
+async function submitWithdraw(mid) {
+    await memberAPI.withdrawMember(mid);
+    store.dispatch("deleteAuth");
+    router.push("/");
 }
 
 function getMemberInfo(mid) {

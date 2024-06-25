@@ -33,6 +33,10 @@ function deleteLike(mid, fmid) {
     return axios.delete("/member/unlike?mid=" + mid + "&fmid=" + fmid);
 }
 
+function withdrawMember(mid) {
+    return axios.patch("/member/withdraw?mid=" + mid);
+}
+
 export default {
     login,
     join,
@@ -42,4 +46,5 @@ export default {
     getLikeCnt,
     insertLike,
     deleteLike,
+    withdrawMember,
 };
