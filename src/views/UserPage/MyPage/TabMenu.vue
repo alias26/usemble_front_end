@@ -45,13 +45,26 @@
                 </RouterLink>
             </li>
             <li class="nav-item mb-3">
-                <a class="nav-link text-black"><strong>로그아웃</strong></a>
+                <button @click="handleLogout" class="nav-link text-black">
+                    <strong>로그아웃</strong>
+                </button>
             </li>
         </ul>
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+
+const store = useStore();
+const router = useRouter();
+
+function handleLogout() {
+    store.dispatch("deleteAuth");
+    router.push("/");
+}
+</script>
 
 <style scoped>
 #click-mypage {
