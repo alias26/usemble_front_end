@@ -139,7 +139,6 @@
                                 type="text"
                                 class="form-control fw-bold"
                                 id="form-input"
-                                placeholder="010"
                                 name="form-mphone"
                                 v-model="mph.m1"
                             />
@@ -179,7 +178,7 @@
                         id="form-input"
                         name="form-account1"
                         placeholder="은행명"
-                        v-model="member.mbankname"
+                        v-model="member.mbankName"
                     />
                     <div id="bank_warning" class="text-danger" style="font-size: 13px"></div>
                 </div>
@@ -190,7 +189,7 @@
                         id="form-input"
                         name="form-account2"
                         placeholder="계좌번호"
-                        v-model="member.mpayaccount"
+                        v-model="member.mpayAccount"
                     />
                     <div id="account_warning" class="text-danger" style="font-size: 13px"></div>
                 </div>
@@ -204,18 +203,16 @@
 
 <script setup>
 import memberAPI from "@/apis/memberAPI";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
-// function nextStep() {
-//     router.push("./joinCategory");
-// }
 const mph = ref({
     m1: "",
     m2: "",
     m3: "",
 });
+
 const mpwd = ref({
     mpwd1: "",
     mpwd2: "",
@@ -228,14 +225,77 @@ const member = ref({
     mbirth: "",
     msex: "",
     mphone: "",
-    mbankname: "",
-    mpayaccount: "",
+    mbankName: "",
+    mpayAccount: "",
     mintroduce: "",
 });
 
+watch([() => mph.value.m1, () => mph.value.m2, () => mph.value.m3], ([newM1, newM2, newM3]) => {
+    member.value.mphone = newM1 + newM2 + newM3;
+});
+watch([() => mpwd.value.mpwd1, () => mpwd.value.mpwd2], ([newM1, newM2]) => {
+    if (newM1 == newM2) {
+        member.value.mpassword = newM1;
+    }
+});
+
 //가입 버튼 클릭시 실행
-function handleSubmit() {
+async function handleSubmit() {
     //유효성 검사 작성.
+    const intro_warning = document.getElementById("intro_warning");
+    if (member.value.mintroduce.length == 0) {
+        intro_warning.innerHTML = "자기소개를 입력해 주세요.";
+    }
+    const id_warning = document.getElementById("id_warning");
+    const validate_id = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\.[A-Za-z0-9\\-]+/;
+    if (!validate_id.test(member.value.mid) || !member.value.mid) {
+        id_warning.innerHTML = "아이디(메일)형식을 지켜주세요.";
+    }
+    const pwd_warning = document.getElementById("pwd_warning");
+    const validate_pwd = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+    if (!validate_pwd.test(mpwd.value.mpwd1) || !mpwd.value.mpwd1) {
+        pwd_warning.innerHTML = "비밀번호 형식에 맞게 입력해주세요.";
+    }
+    const pwd2_warning = document.getElementById("pwd2_warning");
+    if (mpwd.value.mpwd1 != mpwd.value.mpwd2) {
+        pwd2_warning.innerHTML = "비밀번호가 일치하지 않습니다.";
+    }
+    const name_warning = document.getElementById("name_warning");
+    const validate_name = /^[가-힣]{1,6}$/;
+    if (!validate_name.test(member.value.mname) || !member.value.mname) {
+        name_warning.innerHTML = "이름을 형식에 맞게 입력해주세요.";
+    }
+    const birth_warning = document.getElementById("birth_warning");
+    const validate_birth = /^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$/;
+    if (!validate_birth.test(member.value.mbirth) || !member.value.mbirth) {
+        birth_warning.innerHTML = "생년월일을 형식에 맞게 입력해주세요.";
+    }
+    const sex_warning = document.getElementById("sex_warning");
+    const is_check_m = document.getElementById("inlineRadio1").checked;
+    const is_check_w = document.getElementById("inlineRadio2").checked;
+    if (is_check_m == false && is_check_w == false) {
+        sex_warning.innerHTML = "성별을 선택해 주세요.";
+    }
+    const validate_phone = /^[0-9]{4}$/;
+    const phone_warning1 = document.getElementById("phone_warning1");
+    const phone_warning2 = document.getElementById("phone_warning2");
+    if (!validate_phone.test(mph.value.m2) || !mph.value.m2) {
+        phone_warning1.innerHTML = "형식에 맞게 입력하세요.";
+    }
+    if (!validate_phone.test(mph.value.m3) || !mph.value.m3) {
+        phone_warning2.innerHTML = "형식에 맞게 입력하세요.";
+    }
+    const bank_warning = document.getElementById("bank_warning");
+    const validate_bank = /^[가-힣]{1,7}$/;
+    if (!validate_bank.test(member.value.mbankName) || !member.value.mbankName) {
+        bank_warning.innerHTML = "은행명을 형식에 맞게 입력해주세요.";
+    }
+    const account_warning = document.getElementById("account_warning");
+    const validate_account = /^[0-9]{1,20}$/;
+    if (!validate_account.test(member.value.mpayAccount) || !member.value.mpayAccount) {
+        account_warning.innerHTML = "계좌번호를 형식에 맞게 입력해주세요.";
+    }
+
     const formData = new FormData();
     formData.append("mid", member.value.mid);
     formData.append("mname", member.value.mname);
@@ -243,8 +303,8 @@ function handleSubmit() {
     formData.append("mbirth", member.value.mbirth);
     formData.append("msex", member.value.msex);
     formData.append("mphone", member.value.mphone);
-    formData.append("mbankname", member.value.mbankname);
-    formData.append("mpayaccount", member.value.mpayaccount);
+    formData.append("mbankName", member.value.mbankName);
+    formData.append("mpayAccount", member.value.mpayAccount);
     formData.append("mintroduce", member.value.mintroduce);
 
     const elMattach = mattach.value;
@@ -252,8 +312,9 @@ function handleSubmit() {
         formData.append("mattach", elMattach.files[0]);
     }
     try {
+        const response = await memberAPI.join(formData);
         router.push({
-            path: "./joinCategory",
+            path: "joinCategory",
             params: {
                 formData: formData,
             },
@@ -262,77 +323,6 @@ function handleSubmit() {
         console.log(error);
     }
 }
-
-//가입 버튼 클릭시 실행
-// async function handleSubmit() {
-//     //유효성 검사 시작.
-//     const intro_warning = document.getElementById("intro_warning");
-//     if (member.value.mintroduce.length == 0) {
-//         intro_warning.innerHTML = "자기소개를 입력해 주세요.";
-//     }
-//     const id_warning = document.getElementById("id_warning");
-//     const validate_id = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\.[A-Za-z0-9\\-]+/;
-//     if (!validate_id.test(member.value.mid) || !member.value.mid) {
-//         id_warning.innerHTML = "아이디(메일)형식을 지켜주세요.";
-//     }
-//     const pwd_warning = document.getElementById("pwd_warning");
-//     const validate_pwd = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-//     if (!validate_pwd.test(mpwd.value.mpwd1) || !mpwd.value.mpwd1) {
-//         pwd_warning.innerHTML = "비밀번호 형식에 맞게 입력해주세요.";
-//     }
-//     const pwd2_warning = document.getElementById("pwd2_warning");
-//     if (mpwd.value.mpwd1 != mpwd.value.mpwd2) {
-//         pwd2_warning.innerHTML = "비밀번호가 일치하지 않습니다.";
-//     }
-//     const name_warning = document.getElementById("name_warning");
-//     const validate_name = /^[가-힣]{1,6}$/;
-//     if (!validate_name.test(member.value.mname) || !member.value.mname) {
-//         name_warning.innerHTML = "이름을 형식에 맞게 입력해주세요.";
-//     }
-//     const birth_warning = document.getElementById("birth_warning");
-//     const validate_birth = /^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$/;
-//     if (!validate_birth.test(member.value.mbirth) || !member.value.mbirth) {
-//         birth_warning.innerHTML = "생년월일을 형식에 맞게 입력해주세요.";
-//     }
-//     const sex_warning = document.getElementById("sex_warning");
-//     const is_check_m = document.getElementById("inlineRadio1").checked;
-//     const is_check_w = document.getElementById("inlineRadio2").checked;
-//     if (is_check_m == false && is_check_w == false) {
-//         sex_warning.innerHTML = "성별을 선택해 주세요.";
-//     }
-//     const validate_phone = /^[0-9]{4}$/;
-//     const phone_warning1 = document.getElementById("phone_warning1");
-//     const phone_warning2 = document.getElementById("phone_warning2");
-//     if (!validate_phone.test(mph.value.m2) || !mph.value.m2) {
-//         phone_warning1.innerHTML = "형식에 맞게 입력하세요.";
-//     }
-//     if (!validate_phone.test(mph.value.m3) || !mph.value.m3) {
-//         phone_warning2.innerHTML = "형식에 맞게 입력하세요.";
-//     }
-//     const bank_warning = document.getElementById("bank_warning");
-//     const validate_bank = /^[가-힣]{1,7}$/;
-//     if (!validate_bank.test(member.value.mbankname) || !member.value.mbankname) {
-//         bank_warning.innerHTML = "은행명을 형식에 맞게 입력해주세요.";
-//     }
-//     const account_warning = document.getElementById("account_warning");
-//     const validate_account = /^[0-9]$/;
-//     if (!validate_account.test(member.value.mpayaccount) || !member.value.mpayaccount) {
-//         account_warning.innerHTML = "계좌번호를 형식에 맞게 입력해주세요.";
-//     }
-
-//     try {
-//         //유효성검사 생략
-//         console.log(JSON.parse(JSON.stringify(member.value)));
-//         //axios를 이용해서 back-end로 회원가입 요청
-//         const data = JSON.parse(JSON.stringify(member.value));
-//         const response = await memberAPI.join(data);
-//         memberAPI.join(response.data);
-//         //홈페이지로 이동
-//         router.push("/");
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
 </script>
 
 <style scoped>
