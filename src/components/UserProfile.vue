@@ -1,69 +1,123 @@
 <template>
-    <div class="d-flex justify-content-between" id="userinfo">
-        <div class="d-flex">
-            <div id="userimg">
-                <RouterLink to="/user/info">
-                    <img src="@/assets/photo31.jpg" />
-                </RouterLink>
-            </div>
-            <div>
-                <div id="host">호스트</div>
-                <RouterLink class="no-underline" to="/user/info">
-                    <div id="id">myeonghwan57</div>
-                </RouterLink>
-                <div id="intro">
-                    <div>안녕하세요.</div>
-                    <div>성남 인근에서 작고 아담한 와인모임을 진행하고 있습니다.</div>
-                    <div>와인에 관심있으시면 참여해주세요.</div>
+    <div :id="props.id">
+        <div class="d-flex justify-content-between userinfo">
+            <div class="d-flex">
+                <div id="userimg">
+                    <RouterLink to="/user/info">
+                        <img src="@/assets/photo31.jpg" />
+                    </RouterLink>
+                </div>
+                <div>
+                    <div id="host">호스트</div>
+                    <RouterLink class="no-underline" to="/user/info">
+                        <div id="id">{{ profile.mid }}</div>
+                    </RouterLink>
+                    <div id="intro">
+                        {{ profile.mintroduce }}
+                    </div>
                 </div>
             </div>
+            <div class="d-flex align-items-center">
+                <button
+                    class="d-flex btn mx-3"
+                    id="like-btn"
+                    @click="handleLike(store.state.mid, profile.mid)"
+                >
+                    <i v-if="!like" :id="'like' + idx" class="bi bi-heart me-2"></i>
+                    <i
+                        v-if="like"
+                        :id="'like' + idx"
+                        class="bi bi-heart-fill me-2"
+                        style="color: red"
+                    ></i>
+                    <div>{{ profile.mlikeCnt }}</div>
+                </button>
+            </div>
         </div>
-        <div class="d-flex align-items-center">
-            <button class="d-flex btn mx-3" id="like-btn" @click="handleLike">
-                <i id="like" class="bi bi-heart me-2"></i>
-                <div>{{ likeAmount }}</div>
-            </button>
-        </div>
+        <hr class="mx-2" />
     </div>
-    <hr class="mx-2"/>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import memberAPI from "@/apis/memberAPI";
 
-const props = defineProps(["mid"]);
+const props = defineProps(["mid", "idx", "id"]);
+const emit = defineEmits(["handleLikeHistory"]);
 
-function getUserProfile(mid) {
-    const user = ref({
-        mid: "myeonghwan57",
-        mintroduce:
-            "안녕하세요.성남 인근에서 작고 아담한 와인모임을 진행하고 있습니다.와인에 관심있으시면 참여해주세요.",
-    });
+const router = useRouter();
 
-    return user;
+const profile = ref({
+    mid: "",
+    mintroduce: "",
+    mlikeCnt: 0,
+});
+
+async function getMember(mid) {
+    try {
+        const response = await memberAPI.getUserProfile(mid);
+        profile.value.mid = response.data.member.mid;
+        profile.value.mintroduce = response.data.member.mintroduce;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-const writer = getUserProfile(props.mid);
+getMember(props.mid);
+
+async function getLikeCnt(mid) {
+    try {
+        const response = await memberAPI.getLikeCnt(mid);
+        profile.value.mlikeCnt = response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getLikeCnt(props.mid);
 
 //나의 좋아요 상태
 const like = ref(false);
-const likeAmount = ref(3);
 
-function handleLike() {
+async function getLikeState(mid, fmid) {
+    try {
+        const response = await memberAPI.getLikeState(mid, fmid);
+        like.value = response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const store = useStore();
+
+getLikeState(store.state.mid, props.mid);
+
+async function handleLike(mid, fmid) {
+    if (mid === fmid) {
+        alert("스스로를 좋아요할 수 없습니다.");
+        return;
+    }
+
     like.value = !like.value;
-    const likeEl = document.getElementById("like");
+    const likeEl = document.getElementById("like" + props.idx);
 
     if (like.value) {
         likeEl.classList.remove("bi-heart");
         likeEl.style.color = "red";
         likeEl.classList.add("bi-heart-fill");
-        likeAmount.value++;
+        const response = await memberAPI.insertLike(mid, fmid);
     } else {
         likeEl.classList.remove("bi-heart-fill");
         likeEl.style.color = "black";
         likeEl.classList.add("bi-heart");
-        likeAmount.value--;
+        const response = await memberAPI.deleteLike(mid, fmid);
+        if (emit("handleLikeHistory") != null) {
+            emit("handleLikeHistory", props.id);
+        }
     }
+    getLikeCnt(fmid);
 }
 </script>
 
@@ -72,7 +126,7 @@ img {
     border-radius: 50%;
     width: 60px;
 }
-#userinfo {
+.userinfo {
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;

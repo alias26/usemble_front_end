@@ -17,17 +17,24 @@
             <div class="bg-light" style="height: 500px">
                 <div class="hr"></div>
                 <div class="text-secondary align-content-center" style="font-size: 14px">
-                    <!-- 
-                    <div>관심 있는 호스트를 찾아보세요.</div>
-                    <button
-                        class="p-3 bg-black text-white rounded-1 fw-bold"
-                        style="font-size: 14px; border: none"
-                    >
-                        어셈블 둘러보기
-                    </button> -->
+                    <div v-if="likeList.mids.length == 0">
+                        <div>관심 있는 호스트를 찾아보세요.</div>
+                        <button
+                            class="p-3 bg-black text-white rounded-1 fw-bold"
+                            style="font-size: 14px; border: none"
+                        >
+                            어셈블 둘러보기
+                        </button>
+                    </div>
                     <div id="like-host" class="p-2">
-                        <UserProfile mid="myeonghwan57" />
-                        <UserProfile mid="myeonghwan57" />
+                        <UserProfile
+                            v-for="(mid, index) in likeList.mids"
+                            :key="index"
+                            :mid="mid"
+                            :idx="index"
+                            :id="'profile' + index"
+                            @handleLikeHistory="handleLikeHistory(index)"
+                        />
                     </div>
                 </div>
             </div>
@@ -37,6 +44,31 @@
 
 <script setup>
 import UserProfile from "@/components/UserProfile.vue";
+import memberAPI from "@/apis/memberAPI";
+import { ref } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
+const likeList = ref({
+    mids: [],
+});
+
+async function getUserProfileList(mid) {
+    try {
+        const response = await memberAPI.getUserProfileList(mid);
+        likeList.value.mids = response.data.likeList;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getUserProfileList(store.state.mid);
+
+function handleLikeHistory(index) {
+    document.getElementById("profile" + index).remove();
+    getUserProfileList(store.state.mid);
+}
 </script>
 
 <style scoped>
