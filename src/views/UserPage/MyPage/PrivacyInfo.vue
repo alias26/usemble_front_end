@@ -7,29 +7,31 @@
             <hr />
             <div class="mt-4 text-start">
                 <h5 class="mb-5"><strong>로그인 정보</strong></h5>
-                <div class="d-flex mb-4">
-                    <h6 style="margin-right: 200px"><strong>아이디</strong></h6>
-                    <div id="mid" style="color: gray">{{ member.mid }}</div>
+                <div class="d-flex mb-4 row">
+                    <h6 class="col-3"><strong>아이디</strong></h6>
+                    <div id="mid" class="col-9" style="color: gray">{{ member.mid }}</div>
                 </div>
-                <div class="d-flex mb-5">
-                    <h6 style="margin-right: 150px"><strong>비밀번호 변경</strong></h6>
-                    <RouterLink to="./passwordUpdate">
-                        <button class="btn btn-outline-secondary" id="update-btn">
-                            <strong>변경하기</strong>
-                        </button>
-                    </RouterLink>
+                <div class="d-flex mb-5 row">
+                    <h6 class="col-3"><strong>비밀번호 변경</strong></h6>
+                    <div class="col-9">
+                        <RouterLink to="./passwordUpdate">
+                            <button class="btn btn-outline-secondary" id="update-btn">
+                                <strong>변경하기</strong>
+                            </button>
+                        </RouterLink>
+                    </div>
                 </div>
             </div>
             <hr />
             <div class="mt-4 mb-5">
                 <h5 class="mb-5"><strong>회원 정보</strong></h5>
-                <div class="d-flex mb-4">
-                    <h6 style="margin-right: 210px"><strong>이름</strong></h6>
-                    <div id="mname" style="color: gray">{{ member.mname }}</div>
+                <div class="d-flex mb-4 row">
+                    <h6 class="col-3"><strong>이름</strong></h6>
+                    <div class="col-9" id="mname" style="color: gray">{{ member.mname }}</div>
                 </div>
-                <div class="d-flex mb-4">
-                    <h6 style="margin-right: 180px"><strong>전화번호</strong></h6>
-                    <div class="d-flex" id="pnum">
+                <div class="d-flex mb-4 row">
+                    <h6 class="col-3"><strong>전화번호</strong></h6>
+                    <div class="d-flex col-9" id="pnum">
                         <input
                             class="form-control"
                             id="mphone"
@@ -53,17 +55,26 @@
                         />
                     </div>
                 </div>
-                <div class="d-flex mb-4">
-                    <h6 style="margin-right: 170px"><strong>출생 연도</strong></h6>
-                    <div id="mssn" style="color: gray">{{ mbirth }}년</div>
+                <div class="d-flex mb-4 row">
+                    <h6 class="col-3"><strong>생년월일</strong></h6>
+                    <div class="col-9" id="mssn">
+                        {{
+                            member.mssn.slice(0, 2) +
+                            "년 " +
+                            member.mssn.slice(2, 4) +
+                            "월 " +
+                            member.mssn.slice(4, 6) +
+                            "일"
+                        }}
+                    </div>
                 </div>
-                <div class="d-flex mb-4">
-                    <h6 style="margin-right: 210px"><strong>성별</strong></h6>
-                    <div id="mssn" style="color: gray">{{ msex }}</div>
+                <div class="d-flex mb-4 row">
+                    <h6 class="col-3"><strong>성별</strong></h6>
+                    <div class="col-9" id="mssn" style="color: gray">{{ member.msex }}</div>
                 </div>
-                <div class="d-flex mb-4">
-                    <h6 style="margin-right: 170px"><strong>계좌정보</strong></h6>
-                    <div class="d-flex">
+                <div class="d-flex mb-4 row">
+                    <h6 class="col-3"><strong>계좌정보</strong></h6>
+                    <div class="d-flex col-9">
                         <div class="me-2">
                             <input
                                 style="color: gray"
@@ -87,20 +98,22 @@
                     </div>
                 </div>
                 <div class="mb-4">
-                    <div class="d-flex">
-                        <div style="margin-right: 140px; font-size: 16px">
+                    <div class="d-flex row">
+                        <div class="col-3" style="font-size: 16px">
                             <strong>자기소개 입력</strong>
                         </div>
-                        <textarea
-                            v-model="member.mintroduce"
-                            type="text"
-                            class="mb-3 form-control"
-                            id="mintroduce"
-                            placeholder="예)
+                        <div class="col-9">
+                            <textarea
+                                v-model="member.mintroduce"
+                                type="text"
+                                class="mb-3 form-control"
+                                id="mintroduce"
+                                placeholder="예)
                         OOO에서 그래픽 디자이너로 일하고 있습니다. 일상의 무료함을 달래며 영감을
                         얻기 위해 어셈블을 시작하게 됐어요! 좋은 분들을 만나 즐거운 시간을 보낼 수
                         있었으면 좋겠습니다."
-                        />
+                            />
+                        </div>
                     </div>
                     <div>
                         <button class="btn btn-outline-secondary" id="update-btn">
@@ -110,12 +123,12 @@
                 </div>
             </div>
             <hr />
-            <div class="d-flex mt-4 mb-4">
-                <div style="margin-right: 50px">
+            <div class="d-flex mt-4 mb-4 row">
+                <div class="col-3">
                     <h5><strong>마케팅 정보 수신 및</strong></h5>
                     <h5><strong> 활용 동의 여부</strong></h5>
                 </div>
-                <div class="form-check mb-4">
+                <div class="form-check mb-4 col-9">
                     <input
                         class="form-check-input"
                         type="checkbox"
@@ -137,9 +150,9 @@
             </div>
             <hr />
             <div class="mt-4 mb-5">
-                <div class="d-flex mb-4">
-                    <h5 style="margin-right: 150px"><strong>회원 탈퇴</strong></h5>
-                    <div>
+                <div class="d-flex mb-4 row">
+                    <h5 class="col-3"><strong>회원 탈퇴</strong></h5>
+                    <div class="col-9">
                         <p style="font-size: 18px"><strong>탈퇴시 주의사항</strong></p>
                         <div>
                             · 회원님의 좋아요와 신청한 어셈블 정보 및 결제 정보가 삭제처리됩니다.
@@ -212,8 +225,8 @@ function getMemberInfo(mid) {
         mid: "myeong1709@naver.com",
         mname: "김명환",
         mphone: "01071731709",
-        msex: "male",
-        mssn: "9506181",
+        msex: "남",
+        mssn: "950618",
         mbankName: "카카오뱅크",
         mpayAccount: "1111111111",
         mintroduce: "자기소개",
@@ -227,11 +240,6 @@ const member = getMemberInfo("myeong1709@naver.com");
 const mphone1 = member.value.mphone.slice(0, 3);
 const mphone2 = ref(member.value.mphone.slice(3, 7));
 const mphone3 = ref(member.value.mphone.slice(7, 11));
-
-const century = member.value.mssn.charAt(6);
-const year = member.value.mssn.slice(0, 2);
-const mbirth = century == "1" || century == "2" ? "19" + year : "20" + year;
-const msex = member.value.msex == "male" ? "남성" : "여성";
 </script>
 
 <style scoped>
@@ -249,9 +257,11 @@ const msex = member.value.msex == "male" ? "남성" : "여성";
 }
 
 #mintroduce {
-    width: 70%;
+    /* width: 70%; */
     height: 100px;
     padding: 10px;
+    resize: none;
+    color: gray;
 }
 
 input::placeholder {
