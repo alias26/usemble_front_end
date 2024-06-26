@@ -148,7 +148,10 @@
                             · 탈퇴 후에도 작성한 리뷰와 신청서의 내용은 서비스 내 계속 표시될 수
                             있습니다.
                         </div>
-                        <div>· 탈퇴 후 7일 간은 동일한 계정으로 재가입이 불가합니다.</div>
+                        <div>
+                            · 탈퇴 후에는 동일한 계정으로
+                            <span style="color: red">재가입이 불가</span>합니다.
+                        </div>
                         <br />
                         <br />
                         <div style="text-align: right">
