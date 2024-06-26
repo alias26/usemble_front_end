@@ -19,12 +19,13 @@
                 <div class="mb-2 fs-6 fw-bold">프로필 이미지 등록</div>
 
                 <input id="file" type="file" ref="mattach" @change="loadThumb" />
-                <label for="file">
+                <label class="mb-2" for="file">
                     <img type="button" src="@/assets/admin.png" class="thumbnail" id="thumbnail" />
                     <div type="button" id="camera">
                         <i id="camicon" class="bi bi-camera-fill text-white"></i>
                     </div>
                 </label>
+                <div id="img_warning" class="text-danger" style="font-size: 13px"></div>
             </div>
             <div class="mt-4">
                 <div class="mb-2 fs-6 fw-bold">자기소개 입력</div>
@@ -362,6 +363,7 @@ watch([() => mpwd.value.mpwd1, () => mpwd.value.mpwd2], ([newM1, newM2]) => {
 
 function loadThumb() {
     let flag = true;
+    const img_warning = document.getElementById("img_warning");
     const input = document.getElementById("file");
     if (input.files && input.files[0]) {
         const reader = new FileReader();
@@ -371,8 +373,8 @@ function loadThumb() {
         reader.readAsDataURL(input.files[0]);
         flag = true;
     } else {
-        document.getElementById("thumbnail").src = "@/assets/admin.png";
         flag = false;
+        img_warning.innerHTML = "프로필 이미지를 설정해주세요.";
     }
     return flag;
 }
