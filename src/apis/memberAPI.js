@@ -40,6 +40,9 @@ function withdrawMember(mid) {
 function idCheck(mid) {
     return axios.get("/member/idCheck?mid=" + mid);
 }
+function memberAttachDownload(mid) {
+    return axios.get("/member/mattach/" + mid, { responseType: "blob" });
+}
 export default {
     login,
     join,
@@ -51,4 +54,5 @@ export default {
     deleteLike,
     withdrawMember,
     idCheck,
+    memberAttachDownload,
 };

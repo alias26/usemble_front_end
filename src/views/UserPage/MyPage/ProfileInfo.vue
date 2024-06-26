@@ -23,8 +23,8 @@
             </div>
 
             <div class="d-flex">
-                <img id="proimg" src="../../../assets/photo31.jpg" alt="" />
-
+                <img id="proimg" alt="" :src="mattach" />
+                <!-- :src="`${axios.defaults.baseURL}/member/mattach/${member.mid}?accessToken=${$store.state.accessToken}`" -->
                 <div class="d-flex flex-column mb-2 ps-4" style="width: 100%">
                     <div class="d-flex">
                         <div class="d-flex me-1">
@@ -115,6 +115,8 @@ const member = ref({
     mid: "",
     mintroduce: "",
 });
+//이미지
+const mattach = ref(null);
 
 onMounted(() => {
     categoryModal = new Modal(document.querySelector("#categoryModal"));
@@ -125,6 +127,16 @@ async function getUserProfile(mid) {
     if (response.data.response == "success") {
         member.value.mid = response.data.member.mid;
         member.value.mintroduce = response.data.member.mintroduce;
+        getAttach(mid);
+    }
+}
+async function getAttach(mid) {
+    try {
+        const response = await memberAPI.memberAttachDownload(mid);
+        const blob = response.data;
+        mattach.value = URL.createObjectURL(blob);
+    } catch (error) {
+        console.log(error);
     }
 }
 
