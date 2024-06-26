@@ -7,6 +7,7 @@ import NoticeList from "@/views/FooterPage/NoticeList.vue";
 import NoticeDetail from "@/views/FooterPage/NoticeDetail.vue";
 import PolicyPrivacy from "@/views/FooterPage/PolicyPrivacy.vue";
 import PolicyUsage from "@/views/FooterPage/PolicyUsage.vue";
+import NotFound from "@/views/NotFound.vue";
 import SocialPage from "./SocialPage";
 import UserPage from "./UserPage";
 import AdminPage from "./AdminPage";
@@ -42,10 +43,14 @@ const routes = [
         name: "policyUsage",
         component: PolicyUsage,
     },
-
     ...SocialPage,
     ...UserPage,
     ...AdminPage,
+    {
+        path: "/:catchAll(.*)",
+        name: "notFound",
+        component: NotFound,
+    },
 ];
 
 const router = createRouter({
@@ -57,7 +62,6 @@ const router = createRouter({
     },
 });
 
-// const store = useStore();
 router.beforeEach((to, from, next) => {
     const mrole = store.state.mrole;
     const { authorization } = to.meta;
@@ -67,7 +71,7 @@ router.beforeEach((to, from, next) => {
             return next({ path: "/login" });
         }
         if (authorization.length && !authorization.includes(mrole)) {
-            return next({ path: "/notFound" });
+            return next({ path: "/:catchAll(.*)" });
         }
     }
     next();
