@@ -16,9 +16,11 @@
             </div>
 
             <div class="mb-4">
-                <img src="../../../assets/photo31.jpg" id="img-info" />
-                <input id="file" type="file" ref="mattach" multiple />
+                <div class="mb-2 fs-6 fw-bold">프로필 이미지 등록</div>
+
+                <input id="file" type="file" ref="mattach" @change="loadThumb" />
                 <label for="file">
+                    <img type="button" src="@/assets/admin.png" class="thumbnail" id="thumbnail" />
                     <div type="button" id="camera">
                         <i id="camicon" class="bi bi-camera-fill text-white"></i>
                     </div>
@@ -356,6 +358,24 @@ watch([() => mpwd.value.mpwd1, () => mpwd.value.mpwd2], ([newM1, newM2]) => {
         member.value.mpassword = newM1;
     }
 });
+// 이미지 미리보기
+
+function loadThumb() {
+    let flag = true;
+    const input = document.getElementById("file");
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById("thumbnail").src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+        flag = true;
+    } else {
+        document.getElementById("thumbnail").src = "@/assets/admin.png";
+        flag = false;
+    }
+    return flag;
+}
 
 function validateEmail() {
     let flag = true;
@@ -363,7 +383,7 @@ function validateEmail() {
     const validate_id = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!validate_id.test(member.value.mid) || !member.value.mid) {
         flag = false;
-        id_warning.innerHTML = "아이디(메일)형식을 지켜주세요.";
+        id_warning.innerHTML = "아이디(메일)형식을 지켜서 입력해주세요.";
     } else {
         flag = true;
         id_warning.innerHTML = " ";
@@ -381,7 +401,7 @@ async function IdCheck() {
             id_warning.innerHTML = "사용 가능한 아이디 입니다.";
             idWarningClass.value = "text-success";
         } else if (idCheckResult.value == 0 && (validateEmail() & true) == 0) {
-            id_warning.innerHTML = "아이디(메일)형식을 지켜주세요.";
+            id_warning.innerHTML = "아이디(메일)형식을 지켜서 입력해주세요.";
             idWarningClass.value = "text-danger";
         } else {
             id_warning.innerHTML = "이미 존재하는 아이디 입니다.";
@@ -409,7 +429,8 @@ function validatePwd1() {
     const validate_pwd = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
     if (!validate_pwd.test(mpwd.value.mpwd1) || !mpwd.value.mpwd1) {
         flag = false;
-        pwd_warning.innerHTML = "비밀번호 형식에 맞게 입력해주세요.";
+        pwd_warning.innerHTML =
+            "비밀번호 형식(특수문자, 영어 대/소문자, 숫자를 혼합해 8~16글자)에 맞게 입력해주세요.";
     } else {
         flag = true;
         pwd_warning.innerHTML = " ";
@@ -447,7 +468,7 @@ function validateBirth() {
     const validate_birth = /^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$/;
     if (!validate_birth.test(member.value.mbirth) || !member.value.mbirth) {
         flag = false;
-        birth_warning.innerHTML = "생년월일을 형식에 맞게 입력해주세요.";
+        birth_warning.innerHTML = "생년월일(YYMMDD)을 형식에 맞게 입력해주세요.";
     } else {
         flag = true;
         birth_warning.innerHTML = " ";
@@ -475,7 +496,7 @@ function validatePhone1() {
 
     if (!validate_phone.test(mph.value.m2) || !mph.value.m2) {
         flag = false;
-        phone_warning1.innerHTML = "형식에 맞게 입력하세요.";
+        phone_warning1.innerHTML = "형식(숫자4개)에 맞게 입력하세요.";
     } else {
         flag = true;
         phone_warning1.innerHTML = " ";
@@ -490,7 +511,7 @@ function validatePhone2() {
 
     if (!validate_phone.test(mph.value.m3) || !mph.value.m3) {
         flag = false;
-        phone_warning2.innerHTML = "형식에 맞게 입력하세요.";
+        phone_warning2.innerHTML = "형식(숫자4개)에 맞게 입력하세요.";
     } else {
         flag = true;
         phone_warning2.innerHTML = " ";
@@ -503,7 +524,7 @@ function validateBank() {
     const validate_bank = /^[가-힣]{2,7}$/;
     if (!validate_bank.test(member.value.mbankName) || !member.value.mbankName) {
         flag = false;
-        bank_warning.innerHTML = "은행명을 형식에 맞게 입력해주세요.";
+        bank_warning.innerHTML = "은행명을 형식(한글)에 맞게 입력해주세요.";
     } else {
         flag = true;
         bank_warning.innerHTML = " ";
@@ -516,7 +537,7 @@ function validateAccount() {
     const validate_account = /^[0-9]{1,17}$/;
     if (!validate_account.test(member.value.mpayAccount) || !member.value.mpayAccount) {
         flag = false;
-        account_warning.innerHTML = "계좌번호를 형식에 맞게 입력해주세요.";
+        account_warning.innerHTML = "계좌번호를 형식(숫자)에 맞게 입력해주세요.";
     } else {
         flag = true;
         account_warning.innerHTML = " ";
@@ -526,7 +547,8 @@ function validateAccount() {
 function nextStep() {
     //유효성 검사 작성.
     if (
-        (validateIntro() &
+        (loadThumb() &
+            validateIntro() &
             validateAccount() &
             validateName() &
             validateEmail() &
@@ -628,9 +650,11 @@ input::placeholder {
     border-radius: 7px 7px;
 }
 
-#img-info {
+#thumbnail {
     border-radius: 50%;
     width: 100px;
+    height: 100px;
+    object-fit: cover;
 }
 
 #camera {
@@ -640,11 +664,11 @@ input::placeholder {
     border: none;
     border-radius: 50%;
     position: absolute;
-    transform: translate(-100%, 55%);
+    transform: translate(220%, -90%);
 }
 #camicon {
     position: absolute;
-    transform: translate(44%, 15%);
+    transform: translate(47%, 15%);
 }
 #text-box {
     width: 100%;
