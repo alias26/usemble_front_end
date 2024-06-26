@@ -50,11 +50,11 @@
                             @change="validateEmail"
                         />
                     </div>
-                    <button type="button" class="btn btn-secondary" id="check-btn">
+                    <button type="button" class="btn btn-secondary" id="check-btn" @click="IdCheck">
                         중복 확인
                     </button>
                 </div>
-                <div id="id_warning" class="text-danger" style="font-size: 13px"></div>
+                <div id="id_warning" :class="idWarningClass" style="font-size: 13px"></div>
             </div>
 
             <div class="input-group">
@@ -304,12 +304,13 @@
 <script setup>
 import memberAPI from "@/apis/memberAPI";
 import { ref, watch } from "vue";
-import { router } from "vue-router";
 import JoinModal from "./JoinModal.vue";
+
 import { onMounted } from "vue";
 import { Modal } from "bootstrap";
 
 let joinModal = null;
+
 onMounted(() => {
     joinModal = new Modal(document.querySelector("#joinModal"));
 });
@@ -368,6 +369,27 @@ function validateEmail() {
         id_warning.innerHTML = " ";
     }
     return flag;
+}
+const idCheckResult = ref(null);
+const idWarningClass = ref("text-danger");
+async function IdCheck() {
+    try {
+        const response = await memberAPI.idCheck(member.value.mid);
+        const id_warning = document.getElementById("id_warning");
+        idCheckResult.value = response.data;
+        if (idCheckResult.value == 0 && (validateEmail() & true) == 1) {
+            id_warning.innerHTML = "사용 가능한 아이디 입니다.";
+            idWarningClass.value = "text-success";
+        } else if (idCheckResult.value == 0 && (validateEmail() & true) == 0) {
+            id_warning.innerHTML = "아이디(메일)형식을 지켜주세요.";
+            idWarningClass.value = "text-danger";
+        } else {
+            id_warning.innerHTML = "이미 존재하는 아이디 입니다.";
+            idWarningClass.value = "text-danger";
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 function validateIntro() {
     let flag = true;

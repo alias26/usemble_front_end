@@ -36,7 +36,9 @@ function deleteLike(mid, fmid) {
 function withdrawMember(mid) {
     return axios.patch("/member/withdraw?mid=" + mid);
 }
-
+function idCheck(mid) {
+    return axios.get("/member/idCheck?mid=" + mid);
+}
 export default {
     login,
     join,
@@ -47,4 +49,5 @@ export default {
     insertLike,
     deleteLike,
     withdrawMember,
+    idCheck,
 };
