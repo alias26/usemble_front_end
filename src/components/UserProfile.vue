@@ -4,7 +4,7 @@
             <div class="d-flex">
                 <div id="userimg">
                     <RouterLink to="/user/info">
-                        <img src="@/assets/photo31.jpg" />
+                        <img :src="mattach" />
                     </RouterLink>
                 </div>
                 <div>
@@ -55,6 +55,8 @@ const profile = ref({
     mlikeCnt: 0,
 });
 
+const mattach = ref(null);
+
 async function getMember(mid) {
     try {
         const response = await memberAPI.getUserProfile(mid);
@@ -65,7 +67,19 @@ async function getMember(mid) {
     }
 }
 
+async function getAttach(mid) {
+    try {
+        const response = await memberAPI.memberAttachDownload(mid);
+        const blob = response.data;
+        mattach.value = URL.createObjectURL(blob);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 getMember(props.mid);
+
+getAttach(props.mid);
 
 async function getLikeCnt(mid) {
     try {

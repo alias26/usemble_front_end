@@ -127,9 +127,9 @@ async function getUserProfile(mid) {
     if (response.data.response == "success") {
         member.value.mid = response.data.member.mid;
         member.value.mintroduce = response.data.member.mintroduce;
-        getAttach(mid);
     }
 }
+
 async function getAttach(mid) {
     try {
         const response = await memberAPI.memberAttachDownload(mid);
@@ -143,6 +143,8 @@ async function getAttach(mid) {
 const store = useStore();
 
 getUserProfile(store.state.mid);
+
+getAttach(store.state.mid);
 
 function showCategoryModal() {
     categoryModal.show();
