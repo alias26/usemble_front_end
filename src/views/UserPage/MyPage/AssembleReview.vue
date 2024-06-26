@@ -6,7 +6,7 @@
                 <p>후기</p>
             </div>
             <div class="hr"></div>
-            <div class="nav justify-content-around">
+            <div class="nav">
                 <div class="nav-item">
                     <button class="nav-link fw-bold" @click="toMeClick" :class="{ active: toMe }">
                         나에게 작성된 후기
@@ -123,25 +123,37 @@ const fromMeReviews = getFromMeReviews();
 .hr {
     border-bottom: 1px solid lightgray;
 }
+
 .nav-link {
     text-align: center;
-    width: 465px;
+    width: 100%;
     color: gray;
-}
-
-.active {
-    color: black;
-    border-width: 100%;
-    border-bottom: 3px solid black;
 }
 
 .nav-link:focus {
     color: black;
     border-width: 100%;
-    border-bottom: 3px solid black;
+    border-bottom: 1px solid black;
+}
+
+.active {
+    color: black;
+    border-width: 100%;
+    border-bottom: 1px solid black;
 }
 
 .nav {
     display: flex;
+}
+
+.nav-item {
+    flex-basis: 50%;
+}
+
+.nav-item:nth-child(1) {
+    flex-shrink: 1;
+}
+.nav-item:nth-child(2) {
+    flex-shrink: 1;
 }
 </style>

@@ -6,14 +6,18 @@
                 <p>어셈블 내역</p>
             </div>
             <div class="hr"></div>
-            <div class="nav justify-content-around">
-                <div class="fw-bold">
-                    <button class="nav-link" @click="applyClick" :class="{ active: apply }">
+            <div class="nav">
+                <div class="nav-item">
+                    <button class="nav-link fw-bold" :class="{ active: apply }" @click="applyClick">
                         신청 내역
                     </button>
                 </div>
-                <div class="fw-bold">
-                    <button class="nav-link" @click="recruitClick" :class="{ active: recruit }">
+                <div class="nav-item">
+                    <button
+                        class="nav-link fw-bold"
+                        :class="{ active: recruit }"
+                        @click="recruitClick"
+                    >
                         모집 내역
                     </button>
                 </div>
@@ -120,29 +124,40 @@ const recruitments = getRecruitments();
 }
 .nav-link {
     text-align: center;
-    width: 465px;
+    width: 100%;
     color: gray;
 }
 
 .nav-link:active {
     color: black;
     border-width: 100%;
-    border-bottom: 3px solid black;
+    border-bottom: 1px solid black;
 }
 
 .active {
     color: black;
     border-width: 100%;
-    border-bottom: 3px solid black;
+    border-bottom: 1px solid black;
 }
 
 .nav-link:focus {
     color: black;
     border-width: 100%;
-    border-bottom: 3px solid black;
+    border-bottom: 1px solid black;
 }
 
-.nav .nav {
+.nav {
     display: flex;
+}
+
+.nav-item {
+    flex-basis: 50%;
+}
+
+.nav-item:nth-child(1) {
+    flex-shrink: 1;
+}
+.nav-item:nth-child(2) {
+    flex-shrink: 1;
 }
 </style>
