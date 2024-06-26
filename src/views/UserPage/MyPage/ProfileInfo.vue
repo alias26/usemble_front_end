@@ -49,7 +49,7 @@
                             <CategoryModal id="categoryModal" @close="hideCategoryModal" />
                         </div>
                     </div>
-                    <div id="intro_box" class="bg-light p-4 mt-3">자기소개가 없습니다.</div>
+                    <div id="intro_box" class="bg-light p-4 mt-3">{{ member.mintroduce }}</div>
                 </div>
             </div>
 
@@ -106,12 +106,31 @@ import SocialCard from "@/components/Social/SocialCard.vue";
 import CategoryModal from "./CategoryModal.vue";
 import { onMounted, ref } from "vue";
 import { Modal } from "bootstrap";
+import { useStore } from "vuex";
+import memberAPI from "@/apis/memberAPI";
 
 let categoryModal = null;
+
+const member = ref({
+    mid: "",
+    mintroduce: "",
+});
 
 onMounted(() => {
     categoryModal = new Modal(document.querySelector("#categoryModal"));
 });
+
+async function getUserProfile(mid) {
+    const response = await memberAPI.getUserProfile(mid);
+    if (response.data.response == "success") {
+        member.value.mid = response.data.member.mid;
+        member.value.mintroduce = response.data.member.mintroduce;
+    }
+}
+
+const store = useStore();
+
+getUserProfile(store.state.mid);
 
 function showCategoryModal() {
     categoryModal.show();
