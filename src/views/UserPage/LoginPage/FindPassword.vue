@@ -1,39 +1,79 @@
 <template>
-
-        <div class="mt-5" id="findPassword">
-            <div class="mb-5 d-flex">
-                <div id="title-bold"><span class="highlight">비밀번호</span></div>
-                <div id="find-title">&nbsp;찾기</div>
-            </div>
-
-            <form>
-                <div class="d-flex mb-2">
-                    <div class="input-group me-2">
-                        <input
-                            type="email"
-                            id="form-email"
-                            class="form-control d-flex"
-                            placeholder="이메일주소 입력"
-                        />
-                    </div>
-                </div>
-            </form>
-
-            <div class="text-center">
-                <button type="submit" id="sub-btn" @click="trasfer">
-                    <strong>전송하기</strong>
-                </button>
-            </div>
+    <div class="mt-5" id="findPassword">
+        <div class="mb-5 d-flex">
+            <div id="title-bold"><span class="highlight">비밀번호</span></div>
+            <div id="find-title">&nbsp;찾기</div>
         </div>
-   
+
+        <form @submit.prevent="handleFindPassword">
+            <div class="d-flex mb-2">
+                <div class="input-group me-2">
+                    <input
+                        type="email"
+                        id="form-email"
+                        class="form-control d-flex"
+                        placeholder="이메일주소 입력"
+                        v-model="mid"
+                    />
+                </div>
+            </div>
+        </form>
+        <span id="warning" style="color: red; font-size: 14px">&nbsp;</span>
+        <div class="text-center">
+            <button type="submit" id="sub-btn" @click="handleFindPassword">
+                <strong>전송하기</strong>
+            </button>
+            <FindModal id="findModal" :mpassword="mpassword" @close="hideFindModal" />
+        </div>
+    </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-const router = useRouter();
-function trasfer() {
-    router.push("/");
+import { Modal } from "bootstrap";
+import memberAPI from "@/apis/memberAPI";
+import FindModal from "./FindModal.vue";
+
+const mid = ref("");
+const mpassword = ref("");
+
+async function handleFindPassword() {
+    const warning = document.getElementById("warning");
+    try {
+        //axios 이용
+        const response = await memberAPI.findPassword(mid.value);
+        //백엔드 -> 비밀번호 수정 -> 수정된 비번을 화면에 띄우기
+        if (response.data.result == "success") {
+            mpassword.value = response.data.mpassword;
+            showFindModal();
+        } else {
+            warning.innerHTML = "존재하지 않는 아이디입니다.";
+        }
+    } catch (error) {
+        console.log("error내용: ", error);
+    }
 }
+
+// const emit = defineEmits(["close"]);
+
+let findModal = null;
+
+
+onMounted(() => {
+    findModal = new Modal(document.getElementById("findModal"));
+});
+
+function showFindModal() {
+    findModal.show();
+}
+
+function hideFindModal() {
+    findModal.hide();
+}
+
+//
 </script>
 
 <style scoped>

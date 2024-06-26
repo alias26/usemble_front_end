@@ -10,6 +10,11 @@ function join(formData) {
     return axios.post("/member/join", formData);
 }
 
+function findPassword(mid) {
+    //multipart/form-data로 데이터 전송
+    return axios.patch("/member/findPassword?mid=" + mid);
+}
+
 function getUserProfileList(mid) {
     return axios.get("/member/likeList?mid=" + mid);
 }
@@ -46,6 +51,7 @@ function memberAttachDownload(mid) {
 export default {
     login,
     join,
+    findPassword,
     getUserProfileList,
     getUserProfile,
     getLikeState,
