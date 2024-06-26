@@ -78,7 +78,7 @@ function hideFindModal() {
 
 <style scoped>
 #findPassword {
-    width: 70%;
+    width: 50%;
     margin: 0 auto;
 }
 
