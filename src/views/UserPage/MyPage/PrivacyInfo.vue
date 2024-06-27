@@ -237,7 +237,7 @@ getPrivacy(store.state.mid);
 
 function updatePrivacy() {
     member.value.mphone = mphone1.value + mphone2.value + mphone3.value;
-    memberAPI.updatePrivacy(member.value);
+    memberAPI.updatePrivacy(JSON.parse(JSON.stringify(member.value)));
 }
 </script>
 
