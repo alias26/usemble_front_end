@@ -119,7 +119,8 @@
                         type="checkbox"
                         id="agree2"
                         name="agree2"
-                        value="1"
+                        v-model="member.agree"
+                        @click="updateAgree"
                     />
                     <label class="form-check-label mt-1 fw-bold" for="agree2">
                         (선택) 마케팅 정보 수신 동의
@@ -210,6 +211,7 @@ const member = ref({
     mbirth: "",
     mbankName: "",
     mpayAccount: "",
+    agree: false,
 });
 
 const mphone1 = ref(null);
@@ -225,6 +227,7 @@ async function getPrivacy(mid) {
     member.value.mbirth = response.data.mbirth.toString();
     member.value.mbankName = response.data.mbankName;
     member.value.mpayAccount = response.data.mpayAccount;
+    member.value.agree = response.data.agree;
 
     mphone1.value = member.value.mphone.slice(0, 3);
     mphone2.value = member.value.mphone.slice(3, 7);
@@ -238,6 +241,17 @@ getPrivacy(store.state.mid);
 function updatePrivacy() {
     member.value.mphone = mphone1.value + mphone2.value + mphone3.value;
     memberAPI.updatePrivacy(JSON.parse(JSON.stringify(member.value)));
+}
+
+function updateAgree() {
+    member.value.agree = !member.value.agree;
+
+    const nmember = {
+        mid: member.value.mid,
+        agree: member.value.agree,
+    };
+
+    memberAPI.updateAgree(nmember);
 }
 </script>
 

@@ -64,11 +64,19 @@ function getPrivacy(mid) {
 }
 
 function updatePrivacy(member) {
-    return axios.patch("/member/updatePrivacy", qs.stringify(member));
+    return axios.patch("/member/updatePrivacy", member);
 }
 
 function updatePassword(member) {
     return axios.patch("/member/updatePassword", qs.stringify(member));
+}
+
+function updateProfile(member) {
+    return axios.patch("/member/updateProfile", member);
+}
+
+function updateAgree(member) {
+    return axios.patch("/member/updateAgree", member);
 }
 
 export default {
@@ -89,4 +97,6 @@ export default {
     getPrivacy,
     updatePrivacy,
     updatePassword,
+    updateProfile,
+    updateAgree,
 };
