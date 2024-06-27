@@ -246,11 +246,6 @@
             </div>
 
             <div class="mb-5" id="ct-select">*최대 3개(0/3)</div>
-            <!-- <div>
-                <button v-for="(btn, index) in button" :key="index" @click="toggleClicked(index)">
-                    {{ btn.isClicked ? "Clicked" : "Click me" }}
-                </button>
-            </div> -->
 
             <div class="mt-5 mb-5">
                 <div class="form-check mb-4">
@@ -316,19 +311,6 @@ import JoinModal from "./JoinModal.vue";
 
 import { onMounted } from "vue";
 import { Modal } from "bootstrap";
-
-// //버튼 상태를 관리하는 배열
-// const button = ref([
-//     { isClicked: false },
-//     { isClicked: false },
-//     { isClicked: false },
-//     // 필요한 만큼 버튼을 추가
-// ]);
-
-// //상태 토글 함수
-// const toggleClicked = (index) => {
-//     button.value[index].isClicked = !button.value[index].isClicked;
-// };
 
 let joinModal = null;
 
@@ -597,31 +579,30 @@ function validateAccount() {
 
 function nextStep() {
     //유효성 검사 작성.
-    isStep1.value = !isStep1.value;
-    isStep2.value = !isStep2.value;
-    // if (
-    //     (loadThumb() &
-    //         validateIntro() &
-    //         validateAccount() &
-    //         validateName() &
-    //         validateEmail() &
-    //         validateBank() &
-    //         validateBirth() &
-    //         validatePhone1() &
-    //         validatePhone2() &
-    //         validatePwd1() &
-    //         validatePwd2() &
-    //         validateSex()) ==
-    //     true
-    // ) {
-    //     if (emailCheckFlag.value == false) {
-    //         const id_warning = document.getElementById("id_warning");
-    //         id_warning.innerHTML = "아이디 중복을 확인해 주세요.";
-    //     } else {
-    //         isStep1.value = !isStep1.value;
-    //         isStep2.value = !isStep2.value;
-    //     }
-    // }
+
+    if (
+        (loadThumb() &
+            validateIntro() &
+            validateAccount() &
+            validateName() &
+            validateEmail() &
+            validateBank() &
+            validateBirth() &
+            validatePhone1() &
+            validatePhone2() &
+            validatePwd1() &
+            validatePwd2() &
+            validateSex()) ==
+        true
+    ) {
+        if (emailCheckFlag.value == false) {
+            const id_warning = document.getElementById("id_warning");
+            id_warning.innerHTML = "아이디 중복을 확인해 주세요.";
+        } else {
+            isStep1.value = !isStep1.value;
+            isStep2.value = !isStep2.value;
+        }
+    }
 }
 
 //가입 버튼 클릭시 실행
@@ -765,17 +746,6 @@ h2 {
     font-size: 14px;
     font-weight: bolder;
 }
-
-/* .ct-btn:hover {
-    color: white;
-    border-color: #57b17f;
-    background-color: #57b17f;
-    padding: 12px 25px;
-    border-radius: 50px;
-    opacity: 70%;
-    font-size: 14px;
-    font-weight: bolder;
-} */
 
 .ct-btn-select {
     color: white;
