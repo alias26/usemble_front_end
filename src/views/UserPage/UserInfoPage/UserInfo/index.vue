@@ -165,7 +165,7 @@ getSocialCnt(mid);
 async function getReviewCnt(mid) {
     try {
         const response = await memberAPI.getReviewCnt(mid);
-        member.value.mlikeCnt = response.data;
+        member.value.reviewCnt = response.data;
     } catch (error) {
         console.log(error);
     }
