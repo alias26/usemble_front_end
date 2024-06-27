@@ -58,6 +58,9 @@ function idCheck(mid) {
 function memberAttachDownload(mid) {
     return axios.get("/member/mattach/" + mid, { responseType: "blob" });
 }
+function getCategory() {
+    return axios.get("/member/category");
+}
 
 function getPrivacy(mid) {
     return axios.get("/member/privacy?mid=" + mid);
@@ -94,6 +97,7 @@ export default {
     withdrawMember,
     idCheck,
     memberAttachDownload,
+    getCategory,
     getPrivacy,
     updatePrivacy,
     updatePassword,

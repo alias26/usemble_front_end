@@ -223,29 +223,34 @@
                     <h6><strong>2. 카테고리 선택</strong></h6>
                 </div>
             </div>
-            <div class="mt-4 mb-5">
+            <div class="mt-4 mb-3">
                 <h2>회원가입 마지막 단계!</h2>
                 <h2>관심있는 카테고리를 선택하세요</h2>
                 <p style="color: gray">취향에 맞게 추천해드려요.</p>
             </div>
-
-            <div class="mb-2">
-                <button type="button" class="btn btn-outline-secondary me-2" id="ct-btn">
-                    인간관계(친목)
-                </button>
-                <button type="button" class="btn btn-outline-secondary me-2" id="ct-btn">
-                    여행
-                </button>
-                <button type="button" class="btn btn-outline-secondary me-2" id="ct-btn">
-                    스포츠/운동
-                </button>
-                <button type="button" class="btn btn-outline-secondary me-2" id="ct-btn">
-                    자기계발/공부
-                </button>
-                <button type="button" class="btn btn-outline-secondary" id="ct-btn">음식</button>
+            <div class="form-control border-0 mb-2">
+                <div class="d-flex">
+                    <div v-for="(cate, index) in category" :key="index">
+                        <input
+                            type="button"
+                            :value="cate.ctname"
+                            class="btn ct-btn me-2"
+                            :class="{
+                                'ct-btn': !selected[index],
+                                'ct-btn-select': selected[index],
+                            }"
+                            @click="selectCategory(index)"
+                        />
+                    </div>
+                </div>
             </div>
 
             <div class="mb-5" id="ct-select">*최대 3개(0/3)</div>
+            <!-- <div>
+                <button v-for="(btn, index) in button" :key="index" @click="toggleClicked(index)">
+                    {{ btn.isClicked ? "Clicked" : "Click me" }}
+                </button>
+            </div> -->
 
             <div class="mt-5 mb-5">
                 <div class="form-check mb-4">
@@ -312,6 +317,19 @@ import JoinModal from "./JoinModal.vue";
 import { onMounted } from "vue";
 import { Modal } from "bootstrap";
 
+// //버튼 상태를 관리하는 배열
+// const button = ref([
+//     { isClicked: false },
+//     { isClicked: false },
+//     { isClicked: false },
+//     // 필요한 만큼 버튼을 추가
+// ]);
+
+// //상태 토글 함수
+// const toggleClicked = (index) => {
+//     button.value[index].isClicked = !button.value[index].isClicked;
+// };
+
 let joinModal = null;
 
 onMounted(() => {
@@ -359,6 +377,21 @@ watch([() => mpwd.value.mpwd1, () => mpwd.value.mpwd2], ([newM1, newM2]) => {
         member.value.mpassword = newM1;
     }
 });
+const category = ref([]);
+async function getCategoryList() {
+    try {
+        const response = await memberAPI.getCategory();
+        category.value = response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+const selected = ref(new Array(category.value.length).fill("focus"));
+function selectCategory(index) {
+    selected.value[index] = !selected.value[index];
+}
+
+getCategoryList();
 // 이미지 미리보기
 
 function loadThumb() {
@@ -564,29 +597,31 @@ function validateAccount() {
 
 function nextStep() {
     //유효성 검사 작성.
-    if (
-        (loadThumb() &
-            validateIntro() &
-            validateAccount() &
-            validateName() &
-            validateEmail() &
-            validateBank() &
-            validateBirth() &
-            validatePhone1() &
-            validatePhone2() &
-            validatePwd1() &
-            validatePwd2() &
-            validateSex()) ==
-        true
-    ) {
-        if (emailCheckFlag.value == false) {
-            const id_warning = document.getElementById("id_warning");
-            id_warning.innerHTML = "아이디 중복을 확인해 주세요.";
-        } else {
-            isStep1.value = !isStep1.value;
-            isStep2.value = !isStep2.value;
-        }
-    }
+    isStep1.value = !isStep1.value;
+    isStep2.value = !isStep2.value;
+    // if (
+    //     (loadThumb() &
+    //         validateIntro() &
+    //         validateAccount() &
+    //         validateName() &
+    //         validateEmail() &
+    //         validateBank() &
+    //         validateBirth() &
+    //         validatePhone1() &
+    //         validatePhone2() &
+    //         validatePwd1() &
+    //         validatePwd2() &
+    //         validateSex()) ==
+    //     true
+    // ) {
+    //     if (emailCheckFlag.value == false) {
+    //         const id_warning = document.getElementById("id_warning");
+    //         id_warning.innerHTML = "아이디 중복을 확인해 주세요.";
+    //     } else {
+    //         isStep1.value = !isStep1.value;
+    //         isStep2.value = !isStep2.value;
+    //     }
+    // }
 }
 
 //가입 버튼 클릭시 실행
@@ -722,7 +757,7 @@ h2 {
     text-align: left;
 }
 
-#ct-btn {
+.ct-btn {
     border-color: #cecac8;
     padding: 12px 25px;
     border-radius: 50px;
@@ -731,20 +766,20 @@ h2 {
     font-weight: bolder;
 }
 
-#ct-btn:hover {
+/* .ct-btn:hover {
     color: white;
-    border: #57b17f;
+    border-color: #57b17f;
     background-color: #57b17f;
     padding: 12px 25px;
     border-radius: 50px;
     opacity: 70%;
     font-size: 14px;
     font-weight: bolder;
-}
+} */
 
-#ct-btn:focus {
+.ct-btn-select {
     color: white;
-    border: #57b17f;
+    border-color: #57b17f;
     background-color: #57b17f;
     padding: 12px 25px;
     border-radius: 50px;
