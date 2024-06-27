@@ -10,8 +10,8 @@
                 type="password"
                 id="form-input"
                 class="form-control p-2"
-                placeholder="비밀번호 (8자 이상)"
-                v-model="password"
+                placeholder="기존 비밀번호"
+                v-model="passwordCheck"
             />
         </div>
 
@@ -20,8 +20,8 @@
                 type="password"
                 id="form-input"
                 class="form-control p-2"
-                placeholder="비밀번호 재입력"
-                v-model="passwordCheck"
+                placeholder="비밀번호 (8자 이상)"
+                v-model="password"
             />
         </div>
         <span id="warning" style="color: red; font-size: 14px"></span>
@@ -50,7 +50,8 @@ async function updatePassword() {
 
     const member = {
         mid: store.state.mid,
-        mpassword: password.value,
+        newPassword: password.value,
+        originPassword: passwordCheck.value,
     };
 
     const response = await memberAPI.updatePassword(member);
@@ -59,8 +60,13 @@ async function updatePassword() {
         store.dispatch("deleteAuth");
         router.push("/");
     } else {
-        const warning = document.getElementById("warning");
-        warning.innerHTML = "같은 비밀번호로는 변경하실 수 없습니다.";
+        if (response.data.reason == "originPassword") {
+            const warning = document.getElementById("warning");
+            warning.innerHTML = "기존 비밀번호와 맞지 않습니다.";
+        } else {
+            const warning = document.getElementById("warning");
+            warning.innerHTML = "같은 비밀번호로는 변경하실 수 없습니다.";
+        }
     }
 }
 </script>
