@@ -5,7 +5,7 @@
                 <div class="d-flex justify-content-between">
                     <div class="d-flex">
                         <div class="profile-img me-3">
-                            <img src="@/assets/logo.png" width="100px" height="100px" />
+                            <img :src="mattach" width="100px" height="100px" />
                         </div>
                         <div class="profile">
                             <p class="subtext mt-2 mb-2" style="font-size: 16px">사용자</p>
@@ -96,6 +96,20 @@ const member = ref({
 const route = useRoute();
 const store = useStore();
 const mid = route.query.mid;
+
+const mattach = ref(null);
+
+async function getAttach(mid) {
+    try {
+        const response = await memberAPI.memberAttachDownload(mid);
+        const blob = response.data;
+        mattach.value = URL.createObjectURL(blob);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getAttach(mid);
 
 async function getMember(mid) {
     try {
