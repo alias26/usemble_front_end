@@ -24,6 +24,7 @@
                 v-model="passwordCheck"
             />
         </div>
+        <span id="warning" style="color: red; font-size: 14px"></span>
         <div class="mt-3 text-end">
             <button class="btn" id="update-btn" @click="updatePassword">
                 <strong>변경하기</strong>
@@ -44,7 +45,7 @@ const router = useRouter();
 const password = ref("");
 const passwordCheck = ref("");
 
-function updatePassword() {
+async function updatePassword() {
     //TODO: 유효성 검사 추가
 
     const member = {
@@ -52,9 +53,15 @@ function updatePassword() {
         mpassword: password.value,
     };
 
-    memberAPI.updatePassword(member);
-    store.dispatch("deleteAuth");
-    router.push("/");
+    const response = await memberAPI.updatePassword(member);
+
+    if (response.data.response == "success") {
+        store.dispatch("deleteAuth");
+        router.push("/");
+    } else {
+        const warning = document.getElementById("warning");
+        warning.innerHTML = "같은 비밀번호로는 변경하실 수 없습니다.";
+    }
 }
 </script>
 
