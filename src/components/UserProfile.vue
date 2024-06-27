@@ -3,13 +3,13 @@
         <div class="d-flex justify-content-between userinfo">
             <div class="d-flex">
                 <div id="userimg">
-                    <RouterLink to="/user/info">
+                    <RouterLink :to="`/user/info?mid=${props.mid}`">
                         <img :src="mattach" />
                     </RouterLink>
                 </div>
                 <div>
                     <div id="host">호스트</div>
-                    <RouterLink class="no-underline" to="/user/info">
+                    <RouterLink class="no-underline" :to="`/user/info?mid=${props.mid}`">
                         <div id="id">{{ profile.mid }}</div>
                     </RouterLink>
                     <div id="intro">
@@ -23,12 +23,15 @@
                     id="like-btn"
                     @click="handleLike(store.state.mid, profile.mid)"
                 >
-                    <i v-if="!like" :id="'like' + idx" class="bi bi-heart me-2"></i>
                     <i
-                        v-if="like"
                         :id="'like' + idx"
-                        class="bi bi-heart-fill me-2"
-                        style="color: red"
+                        class="bi me-2"
+                        :class="{
+                            'bi-heart': !like,
+                            'like-deactive': !like,
+                            'bi-heart-fill': like,
+                            'like-active': like,
+                        }"
                     ></i>
                     <div>{{ profile.mlikeCnt }}</div>
                 </button>
@@ -170,6 +173,14 @@ img {
     border-color: lightgray;
     width: 120px;
     height: 40px;
+}
+
+.like-active {
+    color: red;
+}
+
+.like-deactive {
+    color: black;
 }
 
 .no-underline {

@@ -31,6 +31,14 @@ function getLikeCnt(mid) {
     return axios.get("/member/likeCnt?mid=" + mid);
 }
 
+function getSocialCnt(mid) {
+    return axios.get("/member/socialCnt?mid=" + mid);
+}
+
+function getReviewCnt(mid) {
+    return axios.get("/member/reviewCnt?mid=" + mid);
+}
+
 function insertLike(mid, fmid) {
     return axios.post("/member/like?mid=" + mid + "&fmid=" + fmid);
 }
@@ -42,9 +50,11 @@ function deleteLike(mid, fmid) {
 function withdrawMember(mid) {
     return axios.patch("/member/withdraw?mid=" + mid);
 }
+
 function idCheck(mid) {
     return axios.get("/member/idCheck?mid=" + mid);
 }
+
 function memberAttachDownload(mid) {
     return axios.get("/member/mattach/" + mid, { responseType: "blob" });
 }
@@ -56,6 +66,8 @@ export default {
     getUserProfile,
     getLikeState,
     getLikeCnt,
+    getSocialCnt,
+    getReviewCnt,
     insertLike,
     deleteLike,
     withdrawMember,

@@ -10,14 +10,22 @@
                         <div class="profile">
                             <p class="subtext mt-2 mb-2" style="font-size: 16px">사용자</p>
                             <h4>{{ member.mname }}</h4>
-                            <p class="subtext mt-2 mb-2">{{ member.mdate }} 가입</p>
+                            <p class="subtext mt-2 mb-2">
+                                {{ new Date(member.mdate).toLocaleDateString() }} 가입
+                            </p>
                         </div>
                     </div>
                     <div class="mt-1">
                         <button
                             id="like"
-                            class="like bi bi-heart fs-4"
-                            @click="handleLike"
+                            class="like bi fs-4"
+                            :class="{
+                                'bi-heart': !like,
+                                'like-deactive': !like,
+                                'bi-heart-fill': like,
+                                'like-active': like,
+                            }"
+                            @click="handleLike($store.state.mid, mid)"
                         ></button>
                     </div>
                 </div>
@@ -25,17 +33,17 @@
                 <div class="d-flex">
                     <div class="dashboard">
                         <p class="theme-color-text">좋아요를 받은 사용자의 수</p>
-                        <h5>{{ likeCnt }}개</h5>
+                        <h5>{{ member.likeCnt }}개</h5>
                     </div>
                     <div class="vr"></div>
                     <div class="dashboard">
                         <p class="theme-color-text">주최한 어셈블의 수</p>
-                        <h5>{{ usembleCnt }}개</h5>
+                        <h5>{{ member.socialCnt }}개</h5>
                     </div>
                     <div class="vr"></div>
                     <div class="dashboard">
                         <p class="theme-color-text">함께한 분들의 후기</p>
-                        <h5>{{ reviewCnt }}개</h5>
+                        <h5>{{ member.reviewCnt }}개</h5>
                     </div>
                 </div>
                 <hr />
@@ -57,7 +65,7 @@
         <div class="card mt-4">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <h5>함께한 분들의 후기 {{ reviewCnt }}</h5>
+                    <h5>함께한 분들의 후기 {{ member.reviewCnt }}</h5>
                     <RouterLink class="show-more" to="/">더보기</RouterLink>
                 </div>
                 <Review v-for="(review, index) in reviews" :key="index" :review="review" />
@@ -68,25 +76,102 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import memberAPI from "@/apis/memberAPI";
 import Review from "@/components/Review.vue";
 import UserSocialList from "./UserSocialList.vue";
 
 //멤버 정보
-const member = {
-    mid: "myeongmyeong1709@naver.com",
-    mname: "김명환",
-    mdate: "2024.06.19",
-    mintroduce: "자기소개입니다.",
-};
+const member = ref({
+    mid: "",
+    mname: "",
+    mintroduce: "",
+    mdate: "",
+    likeCnt: 0,
+    socialCnt: 0,
+    reviewCnt: 0,
+});
+
+const route = useRoute();
+const store = useStore();
+const mid = route.query.mid;
+
+async function getMember(mid) {
+    try {
+        const response = await memberAPI.getUserProfile(mid);
+        member.value.mid = response.data.member.mid;
+        member.value.mname = response.data.member.mname;
+        member.value.mintroduce = response.data.member.mintroduce;
+        member.value.mdate = response.data.member.mdate;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getMember(mid);
 
 //나의 좋아요 상태
 const like = ref(false);
 
+async function getLikeState(mid, fmid) {
+    try {
+        const response = await memberAPI.getLikeState(mid, fmid);
+        like.value = response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getLikeState(store.state.mid, mid);
+
+async function handleLike(mid, fmid) {
+    if (mid === fmid) {
+        alert("스스로를 좋아요할 수 없습니다.");
+        return;
+    }
+    like.value = !like.value;
+
+    if (like.value) {
+        const response = await memberAPI.insertLike(mid, fmid);
+    } else {
+        const response = await memberAPI.deleteLike(mid, fmid);
+    }
+}
+
 //대쉬보드 정보
-const likeCnt = ref(150);
-const usembleCnt = ref(10);
-const reviewCnt = ref(3);
+async function getLikeCnt(mid) {
+    try {
+        const response = await memberAPI.getLikeCnt(mid);
+        member.value.mlikeCnt = response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getLikeCnt(mid);
+
+async function getSocialCnt(mid) {
+    try {
+        const response = await memberAPI.getSocialCnt(mid);
+        member.value.socialCnt = response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getSocialCnt(mid);
+
+async function getReviewCnt(mid) {
+    try {
+        const response = await memberAPI.getReviewCnt(mid);
+        member.value.mlikeCnt = response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getReviewCnt(mid);
 
 function getInProgressSocials() {
     const socials = ref([
@@ -110,9 +195,7 @@ function getInProgressSocials() {
     return socials;
 }
 
-const store = useStore();
-
-const inProgressedeSocials = getInProgressSocials(member.mid);
+const inProgressedeSocials = getInProgressSocials(member.value.mid);
 
 function getProgressedSocials() {
     const socials = ref([
@@ -136,7 +219,7 @@ function getProgressedSocials() {
     return socials;
 }
 
-const progressedeSocials = getProgressedSocials(member.mid);
+const progressedeSocials = getProgressedSocials(member.value.mid);
 
 const review1 = {
     stitle: "어셈블 제목1",
@@ -160,21 +243,6 @@ const review3 = {
 };
 
 const reviews = [review1, review2, review3];
-
-function handleLike() {
-    like.value = !like.value;
-    const likeEl = document.getElementById("like");
-
-    if (like.value) {
-        likeEl.classList.remove("bi-heart");
-        likeEl.style.color = "red";
-        likeEl.classList.add("bi-heart-fill");
-    } else {
-        likeEl.classList.remove("bi-heart-fill");
-        likeEl.style.color = "black";
-        likeEl.classList.add("bi-heart");
-    }
-}
 </script>
 
 <style scoped>
@@ -232,6 +300,14 @@ h5 {
     border: 0;
     background-color: #fff;
     border-radius: 10px;
+}
+
+.like-active {
+    color: red;
+}
+
+.like-deactive {
+    color: black;
 }
 
 .profile-introduce {
