@@ -371,11 +371,13 @@ function loadThumb() {
             document.getElementById("thumbnail").src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
+        img_warning.innerHTML = " ";
         flag = true;
     } else {
-        flag = false;
         img_warning.innerHTML = "프로필 이미지를 설정해주세요.";
+        flag = false;
     }
+    console.log(flag);
     return flag;
 }
 
@@ -390,28 +392,31 @@ function validateEmail() {
         flag = true;
         id_warning.innerHTML = " ";
     }
+    console.log(flag);
     return flag;
 }
+
+const emailCheckFlag = ref(false);
 const idCheckResult = ref(null);
 const idWarningClass = ref("text-danger");
 async function IdCheck() {
-    try {
-        const response = await memberAPI.idCheck(member.value.mid);
-        const id_warning = document.getElementById("id_warning");
-        idCheckResult.value = response.data;
-        if (idCheckResult.value == 0 && (validateEmail() & true) == 1) {
-            id_warning.innerHTML = "사용 가능한 아이디 입니다.";
-            idWarningClass.value = "text-success";
-        } else if (idCheckResult.value == 0 && (validateEmail() & true) == 0) {
-            id_warning.innerHTML = "아이디(메일)형식을 지켜서 입력해주세요.";
-            idWarningClass.value = "text-danger";
-        } else {
-            id_warning.innerHTML = "이미 존재하는 아이디 입니다.";
-            idWarningClass.value = "text-danger";
-        }
-    } catch (error) {
-        console.log(error);
+    const response = await memberAPI.idCheck(member.value.mid);
+    const id_warning = document.getElementById("id_warning");
+    idCheckResult.value = response.data;
+    if (idCheckResult.value == 0 && (validateEmail() & true) == true) {
+        emailCheckFlag.value = true;
+        id_warning.innerHTML = "사용 가능한 아이디 입니다.";
+        idWarningClass.value = "text-success";
+    } else if (idCheckResult.value == 0 && (validateEmail() & true) == false) {
+        emailCheckFlag.value = false;
+        id_warning.innerHTML = "아이디(메일)형식을 지켜서 입력해주세요.";
+        idWarningClass.value = "text-danger";
+    } else {
+        emailCheckFlag.value = false;
+        id_warning.innerHTML = "이미 존재하는 아이디 입니다.";
+        idWarningClass.value = "text-danger";
     }
+    console.log(emailCheckFlag.value);
 }
 function validateIntro() {
     let flag = true;
@@ -423,6 +428,7 @@ function validateIntro() {
         flag = true;
         intro_warning.innerHTML = " ";
     }
+    console.log(flag);
     return flag;
 }
 function validatePwd1() {
@@ -437,6 +443,7 @@ function validatePwd1() {
         flag = true;
         pwd_warning.innerHTML = " ";
     }
+    console.log(flag);
     return flag;
 }
 function validatePwd2() {
@@ -449,6 +456,7 @@ function validatePwd2() {
         flag = true;
         pwd2_warning.innerHTML = " ";
     }
+    console.log(flag);
     return flag;
 }
 function validateName() {
@@ -462,6 +470,7 @@ function validateName() {
         flag = true;
         name_warning.innerHTML = " ";
     }
+    console.log(flag);
     return flag;
 }
 function validateBirth() {
@@ -475,6 +484,7 @@ function validateBirth() {
         flag = true;
         birth_warning.innerHTML = " ";
     }
+    console.log(flag);
     return flag;
 }
 function validateSex() {
@@ -489,6 +499,7 @@ function validateSex() {
         flag = true;
         sex_warning.innerHTML = " ";
     }
+    console.log(flag);
     return flag;
 }
 function validatePhone1() {
@@ -503,6 +514,7 @@ function validatePhone1() {
         flag = true;
         phone_warning1.innerHTML = " ";
     }
+    console.log(flag);
     return flag;
 }
 function validatePhone2() {
@@ -518,6 +530,7 @@ function validatePhone2() {
         flag = true;
         phone_warning2.innerHTML = " ";
     }
+    console.log(flag);
     return flag;
 }
 function validateBank() {
@@ -531,6 +544,7 @@ function validateBank() {
         flag = true;
         bank_warning.innerHTML = " ";
     }
+    console.log(flag);
     return flag;
 }
 function validateAccount() {
@@ -544,8 +558,10 @@ function validateAccount() {
         flag = true;
         account_warning.innerHTML = " ";
     }
+    console.log(flag);
     return flag;
 }
+
 function nextStep() {
     //유효성 검사 작성.
     if (
@@ -563,8 +579,13 @@ function nextStep() {
             validateSex()) ==
         true
     ) {
-        isStep1.value = !isStep1.value;
-        isStep2.value = !isStep2.value;
+        if (emailCheckFlag.value == false) {
+            const id_warning = document.getElementById("id_warning");
+            id_warning.innerHTML = "아이디 중복을 확인해 주세요.";
+        } else {
+            isStep1.value = !isStep1.value;
+            isStep2.value = !isStep2.value;
+        }
     }
 }
 
