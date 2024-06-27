@@ -37,40 +37,40 @@
                             id="mphone"
                             style="color: gray"
                             type="tel"
-                            :value="mphone1"
+                            v-model="mphone1"
                         />
                         <input
                             class="form-control"
                             id="mphone"
                             style="color: gray"
                             type="tel"
-                            :value="mphone2"
+                            v-model="mphone2"
                         />
                         <input
                             class="form-control"
                             id="mphone"
                             style="color: gray"
                             type="tel"
-                            :value="mphone3"
+                            v-model="mphone3"
                         />
                     </div>
                 </div>
                 <div class="d-flex mb-4 row">
                     <h6 class="col-3"><strong>생년월일</strong></h6>
-                    <div class="col-9" id="mssn">
+                    <div class="col-9">
                         {{
-                            member.mssn.slice(0, 2) +
+                            member.mbirth.slice(0, 2) +
                             "년 " +
-                            member.mssn.slice(2, 4) +
+                            member.mbirth.slice(2, 4) +
                             "월 " +
-                            member.mssn.slice(4, 6) +
+                            member.mbirth.slice(4, 6) +
                             "일"
                         }}
                     </div>
                 </div>
                 <div class="d-flex mb-4 row">
                     <h6 class="col-3"><strong>성별</strong></h6>
-                    <div class="col-9" id="mssn" style="color: gray">{{ member.msex }}</div>
+                    <div class="col-9" style="color: gray">{{ member.msex }}</div>
                 </div>
                 <div class="d-flex mb-4 row">
                     <h6 class="col-3"><strong>계좌정보</strong></h6>
@@ -82,7 +82,7 @@
                                 class="form-control"
                                 id="form-account"
                                 name="form-account1"
-                                :value="member.mbankName"
+                                v-model="member.mbankName"
                             />
                         </div>
                         <div class="">
@@ -92,34 +92,19 @@
                                 class="form-control"
                                 id="form-account"
                                 name="form-account2"
-                                :value="member.mpayAccount"
+                                v-model="member.mpayAccount"
                             />
                         </div>
                     </div>
                 </div>
-                <div class="mb-4">
-                    <div class="d-flex row">
-                        <div class="col-3" style="font-size: 16px">
-                            <strong>자기소개 입력</strong>
-                        </div>
-                        <div class="col-9">
-                            <textarea
-                                v-model="member.mintroduce"
-                                type="text"
-                                class="mb-3 form-control"
-                                id="mintroduce"
-                                placeholder="예)
-                        OOO에서 그래픽 디자이너로 일하고 있습니다. 일상의 무료함을 달래며 영감을
-                        얻기 위해 어셈블을 시작하게 됐어요! 좋은 분들을 만나 즐거운 시간을 보낼 수
-                        있었으면 좋겠습니다."
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <button class="btn btn-outline-secondary" id="update-btn">
-                            <strong>수정하기</strong>
-                        </button>
-                    </div>
+                <div class="d-flex justify-content-end mb-4">
+                    <button
+                        class="btn btn-outline-secondary"
+                        id="update-btn"
+                        @click="updatePrivacy"
+                    >
+                        <strong>수정하기</strong>
+                    </button>
                 </div>
             </div>
             <hr />
@@ -217,26 +202,43 @@ async function submitWithdraw(mid) {
     router.push("/");
 }
 
-function getMemberInfo(mid) {
-    const member = ref({
-        mid: "myeong1709@naver.com",
-        mname: "김명환",
-        mphone: "01071731709",
-        msex: "남",
-        mssn: "950618",
-        mbankName: "카카오뱅크",
-        mpayAccount: "1111111111",
-        mintroduce: "자기소개",
-    });
+const member = ref({
+    mid: "",
+    mname: "",
+    mphone: "",
+    msex: "",
+    mbirth: "",
+    mbankName: "",
+    mpayAccount: "",
+});
+
+const mphone1 = ref(null);
+const mphone2 = ref(null);
+const mphone3 = ref(null);
+
+async function getPrivacy(mid) {
+    const response = await memberAPI.getPrivacy(mid);
+    member.value.mid = response.data.mid;
+    member.value.mname = response.data.mname;
+    member.value.mphone = response.data.mphone;
+    member.value.msex = response.data.msex;
+    member.value.mbirth = response.data.mbirth.toString();
+    member.value.mbankName = response.data.mbankName;
+    member.value.mpayAccount = response.data.mpayAccount;
+
+    mphone1.value = member.value.mphone.slice(0, 3);
+    mphone2.value = member.value.mphone.slice(3, 7);
+    mphone3.value = member.value.mphone.slice(7, 11);
 
     return member;
 }
 
-const member = getMemberInfo("myeong1709@naver.com");
+getPrivacy(store.state.mid);
 
-const mphone1 = member.value.mphone.slice(0, 3);
-const mphone2 = ref(member.value.mphone.slice(3, 7));
-const mphone3 = ref(member.value.mphone.slice(7, 11));
+function updatePrivacy() {
+    member.value.mphone = mphone1.value + mphone2.value + mphone3.value;
+    memberAPI.updatePrivacy(member.value);
+}
 </script>
 
 <style scoped>

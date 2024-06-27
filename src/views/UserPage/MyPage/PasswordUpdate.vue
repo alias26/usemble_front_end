@@ -11,6 +11,7 @@
                 id="form-input"
                 class="form-control p-2"
                 placeholder="비밀번호 (8자 이상)"
+                v-model="password"
             />
         </div>
 
@@ -20,17 +21,42 @@
                 id="form-input"
                 class="form-control p-2"
                 placeholder="비밀번호 재입력"
+                v-model="passwordCheck"
             />
         </div>
         <div class="mt-3 text-end">
-            <button class="btn" id="update-btn">
+            <button class="btn" id="update-btn" @click="updatePassword">
                 <strong>변경하기</strong>
             </button>
         </div>
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import memberAPI from "@/apis/memberAPI";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+
+const store = useStore();
+const router = useRouter();
+
+const password = ref("");
+const passwordCheck = ref("");
+
+function updatePassword() {
+    //TODO: 유효성 검사 추가
+
+    const member = {
+        mid: store.state.mid,
+        mpassword: password.value,
+    };
+
+    memberAPI.updatePassword(member);
+    store.dispatch("deleteAuth");
+    router.push("/");
+}
+</script>
 
 <style scoped>
 .highlight {
