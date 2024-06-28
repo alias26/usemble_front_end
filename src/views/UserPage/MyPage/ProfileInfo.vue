@@ -122,6 +122,7 @@ onMounted(() => {
     categoryModal = new Modal(document.querySelector("#categoryModal"));
 });
 
+//유저 프로필 가져오기
 async function getUserProfile(mid) {
     const response = await memberAPI.getUserProfile(mid);
     if (response.data.response == "success") {
@@ -130,6 +131,7 @@ async function getUserProfile(mid) {
     }
 }
 
+//유저 프로필 이미지 가져오기
 async function getAttach(mid) {
     try {
         const response = await memberAPI.memberAttachDownload(mid);

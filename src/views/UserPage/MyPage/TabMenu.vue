@@ -60,6 +60,7 @@ import { useRouter } from "vue-router";
 const store = useStore();
 const router = useRouter();
 
+//로그아웃
 function handleLogout() {
     store.dispatch("deleteAuth");
     router.push("/");

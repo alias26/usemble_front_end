@@ -86,6 +86,7 @@ const likeList = ref({
     pager: {},
 });
 
+//좋아요 정보 가져오기
 async function getUserLikeList(pageNo, mid) {
     try {
         const response = await memberAPI.getUserLikeList(pageNo, mid);
@@ -98,6 +99,7 @@ async function getUserLikeList(pageNo, mid) {
 
 getUserLikeList(pageNo.value, store.state.mid);
 
+//좋아요 삭제 시 컴포넌트 삭제
 function handleLikeHistory(index) {
     document.getElementById("profile" + index).remove();
     getUserLikeList(pageNo.value, store.state.mid);
@@ -109,6 +111,7 @@ function goAssembleList() {
     router.push("/list");
 }
 
+//페이지 이동
 function changePageNo(argPageNo, mid) {
     router.push(`/mypage/assembleLike?mid=${mid}&pageNo=${argPageNo}`);
 }
@@ -123,18 +126,9 @@ watch(route, (newRoute, oldRoute) => {
         pageNo.value = 1;
     }
 });
-
-// watch(likeList.value, (newLikeList, oldLikeList) => {
-
-// });
 </script>
 
 <style scoped>
-/* #mypageForm {
-     width: 70%; 
-    margin: 0 auto;
-} */
-
 .like {
     width: 100%;
     margin: 0 auto;

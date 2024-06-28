@@ -41,10 +41,12 @@ const emit = defineEmits(["close"]);
 
 const router = useRouter();
 
+//메인으로 가기
 function goUrlHome() {
     router.push("/");
 }
 
+//로그인으로 가기
 function goUrlLogin() {
     router.push("/login");
 }

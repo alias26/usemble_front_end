@@ -39,16 +39,18 @@ import FindModal from "./FindModal.vue";
 const mid = ref("");
 const mpassword = ref("");
 
+//비밀번호 찾기
 async function handleFindPassword() {
+    //문제 발생 시 정보를 보여줄 element
     const warning = document.getElementById("warning");
     try {
-        //axios 이용
         const response = await memberAPI.findPassword(mid.value);
-        //백엔드 -> 비밀번호 수정 -> 수정된 비번을 화면에 띄우기
+        //비밀번호 찾기 성공 시
         if (response.data.result == "success") {
             mpassword.value = response.data.mpassword;
             showFindModal();
         } else {
+            //아이디가 존재하지 않는다면
             warning.innerHTML = "존재하지 않는 아이디입니다.";
         }
     } catch (error) {
@@ -56,10 +58,7 @@ async function handleFindPassword() {
     }
 }
 
-// const emit = defineEmits(["close"]);
-
 let findModal = null;
-
 
 onMounted(() => {
     findModal = new Modal(document.getElementById("findModal"));
@@ -72,8 +71,6 @@ function showFindModal() {
 function hideFindModal() {
     findModal.hide();
 }
-
-//
 </script>
 
 <style scoped>

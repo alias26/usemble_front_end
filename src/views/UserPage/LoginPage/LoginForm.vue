@@ -62,33 +62,45 @@ const member = ref({
 });
 
 async function handleLogin() {
+    //문제 발생시 정보를 보여줄 element
     const warning = document.getElementById("loginWarn");
 
+    //유효성 검사
+    //아이디를 입력안했을 때
     if (member.value.mid.length == 0) {
         warning.innerHTML = "아이디를 입력해주세요.";
+        //비밀번호를 입력 안했을 떄
     } else if (member.value.mpassword.length == 0) {
         warning.innerHTML = "비밀번호를 입력해주세요.";
     } else {
         try {
             const data = JSON.parse(JSON.stringify(member.value));
             const response = await memberAPI.login(data);
+
+            //로그인 성공 시
             if (response.data.result == "success") {
+                //payload 데이터
                 const payload = {
                     mid: response.data.mid,
                     mname: response.data.mname,
                     mrole: response.data.mrole,
                     accessToken: response.data.accessToken,
                 };
+                //자동 로그인 체크시
                 if (document.getElementById("autoLogin").checked) {
+                    //로컬스토리지 저장
                     store.dispatch("saveAuthLocal", payload);
                 } else {
+                    //세션스토리지 저장
                     store.dispatch("saveAuthSession", payload);
                 }
                 router.push("/");
             } else {
                 if (response.data.reason == "id") {
+                    //아이디가 존재하지 않는다면
                     warning.innerHTML = "존재하지 않는 아이디입니다.";
                 } else {
+                    //비밀번호가 틀릴 시
                     warning.innerHTML = "잘못된 비밀번호를 입력하셨습니다.";
                 }
             }

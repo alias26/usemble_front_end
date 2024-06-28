@@ -60,6 +60,7 @@ const profile = ref({
 
 const mattach = ref(null);
 
+//멤버 정보 불러오기
 async function getMember(mid) {
     try {
         const response = await memberAPI.getUserProfile(mid);
@@ -70,6 +71,7 @@ async function getMember(mid) {
     }
 }
 
+//멤버의 프로필 이미지 불러오기
 async function getAttach(mid) {
     try {
         const response = await memberAPI.memberAttachDownload(mid);
@@ -84,6 +86,7 @@ getMember(props.mid);
 
 getAttach(props.mid);
 
+//좋아요 개수 가져오기
 async function getLikeCnt(mid) {
     try {
         const response = await memberAPI.getLikeCnt(mid);
@@ -98,6 +101,7 @@ getLikeCnt(props.mid);
 //나의 좋아요 상태
 const like = ref(false);
 
+//나의 좋아요 상태 가져오기
 async function getLikeState(mid, fmid) {
     try {
         const response = await memberAPI.getLikeState(mid, fmid);
@@ -111,6 +115,7 @@ const store = useStore();
 
 getLikeState(store.state.mid, props.mid);
 
+//좋아요 클릭시 이벤트
 async function handleLike(mid, fmid) {
     if (mid === fmid) {
         alert("스스로를 좋아요할 수 없습니다.");
@@ -130,10 +135,14 @@ async function handleLike(mid, fmid) {
         likeEl.style.color = "black";
         likeEl.classList.add("bi-heart");
         const response = await memberAPI.deleteLike(mid, fmid);
+
+        //좋아요 삭제 시 프로필 삭제 이벤트가 있다면
         if (emit("handleLikeHistory") != null) {
+            //프로필 div id를 부모 컴포넌트의 함수에 전달
             emit("handleLikeHistory", props.id);
         }
     }
+    //좋아요 개수 재로딩
     getLikeCnt(fmid);
 }
 </script>

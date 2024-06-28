@@ -99,6 +99,7 @@ const mid = route.query.mid;
 
 const mattach = ref(null);
 
+//유저 프로필 이미지 가져오기
 async function getAttach(mid) {
     try {
         const response = await memberAPI.memberAttachDownload(mid);
@@ -111,6 +112,7 @@ async function getAttach(mid) {
 
 getAttach(mid);
 
+//유저 프로필 가져오기
 async function getMember(mid) {
     try {
         const response = await memberAPI.getUserProfile(mid);
@@ -128,6 +130,7 @@ getMember(mid);
 //나의 좋아요 상태
 const like = ref(false);
 
+//나의 좋아요 상태 가져오기
 async function getLikeState(mid, fmid) {
     try {
         const response = await memberAPI.getLikeState(mid, fmid);
@@ -139,13 +142,16 @@ async function getLikeState(mid, fmid) {
 
 getLikeState(store.state.mid, mid);
 
+//좋아요
 async function handleLike(mid, fmid) {
+    //스스로를 좋아요 시도 시
     if (mid === fmid) {
         alert("스스로를 좋아요할 수 없습니다.");
         return;
     }
     like.value = !like.value;
 
+    //좋아요 했을 시
     if (like.value) {
         const response = await memberAPI.insertLike(mid, fmid);
     } else {
@@ -154,6 +160,7 @@ async function handleLike(mid, fmid) {
 }
 
 //대쉬보드 정보
+//좋아요 수 가져오기
 async function getLikeCnt(mid) {
     try {
         const response = await memberAPI.getLikeCnt(mid);
@@ -165,6 +172,7 @@ async function getLikeCnt(mid) {
 
 getLikeCnt(mid);
 
+//소셜 작성 수 가져오기
 async function getSocialCnt(mid) {
     try {
         const response = await memberAPI.getSocialCnt(mid);
@@ -176,6 +184,7 @@ async function getSocialCnt(mid) {
 
 getSocialCnt(mid);
 
+//리뷰 작성 수 가져오기
 async function getReviewCnt(mid) {
     try {
         const response = await memberAPI.getReviewCnt(mid);

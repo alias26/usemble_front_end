@@ -45,6 +45,7 @@ const router = useRouter();
 const password = ref("");
 const passwordCheck = ref("");
 
+//비밀번호 변경
 async function updatePassword() {
     //TODO: 유효성 검사 추가
 
@@ -56,15 +57,20 @@ async function updatePassword() {
 
     const response = await memberAPI.updatePassword(member);
 
+    //비밀번호 변경 성공 시
     if (response.data.response == "success") {
+        //로그인 해제 후 메인페이지 이동
         store.dispatch("deleteAuth");
         router.push("/");
     } else {
+        //문제 발생 시 정보를 보여줄 element
+        const warning = document.getElementById("warning");
+
         if (response.data.reason == "originPassword") {
-            const warning = document.getElementById("warning");
+            //기존 비밀번호가 틀렸을 시
             warning.innerHTML = "기존 비밀번호와 맞지 않습니다.";
         } else {
-            const warning = document.getElementById("warning");
+            //같은 비밀번호로 변경 시도 시
             warning.innerHTML = "같은 비밀번호로는 변경하실 수 없습니다.";
         }
     }

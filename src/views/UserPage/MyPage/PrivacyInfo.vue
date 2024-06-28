@@ -197,7 +197,9 @@ function hideWithdrawModal() {
     withdrawModal.hide();
 }
 
+//회원 탈퇴
 async function submitWithdraw(mid) {
+    //회원 탈퇴 후 로그인 해제 및 메인 페이지 이동
     await memberAPI.withdrawMember(mid);
     store.dispatch("deleteAuth");
     router.push("/");
@@ -218,6 +220,7 @@ const mphone1 = ref(null);
 const mphone2 = ref(null);
 const mphone3 = ref(null);
 
+//개인정보 가져오기
 async function getPrivacy(mid) {
     const response = await memberAPI.getPrivacy(mid);
     member.value.mid = response.data.mid;
@@ -238,11 +241,14 @@ async function getPrivacy(mid) {
 
 getPrivacy(store.state.mid);
 
+//개인정보 변경
 function updatePrivacy() {
+    //바뀐 전화번호 Concat
     member.value.mphone = mphone1.value + mphone2.value + mphone3.value;
     memberAPI.updatePrivacy(JSON.parse(JSON.stringify(member.value)));
 }
 
+//동의사항 변경
 function updateAgree() {
     member.value.agree = !member.value.agree;
 

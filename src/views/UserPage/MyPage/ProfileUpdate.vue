@@ -50,6 +50,7 @@ const member = ref({
     mintroduce: "",
 });
 
+//유저 프로필 가져오기
 async function getUserProfile(mid) {
     const response = await memberAPI.getUserProfile(mid);
     if (response.data.response == "success") {
@@ -58,6 +59,7 @@ async function getUserProfile(mid) {
     }
 }
 
+//유저 프로필 이미지 가져오기
 async function getAttach(mid) {
     try {
         const response = await memberAPI.memberAttachDownload(mid);
@@ -74,22 +76,31 @@ getUserProfile(store.state.mid);
 
 getAttach(store.state.mid);
 
+//이미지 변경 시 예시 이미지 보여주기
 function loadProfileImg() {
+    //파일 element
     const input = document.getElementById("file");
+
+    //파일이 추가됐을 때
     if (input.files && input.files[0]) {
+        //이미지 예시 보여주기
         const reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById("proimg").src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
     } else {
+        //이미지 삭제
         document.getElementById("proimg").src = "";
     }
 }
 
+//유저 프로필 변경
 async function updateProfile() {
+    //파일 element
     const input = document.getElementById("file");
 
+    //폼 데이터 생성
     const formData = new FormData();
     formData.append("mid", member.value.mid);
     formData.append("mintroduce", member.value.mintroduce);

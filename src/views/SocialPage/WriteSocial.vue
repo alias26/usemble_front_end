@@ -15,7 +15,7 @@
                 <div class="form-group image mt-4 mb-2">
                     <label class="form-label">대표 이미지</label>
                     <div class="thumbnail-wrapper">
-                        <input id="file" type="file" multiple @change="loadThumb" />
+                        <input id="file" type="file" @change="loadThumb" />
                         <label for="file">
                             <img
                                 id="thumbnail"
@@ -121,6 +121,7 @@ const router = useRouter();
 const step = ref(false);
 const date = ref(new Date());
 
+//썸네일 미리보기
 function loadThumb() {
     const input = document.getElementById("file");
     if (input.files && input.files[0]) {
@@ -142,6 +143,7 @@ onMounted(() => {
 
 const quill = ref(null);
 
+//뒤로가기, 다음 클릭 시 페이지 상태 변환
 function changeStep() {
     step.value = !step.value;
     window.scrollTo({ top: 80, left: 0, behavior: "instant" });
@@ -155,6 +157,7 @@ function hideAssembleModal() {
     assembleModal.hide();
 }
 
+//전송시 이미지 경로를 axios경로로 수정
 function submitHandler() {
     let content = quill.value.getContent().cloneNode(true).outerHTML;
     const sourcesUrl = content.match(/<img [^>]*src="[^"]*"[^>]*>/gm);
