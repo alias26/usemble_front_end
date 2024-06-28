@@ -100,7 +100,7 @@ getUserLikeList(pageNo.value, store.state.mid);
 
 function handleLikeHistory(index) {
     document.getElementById("profile" + index).remove();
-    getUserLikeList(store.state.mid);
+    getUserLikeList(pageNo.value, store.state.mid);
 }
 
 const router = useRouter();
