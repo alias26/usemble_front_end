@@ -30,14 +30,40 @@
                     <div id="like-host" class="p-2">
                         <UserProfile
                             v-for="(mid, index) in likeList.mids"
-                            :key="index"
+                            :key="mid"
                             :mid="mid"
                             :idx="index"
                             :id="'profile' + index"
+                            class="mypage-like"
                             @handleLikeHistory="handleLikeHistory(index)"
                         />
                     </div>
                 </div>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                <button
+                    v-if="likeList.pager.startPageNo > 1"
+                    class="btn page-btn btn-sm me-1"
+                    @click="changePageNo(likeList.pager.startPageNo - 1, $store.state.mid)"
+                >
+                    이전
+                </button>
+                <button
+                    v-for="pageNo in likeList.pager.pageArray"
+                    :key="pageNo"
+                    :class="likeList.pager.pageNo == pageNo ? 'cur-page' : ''"
+                    class="btn page-btn btn-sm me-1"
+                    @click="changePageNo(pageNo, $store.state.mid)"
+                >
+                    {{ pageNo }}
+                </button>
+                <button
+                    v-if="likeList.pager.groupNo < likeList.pager.totalGroupNo"
+                    class="btn page-btn btn-sm me-1"
+                    @click="changePageNo(likeList.pager.endPageNo + 1, $store.state.mid)"
+                >
+                    다음
+                </button>
             </div>
         </div>
     </div>
@@ -46,30 +72,35 @@
 <script setup>
 import UserProfile from "@/components/UserProfile.vue";
 import memberAPI from "@/apis/memberAPI";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 const store = useStore();
+const route = useRoute();
+
+const pageNo = ref(route.query.pageNo || 1);
 
 const likeList = ref({
     mids: [],
+    pager: {},
 });
 
-async function getUserProfileList(mid) {
+async function getUserLikeList(pageNo, mid) {
     try {
-        const response = await memberAPI.getUserProfileList(mid);
+        const response = await memberAPI.getUserLikeList(pageNo, mid);
         likeList.value.mids = response.data.likeList;
+        likeList.value.pager = response.data.pager;
     } catch (error) {
         console.log(error);
     }
 }
 
-getUserProfileList(store.state.mid);
+getUserLikeList(pageNo.value, store.state.mid);
 
 function handleLikeHistory(index) {
     document.getElementById("profile" + index).remove();
-    getUserProfileList(store.state.mid);
+    getUserLikeList(store.state.mid);
 }
 
 const router = useRouter();
@@ -77,6 +108,25 @@ const router = useRouter();
 function goAssembleList() {
     router.push("/list");
 }
+
+function changePageNo(argPageNo, mid) {
+    router.push(`/mypage/assembleLike?mid=${mid}&pageNo=${argPageNo}`);
+}
+
+//요청 경로의 변경을 감시
+watch(route, (newRoute, oldRoute) => {
+    if (newRoute.query.pageNo) {
+        getUserLikeList(newRoute.query.pageNo, store.state.mid);
+        pageNo.value = newRoute.query.pageNo;
+    } else {
+        getUserLikeList(1, store.state.mid);
+        pageNo.value = 1;
+    }
+});
+
+// watch(likeList.value, (newLikeList, oldLikeList) => {
+
+// });
 </script>
 
 <style scoped>
@@ -121,7 +171,7 @@ function goAssembleList() {
 }
 
 .like-space {
-    height: 500px;
+    height: 470px;
     position: relative;
 }
 
@@ -132,5 +182,20 @@ function goAssembleList() {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.cur-page {
+    font-weight: 800;
+    color: #558ccf;
+}
+
+.page-btn {
+    border: none;
+    outline: none;
+}
+
+.cur-page:focus {
+    border: none;
+    outline: none;
 }
 </style>

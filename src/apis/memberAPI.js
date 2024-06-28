@@ -15,8 +15,8 @@ function findPassword(mid) {
     return axios.patch("/member/findPassword?mid=" + mid);
 }
 
-function getUserProfileList(mid) {
-    return axios.get("/member/likeList?mid=" + mid);
+function getUserLikeList(pageNo, mid) {
+    return axios.get("/member/likeList?mid=" + mid + "&pageNo=" + pageNo);
 }
 
 function getUserProfile(mid) {
@@ -86,7 +86,7 @@ export default {
     login,
     join,
     findPassword,
-    getUserProfileList,
+    getUserLikeList,
     getUserProfile,
     getLikeState,
     getLikeCnt,
