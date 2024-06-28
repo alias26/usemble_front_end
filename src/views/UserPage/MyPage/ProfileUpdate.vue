@@ -26,8 +26,14 @@
                             id="text-box"
                             placeholder="예) OOO에서 그래픽 디자이너로 일하고 있습니다. 일상의 무료함을 달래며 영감을 얻기 위해 어셈블을 시작하게 됐어요! 좋은 분들을 만나 즐거운 시간을 보낼 수 있었으면 좋겠습니다."
                             v-model="member.mintroduce"
+                            @change="validateIntroduce"
                         />
                     </div>
+                    <div
+                        id="intro_warning"
+                        class="text-danger"
+                        style="font-size: 13px; padding-left: 16px"
+                    ></div>
                 </div>
                 <div class="mt-5 text-center">
                     <button id="sub-btn" @click="updateProfile">등록하기</button>
@@ -42,6 +48,7 @@ import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
+import router from "@/router";
 
 const mattach = ref(null);
 
@@ -110,8 +117,17 @@ async function updateProfile() {
 
     try {
         const response = await memberAPI.updateProfile(formData);
+        router.push("/mypage");
     } catch (error) {
         console.log(error);
+    }
+}
+function validateIntroduce() {
+    const intro_warning = document.getElementById("intro_warning");
+    if (!member.value.mintroduce) {
+        intro_warning.innerHTML = "자기소개를 입력해 주세요.";
+    } else {
+        intro_warning.innerHTML = " ";
     }
 }
 </script>
@@ -144,6 +160,7 @@ async function updateProfile() {
     border-radius: 50%;
     width: 150px;
     height: 150px;
+    object-fit: cover;
 }
 #file {
     display: none;

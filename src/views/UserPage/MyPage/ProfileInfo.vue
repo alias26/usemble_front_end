@@ -200,6 +200,8 @@ const joinAssembles = getJoinAssemble();
 #proimg {
     border-radius: 50%;
     width: 150px;
+    height: 150px;
+    object-fit: cover;
     margin: 10px 0;
 }
 #intro_box {
