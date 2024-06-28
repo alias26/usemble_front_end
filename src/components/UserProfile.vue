@@ -12,7 +12,7 @@
                     <RouterLink class="no-underline" :to="`/user/info?mid=${props.mid}`">
                         <div id="id">{{ profile.mid }}</div>
                     </RouterLink>
-                    <div id="intro">
+                    <div :class="props.class" id="intro">
                         {{ profile.mintroduce }}
                     </div>
                 </div>
@@ -47,7 +47,7 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
 
-const props = defineProps(["mid", "idx", "id"]);
+const props = defineProps(["mid", "idx", "id", "class"]);
 const emit = defineEmits(["handleLikeHistory"]);
 
 const router = useRouter();
@@ -142,6 +142,7 @@ async function handleLike(mid, fmid) {
 img {
     border-radius: 50%;
     width: 60px;
+    height: 60px;
 }
 .userinfo {
     width: 100%;
@@ -167,6 +168,12 @@ img {
     color: grey;
 }
 
+.mypage-like {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 360px;
+}
 #like-btn {
     justify-content: center;
     align-items: center;
