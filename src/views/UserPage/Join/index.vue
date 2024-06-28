@@ -245,7 +245,7 @@
                 </div>
             </div>
 
-            <div class="mb-5" id="ct-select">*최대 3개(0/3)</div>
+            <div class="mb-5" id="ct-select">*최대 3개({{ cnt }}/3)</div>
 
             <div class="mt-5 mb-5">
                 <div class="form-check mb-4">
@@ -254,7 +254,9 @@
                         type="checkbox"
                         id="agreeAll"
                         name="agreeAll"
-                        value="1"
+                        value="agreeAll"
+                        v-model="agreeAll"
+                        @click="checkAll"
                     />
                     <label class="form-check-label mt-1" for="agreeAll"> 전체 동의하기 </label>
                 </div>
@@ -264,8 +266,8 @@
                         class="form-check-input"
                         type="checkbox"
                         id="agree1"
-                        name="agree1"
-                        value="1"
+                        value="agree1"
+                        v-model="agree.agree1"
                     />
                     <label class="form-check-label mt-1" for="agree1"> 이용약관 동의 (필수) </label>
                 </div>
@@ -274,8 +276,8 @@
                         class="form-check-input"
                         type="checkbox"
                         id="agree2"
-                        name="agree2"
-                        value="1"
+                        value="agree2"
+                        v-model="agree.agree2"
                     />
                     <label class="form-check-label mt-1" for="agree2">
                         개인정보처리방침 동의 (필수)
@@ -286,8 +288,8 @@
                         class="form-check-input"
                         type="checkbox"
                         id="agree3"
-                        name="agree3"
-                        value="1"
+                        value="agree3"
+                        v-model="agree.agree3"
                     />
                     <label class="form-check-label mt-1" for="agree3">
                         마케팅 정보 수신 동의 (선택)
@@ -360,6 +362,7 @@ watch([() => mpwd.value.mpwd1, () => mpwd.value.mpwd2], ([newM1, newM2]) => {
     }
 });
 const category = ref([]);
+
 async function getCategoryList() {
     try {
         const response = await memberAPI.getCategory();
@@ -368,14 +371,86 @@ async function getCategoryList() {
         console.log(error);
     }
 }
-const selected = ref(new Array(category.value.length).fill("focus"));
+
+// async function putCategory() {
+//     try {
+//         for(i=0; i<mcategory.value.length; i++) {
+//             const response = await memberAPI.putCategory(mid);
+
+//         }
+
+//     }
+// }
+
+// 가져온 카테고리의 값들을 false로 설정
+const mcategory = ref([]);
+const selected = ref([false, false, false, false, false]);
+// true의 개수를 세는 cnt
+const cnt = ref(0);
+
 function selectCategory(index) {
-    selected.value[index] = !selected.value[index];
+    if (cnt.value == 3) {
+        // 카테고리를 3개 선택하면 더이상 선택할 수 없도록 하고, 선택된 카테고리를 선택 취소하면 true -> false
+        if (selected.value[index] == false) {
+            selected.value[index] = false;
+        } else {
+            selected.value[index] = false;
+            cnt.value = cnt.value - 1;
+            const delValue = mcategory.value.indexOf(category.value[index].ctno);
+            mcategory.value.splice(delValue, 1);
+        }
+    } else if (cnt.value < 3) {
+        // 선택된 카테고리가 3개 이하이면 다시 선택할 때 true, false 값을 바꿔주고 cnt를 더하거나 뺌
+        if (selected.value[index] == false) {
+            selected.value[index] = true;
+            mcategory.value.push(category.value[index].ctno);
+            cnt.value = cnt.value + 1;
+        } else {
+            selected.value[index] = false;
+            cnt.value = cnt.value - 1;
+            const delValue = mcategory.value.indexOf(category.value[index].ctno);
+            mcategory.value.splice(delValue, 1);
+        }
+    }
+    console.log(mcategory.value);
 }
 
 getCategoryList();
-// 이미지 미리보기
 
+const agree = ref({
+    agree1: false,
+    agree2: false,
+    agree3: false,
+});
+
+const agreeAll = ref(false);
+
+function checkAll() {
+    // 버튼 클릭시 개별 카테고리가 전체 선택되거나 해제
+    if (agreeAll.value == false) {
+        agree.value.agree1 = true;
+        agree.value.agree2 = true;
+        agree.value.agree3 = true;
+    } else if (agreeAll.value == true) {
+        agree.value.agree1 = false;
+        agree.value.agree2 = false;
+        agree.value.agree3 = false;
+    }
+}
+
+// 모든 개별 카테고리를 선택, 해제됨에 따라 전체 선택 버튼이 true, false로 바뀜
+watch(
+    [() => agree.value.agree1, () => agree.value.agree2, () => agree.value.agree3],
+    ([check1, check2, check3]) => {
+        if (check1 && check2 && check3 == true) {
+            agreeAll.value = !agreeAll.value;
+        } else {
+            agreeAll.value = false;
+        }
+    }
+);
+
+// 이미지 미리보기
 function loadThumb() {
     let flag = true;
     const img_warning = document.getElementById("img_warning");
@@ -747,6 +822,15 @@ h2 {
     font-weight: bolder;
 }
 
+.ct-btn:hover {
+    border-color: #cecac8;
+    padding: 12px 25px;
+    border-radius: 50px;
+    opacity: 70%;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
 .ct-btn-select {
     color: white;
     border-color: #57b17f;
@@ -760,7 +844,7 @@ h2 {
 
 #ct-select {
     color: gray;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .form-check {

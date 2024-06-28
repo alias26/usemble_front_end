@@ -82,6 +82,11 @@ function updateAgree(member) {
     return axios.patch("/member/updateAgree", member);
 }
 
+function putCategory(mid) {
+    return axios.put("/member/putCategory?mid=" +mid)
+}
+
+
 export default {
     login,
     join,
@@ -103,4 +108,5 @@ export default {
     updatePassword,
     updateProfile,
     updateAgree,
+    putCategory,
 };
