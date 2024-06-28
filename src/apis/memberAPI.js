@@ -74,8 +74,8 @@ function updatePassword(member) {
     return axios.patch("/member/updatePassword", qs.stringify(member));
 }
 
-function updateProfile(member) {
-    return axios.patch("/member/updateProfile", member);
+function updateProfile(formData) {
+    return axios.patch("/member/updateProfile", formData);
 }
 
 function updateAgree(member) {
