@@ -40,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center mt-4">
+            <div v-if="likeList.mids.length != 0" class="d-flex justify-content-center mt-4">
                 <button
                     v-if="likeList.pager.startPageNo > 1"
                     class="btn page-btn btn-sm me-1"
