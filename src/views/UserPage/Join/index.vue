@@ -372,16 +372,6 @@ async function getCategoryList() {
     }
 }
 
-// async function putCategory() {
-//     try {
-//         for(i=0; i<mcategory.value.length; i++) {
-//             const response = await memberAPI.putCategory(mid);
-
-//         }
-
-//     }
-// }
-
 // 가져온 카테고리의 값들을 false로 설정
 const mcategory = ref([]);
 const selected = ref([false, false, false, false, false]);
@@ -416,6 +406,16 @@ function selectCategory(index) {
 }
 
 getCategoryList();
+const resultcate = ref([null]);
+
+function putCategory() {
+    for (let i = 0; i < mcategory.value.length; i++) {
+        let mcate = { mid: "", mcate: "" };
+        mcate.mid = member.value.mid;
+        mcate.mcate = mcategory.value[i].ctno;
+        resultcate.value.push(mcate);
+    }
+}
 
 const agree = ref({
     agree1: false,
@@ -692,6 +692,7 @@ async function handleSubmit() {
     formData.append("mbankName", member.value.mbankName);
     formData.append("mpayAccount", member.value.mpayAccount);
     formData.append("mintroduce", member.value.mintroduce);
+    putCategory();
 
     const elMattach = mattach.value;
     if (elMattach.files.length != 0) {
@@ -699,6 +700,7 @@ async function handleSubmit() {
     }
     try {
         const response = await memberAPI.join(formData);
+        const response_cate = await memberAPI.putCategory(resultcate);
     } catch (error) {
         console.log(error);
     }

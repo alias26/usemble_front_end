@@ -82,10 +82,9 @@ function updateAgree(member) {
     return axios.patch("/member/updateAgree", member);
 }
 
-function putCategory(mid) {
-    return axios.put("/member/putCategory?mid=" +mid)
+function putCategory(mcategory) {
+    return axios.post("/member/putCategory", mcategory);
 }
-
 
 export default {
     login,
