@@ -32,27 +32,37 @@
                 <div class="d-flex mb-4 row">
                     <h6 class="col-3"><strong>전화번호</strong></h6>
                     <div class="d-flex col-9" id="pnum">
-                        <input
-                            class="form-control"
-                            id="mphone"
-                            style="color: gray"
-                            type="tel"
-                            v-model="mphone1"
-                        />
-                        <input
-                            class="form-control"
-                            id="mphone"
-                            style="color: gray"
-                            type="tel"
-                            v-model="mphone2"
-                        />
-                        <input
-                            class="form-control"
-                            id="mphone"
-                            style="color: gray"
-                            type="tel"
-                            v-model="mphone3"
-                        />
+                        <div class="d-flex flex-column">
+                            <div class="d-flex">
+                                <input
+                                    class="form-control"
+                                    id="mphone"
+                                    style="color: gray"
+                                    type="tel"
+                                    v-model="mphone1"
+                                />
+                                <input
+                                    class="form-control"
+                                    id="mphone"
+                                    style="color: gray"
+                                    type="tel"
+                                    v-model="mphone2"
+                                />
+                                <input
+                                    class="form-control"
+                                    id="mphone"
+                                    style="color: gray"
+                                    type="tel"
+                                    v-model="mphone3"
+                                />
+                            </div>
+
+                            <div
+                                id="phone_warning1"
+                                class="text-danger"
+                                style="font-size: 13px"
+                            ></div>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex mb-4 row">
@@ -83,8 +93,15 @@
                                 id="form-account"
                                 name="form-account1"
                                 v-model="member.mbankName"
+                                @change="validateBank"
                             />
+                            <div
+                                id="bank_warning"
+                                class="text-danger"
+                                style="font-size: 13px"
+                            ></div>
                         </div>
+
                         <div class="">
                             <input
                                 style="color: gray"
@@ -93,7 +110,13 @@
                                 id="form-account"
                                 name="form-account2"
                                 v-model="member.mpayAccount"
+                                @change="validateAccount"
                             />
+                            <div
+                                id="account_warning"
+                                class="text-danger"
+                                style="font-size: 13px"
+                            ></div>
                         </div>
                     </div>
                 </div>
@@ -240,12 +263,64 @@ async function getPrivacy(mid) {
 }
 
 getPrivacy(store.state.mid);
+// 유효성검사
+function validateBank() {
+    let flag = true;
+    const bank_warning = document.getElementById("bank_warning");
+    const validate_bank = /^[가-힣]{2,7}$/;
+    if (!validate_bank.test(member.value.mbankName) || !member.value.mbankName) {
+        bank_warning.innerHTML = "은행명을 형식(한글)에 맞게 입력해주세요.";
+        flag = false;
+    } else {
+        bank_warning.innerHTML = " ";
+        flag = true;
+    }
+    return flag;
+}
+function validateAccount() {
+    let flag = true;
+    const account_warning = document.getElementById("account_warning");
+    const validate_account = /^[0-9]{1,17}$/;
+    if (!validate_account.test(member.value.mpayAccount) || !member.value.mpayAccount) {
+        flag = false;
+        account_warning.innerHTML = "계좌번호를 형식(숫자)에 맞게 입력해주세요.";
+    } else {
+        flag = true;
+        account_warning.innerHTML = " ";
+    }
+    console.log(flag);
+    return flag;
+}
+function validatePhone1() {
+    let flag = true;
+    const validate_phone = /^[0-9]{4}$/;
+    const phone_warning1 = document.getElementById("phone_warning1");
+
+    if (
+        !validate_phone.test(mphone1.value) ||
+        !mphone1.value ||
+        !validate_phone.test(mphone2.value) ||
+        !mphone2.value ||
+        !validate_phone.test(mphone3.value) ||
+        !mphone3.value
+    ) {
+        flag = false;
+        phone_warning1.innerHTML = "형식(010.xxxx.xxxx)에 맞게 입력하세요.";
+    } else {
+        flag = true;
+        phone_warning1.innerHTML = " ";
+    }
+    console.log(flag);
+    return flag;
+}
 
 //개인정보 변경
 function updatePrivacy() {
     //바뀐 전화번호 Concat
-    member.value.mphone = mphone1.value + mphone2.value + mphone3.value;
-    memberAPI.updatePrivacy(JSON.parse(JSON.stringify(member.value)));
+    if ((validateAccount() & validateBank() & validatePhone1()) == true) {
+        member.value.mphone = mphone1.value + mphone2.value + mphone3.value;
+        memberAPI.updatePrivacy(JSON.parse(JSON.stringify(member.value)));
+    }
 }
 
 //동의사항 변경
