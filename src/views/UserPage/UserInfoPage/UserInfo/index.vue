@@ -164,7 +164,7 @@ async function handleLike(mid, fmid) {
 async function getLikeCnt(mid) {
     try {
         const response = await memberAPI.getLikeCnt(mid);
-        member.value.mlikeCnt = response.data;
+        member.value.likeCnt = response.data;
     } catch (error) {
         console.log(error);
     }
