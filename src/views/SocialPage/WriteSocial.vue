@@ -1,6 +1,6 @@
 <template>
     <div style="width: 70%; margin: 50px auto">
-        <form class="create" style="width: 60%; margin: 0 auto">
+        <form style="width: 60%; margin: 0 auto">
             <div v-show="step == false">
                 <h5>기본정보 입력하기</h5>
                 <div class="form-group mt-4">
@@ -9,6 +9,7 @@
                         class="form-control"
                         type="text"
                         placeholder="주제/공간 등이 드러나는 이름을 입력해 주세요."
+                        v-model="social.stitle"
                     />
                 </div>
 
@@ -25,7 +26,7 @@
                         </label>
                     </div>
                 </div>
-                <KakaoAddress />
+                <KakaoAddress @getAddress="getSocialAddress" />
                 <hr />
                 <div class="mb-3">
                     <CalendarWrite />
@@ -41,10 +42,15 @@
                 <h5>상세정보 입력하기</h5>
                 <div class="form-group image border rounded mt-4 mb-2">
                     <div class="d-flex m-2">
-                        <img src="@/assets/empty_thumbnail.png" width="170px" height="107px" />
+                        <img
+                            src="@/assets/empty_thumbnail.png"
+                            id="thumbnail2"
+                            width="170px"
+                            height="107px"
+                        />
                         <div class="info ms-3">
-                            <strong>test</strong>
-                            <span>장소 장소에요</span>
+                            <strong>{{ social.stitle }}</strong>
+                            <span>{{ social.saddress }}</span>
                         </div>
                     </div>
                 </div>
@@ -53,6 +59,7 @@
                     <div class="input-group">
                         <label data-domain="원">
                             <input
+                                id="sfee"
                                 class="form-control"
                                 type="text"
                                 placeholder="입장료를 입력해 주세요."
@@ -62,23 +69,31 @@
                     </div>
                 </div>
                 <div class="form-group mt-4">
-                    <label class="form-label">입금 계좌</label>
-                    <div class="d-flex">
-                        <div class="me-1">
-                            <input class="form-control" type="text" placeholder="은행명" />
-                        </div>
-                        <input class="form-control" type="text" placeholder="계좌 번호" />
+                    <label class="form-label">인원 수</label>
+                    <div class="input-group">
+                        <label data-domain="명">
+                            <input
+                                class="form-control"
+                                type="number"
+                                placeholder="인원 수"
+                                v-model="social.smemberCount"
+                            />
+                        </label>
                     </div>
                 </div>
                 <div class="form-group mt-4">
                     <label class="form-label">카테고리</label>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>카테고리를 선택해주세요.</option>
-                        <option value="1">맛집</option>
-                        <option value="2">운동</option>
-                        <option value="3">스터디</option>
-                        <option value="4">친목</option>
-                        <option value="5">여행</option>
+                    <select
+                        v-model="social.ctno"
+                        class="form-select"
+                        aria-label="Default select example"
+                    >
+                        <option :value="0">카테고리를 선택해주세요.</option>
+                        <option :value="1">맛집</option>
+                        <option :value="2">운동</option>
+                        <option :value="3">스터디</option>
+                        <option :value="4">친목</option>
+                        <option :value="5">여행</option>
                     </select>
                 </div>
                 <div class="mt-3">
@@ -115,11 +130,25 @@ import KakaoAddress from "./KakaoAddress.vue";
 import CalendarWrite from "@/components/CalendarWrite.vue";
 import WyswygEditor from "@/components/WyswygEditor.vue";
 import AssembleModal from "./AssembleModal.vue";
+import { useStore } from "vuex";
 
 const router = useRouter();
+const store = useStore();
 
 const step = ref(false);
 const date = ref(new Date());
+
+const social = ref({
+    ctno: 0,
+    stitle: "",
+    scontent: "",
+    sstartDate: "",
+    sendDate: "",
+    saddress: "",
+    sstartTime: "",
+    smemberCount: 0,
+    sfee: 0,
+});
 
 //썸네일 미리보기
 function loadThumb() {
@@ -128,10 +157,12 @@ function loadThumb() {
         const reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById("thumbnail").src = e.target.result;
+            document.getElementById("thumbnail2").src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
     } else {
         document.getElementById("thumbnail").src = "";
+        document.getElementById("thumbnail2").src = "";
     }
 }
 
@@ -139,6 +170,15 @@ let assembleModal = null;
 
 onMounted(() => {
     assembleModal = new Modal(document.getElementById("assembleModal"));
+    // document.addEventListener(
+    //     "keydown",
+    //     function (event) {
+    //         if (event.keyCode === 13) {
+    //             event.preventDefault();
+    //         }
+    //     },
+    //     true
+    // );
 });
 
 const quill = ref(null);
@@ -157,27 +197,43 @@ function hideAssembleModal() {
     assembleModal.hide();
 }
 
+function getSocialAddress(address) {
+    social.value.saddress = address;
+}
+
 //전송시 이미지 경로를 axios경로로 수정
 function submitHandler() {
-    let content = quill.value.getContent().cloneNode(true).outerHTML;
-    const sourcesUrl = content.match(/<img [^>]*src="[^"]*"[^>]*>/gm);
-    if (sourcesUrl != null) {
-        const sources = sourcesUrl.map((x) => x.replace(/.*src="([^"]*)".*/, "$1"));
+    const formData = new FormData();
+    formData.append("mid", store.state.mid);
+    formData.append("ctno", social.value.ctno);
+    formData.append("stitle", social.value.stitle);
+    formData.append("scontent", quill.value.getContent().innerHTML);
+    formData.append("sstartDate", social.value.sstartDate);
+    formData.append("sendDate", social.value.sendData);
+    formData.append("sstartTime", social.value.sstartTime);
+    formData.append("saddress", social.value.saddress);
+    formData.append("smemberCount", social.value.smemberCount);
 
-        for (var i = 0; i < sources.length; i++) {
-            content = content.replace(sources[i], "");
-        }
+    const sfee = document.getElementById("sfee").value.split(",").join("");
+
+    formData.append("sfee", sfee);
+
+    const input = document.getElementById("file");
+    if (input.files && input.files[0]) {
+        formData.append("sthumbnail", input.files[0]);
     }
+
+    console.log(formData);
+
+    const obj = {};
+    formData.forEach((value, key) => (obj[key] = value));
+
+    console.log(obj);
 }
 </script>
 
 <style scoped>
 h5 {
-    font-weight: bold;
-}
-
-.create {
-    text-align: left;
     font-weight: bold;
 }
 

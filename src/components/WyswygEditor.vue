@@ -5,11 +5,13 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import Quill from "quill";
+import commonAPI from "@/apis/commonAPI";
+import axios from "axios";
 
 defineExpose({ getContent });
 
 const props = defineProps(["content"]);
-const quill = ref(null);
+let quill = null;
 
 onMounted(() => {
     if (!window.Quill) {
@@ -35,7 +37,7 @@ function loadScript() {
 }
 
 function loadEditor() {
-    quill.value = new Quill("#editor", {
+    quill = new Quill("#editor", {
         placeholder: "내용을 작성해주세요.",
         theme: "snow",
         modules: {
@@ -52,10 +54,37 @@ function loadEditor() {
     if (props.content != null) {
         document.querySelector(".ql-editor").innerHTML = props.content;
     }
+
+    quill.getModule("toolbar").addHandler("image", function () {
+        imageHandler();
+    });
 }
 
 function getContent() {
     return document.getElementById("editor").querySelector(".ql-editor");
+}
+
+function imageHandler() {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
+
+    input.addEventListener("change", async () => {
+        const file = input.files[0];
+
+        const formData = new FormData();
+        formData.append("img", file);
+        try {
+            const response = await commonAPI.imageUpload(formData);
+            const imgUrl = response.data.imgUrl;
+            const range = quill.getSelection();
+
+            quill.insertEmbed(range.index, "image", axios.defaults.baseURL + imgUrl);
+        } catch (error) {
+            console.log(error);
+        }
+    });
 }
 </script>
 

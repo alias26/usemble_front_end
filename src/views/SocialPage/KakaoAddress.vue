@@ -25,6 +25,8 @@
 import { onMounted, ref } from "vue";
 import KakaoMap from "@/components/KakaoMap.vue";
 
+const emit = defineEmits(["getAddress"]);
+
 const kakaoMap = ref(null);
 
 onMounted(() => {
@@ -49,8 +51,13 @@ function sample5_execDaumPostcode() {
             // 주소 정보를 해당 필드에 넣는다.
             document.getElementById("sample5_address").value = addr;
             kakaoMap.value.getAddress(addr);
+            getAddress(addr);
         },
     }).open();
+}
+
+function getAddress(address) {
+    emit("getAddress", address);
 }
 </script>
 
