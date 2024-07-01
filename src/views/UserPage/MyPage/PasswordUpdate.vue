@@ -55,7 +55,6 @@ async function updatePassword() {
         originPassword: passwordCheck.value,
     };
     const validate_pwd = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-    const response = await memberAPI.updatePassword(member);
     const warning = document.getElementById("warning");
 
     if (!validate_pwd.test(member.newPassword) || !member.newPassword) {
@@ -63,6 +62,8 @@ async function updatePassword() {
             "비밀번호 형식(특수문자, 영어 대/소문자, 숫자를 혼합해 8~16글자)에 맞게 입력해주세요.";
         return;
     }
+
+    const response = await memberAPI.updatePassword(member);
 
     //비밀번호 변경 성공 시
     if (response.data.response == "success") {
@@ -79,7 +80,7 @@ async function updatePassword() {
             //같은 비밀번호로 변경 시도 시
             warning.innerHTML = "같은 비밀번호로는 변경하실 수 없습니다.";
         }
-    } 
+    }
 }
 </script>
 
