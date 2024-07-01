@@ -292,4 +292,10 @@ span {
     color: black;
     font-weight: bold;
 }
+
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
 </style>
