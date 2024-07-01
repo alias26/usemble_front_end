@@ -46,7 +46,11 @@
                                 <i class="bi bi-pencil-fill"></i>
                                 수정
                             </button>
-                            <CategoryModal id="categoryModal" @close="hideCategoryModal" />
+                            <CategoryModal
+                                :mid="member.mid"
+                                id="categoryModal"
+                                @close="hideCategoryModal"
+                            />
                         </div>
                     </div>
                     <div id="intro_box" class="bg-light p-4 mt-3">{{ member.mintroduce }}</div>

@@ -82,8 +82,16 @@ function updateAgree(member) {
     return axios.patch("/member/updateAgree", member);
 }
 
+function getMcategory(mid) {
+    return axios.get("/member/mcategory?mid=" + mid);
+}
+
 function putMcategory(resultcate) {
     return axios.post("/member/putMcategory", resultcate);
+}
+
+function updateMcategory() {
+    return axios.patch("/member/updateMcategory");
 }
 
 export default {
@@ -107,5 +115,7 @@ export default {
     updatePassword,
     updateProfile,
     updateAgree,
+    getMcategory,
     putMcategory,
+    updateMcategory,
 };
