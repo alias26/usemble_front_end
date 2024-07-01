@@ -9,6 +9,7 @@
                 </div>
                 <hr />
                 <img class="mt-2" id="proimg" :src="mattach" alt="" />
+                <div id="img_warning" class="text-danger" style="font-size: 13px"></div>
                 <div class="mx-2 my-3">
                     <input id="file" type="file" @change="loadProfileImg" />
                     <label for="file">
@@ -87,15 +88,23 @@ getAttach(store.state.mid);
 function loadProfileImg() {
     //파일 element
     const input = document.getElementById("file");
+    const img_warning = document.getElementById("img_warning");
 
     //파일이 추가됐을 때
     if (input.files && input.files[0]) {
         //이미지 예시 보여주기
         const reader = new FileReader();
+        const file = input.files[0];
+        const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
         reader.onload = function (e) {
             document.getElementById("proimg").src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
+        if (!validImageTypes.includes(file.type)) {
+            img_warning.innerHTML = "프로필 이미지를 이미지 파일로 등록해주세요.(gif/jpeg/png)";
+        } else {
+            img_warning.innerHTML = "";
+        }
     } else {
         //이미지 삭제
         document.getElementById("proimg").src = "";
