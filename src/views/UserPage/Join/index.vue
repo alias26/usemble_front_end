@@ -18,7 +18,7 @@
             <div class="mb-4">
                 <div class="mb-2 fs-6 fw-bold">프로필 이미지 등록</div>
 
-                <input id="file" type="file" ref="mattach" @change="loadThumb" />
+                <input id="file" type="file" @change="loadThumb" />
                 <label class="mb-2" for="file">
                     <img type="button" src="@/assets/admin.png" class="thumbnail" id="thumbnail" />
                     <div type="button" id="camera">
@@ -340,7 +340,7 @@ const mpwd = ref({
     mpwd1: "",
     mpwd2: "",
 });
-const mattach = ref(null);
+// const mattach = ref(null);
 const member = ref({
     mid: "",
     mname: "",
@@ -406,15 +406,18 @@ function selectCategory(index) {
 }
 
 getCategoryList();
-const resultcate = ref([null]);
+const resultcate = ref([]);
 
-function putCategory() {
+function putMcategory() {
     for (let i = 0; i < mcategory.value.length; i++) {
-        let mcate = { mid: "", mcate: "" };
+        let mcate = { mid: "", ctno: "" };
         mcate.mid = member.value.mid;
-        mcate.mcate = mcategory.value[i].ctno;
+        mcate.ctno = mcategory.value[i];
         resultcate.value.push(mcate);
+        console.log(mcate.ctno);
+        console.log(mcate.mid);
     }
+    console.log(resultcate.value);
 }
 
 const agree = ref({
@@ -692,15 +695,17 @@ async function handleSubmit() {
     formData.append("mbankName", member.value.mbankName);
     formData.append("mpayAccount", member.value.mpayAccount);
     formData.append("mintroduce", member.value.mintroduce);
-    putCategory();
-
-    const elMattach = mattach.value;
+    console.log(member.value.mid);
+    putMcategory();
+    const elMattach = document.getElementById("file");
     if (elMattach.files.length != 0) {
         formData.append("mattach", elMattach.files[0]);
     }
     try {
         const response = await memberAPI.join(formData);
-        const response_cate = await memberAPI.putCategory(resultcate);
+        const response_cate = await memberAPI.putMcategory(
+            JSON.parse(JSON.stringify(resultcate.value))
+        );
     } catch (error) {
         console.log(error);
     }
