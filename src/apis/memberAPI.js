@@ -94,6 +94,10 @@ function updateMcategory() {
     return axios.patch("/member/updateMcategory");
 }
 
+function putAgree(mid) {
+    return axios.post("/member/putAgree?mid=" + mid);
+}
+
 export default {
     login,
     join,
@@ -118,4 +122,5 @@ export default {
     getMcategory,
     putMcategory,
     updateMcategory,
+    putAgree,
 };

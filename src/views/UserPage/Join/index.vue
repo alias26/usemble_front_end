@@ -234,6 +234,7 @@
                         <input
                             type="button"
                             :value="cate.ctname"
+                            :mcategory="mcategory.ctname"
                             class="btn ct-btn me-2"
                             :class="{
                                 'ct-btn': !selected[index],
@@ -253,10 +254,9 @@
                         class="form-check-input"
                         type="checkbox"
                         id="agreeAll"
-                        name="agreeAll"
-                        value="agreeAll"
                         v-model="agreeAll"
                         @click="checkAll"
+                        @change="validateAgree"
                     />
                     <label class="form-check-label mt-1" for="agreeAll"> 전체 동의하기 </label>
                 </div>
@@ -266,8 +266,8 @@
                         class="form-check-input"
                         type="checkbox"
                         id="agree1"
-                        value="agree1"
                         v-model="agree.agree1"
+                        @change="validateAgree"
                     />
                     <label class="form-check-label mt-1" for="agree1"> 이용약관 동의 (필수) </label>
                 </div>
@@ -276,8 +276,8 @@
                         class="form-check-input"
                         type="checkbox"
                         id="agree2"
-                        value="agree2"
                         v-model="agree.agree2"
+                        @change="validateAgree"
                     />
                     <label class="form-check-label mt-1" for="agree2">
                         개인정보처리방침 동의 (필수)
@@ -288,19 +288,19 @@
                         class="form-check-input"
                         type="checkbox"
                         id="agree3"
-                        value="agree3"
                         v-model="agree.agree3"
                     />
                     <label class="form-check-label mt-1" for="agree3">
                         마케팅 정보 수신 동의 (선택)
                     </label>
                 </div>
+                <div id="agree_warning" class="text-danger" style="font-size: 13px"></div>
             </div>
             <div class="text-center">
                 <button type="submit" id="join-btn" @click="showJoinModal">
                     <strong>가입하기</strong>
                 </button>
-                <JoinModal id="joinModal" @close="hideJoinModal" />
+                <JoinModal id="joinModal" v-if="isModalVisible" @close="hideJoinModal" />
             </div>
         </div>
     </form>
@@ -447,8 +447,10 @@ watch(
     ([check1, check2, check3]) => {
         if (check1 && check2 && check3 == true) {
             agreeAll.value = !agreeAll.value;
+            console.log(agree.value);
         } else {
             agreeAll.value = false;
+            console.log(agree.value);
         }
     }
 );
@@ -682,32 +684,68 @@ function nextStep() {
         }
     }
 }
+function validateAgree() {
+    let flag = true;
+    const agree_warning = document.getElementById("agree_warning");
+    const is_check_agree = document.getElementById("agreeAll").checked;
+    const is_check_agree1 = document.getElementById("agree1").checked;
+    const is_check_agree2 = document.getElementById("agree2").checked;
+    if (is_check_agree == true) {
+        agree_warning.innerHTML = "";
+        flag = true;
+    } else {
+        if (is_check_agree1 == true && is_check_agree2 == true) {
+            agree_warning.innerHTML = "";
+            flag = true;
+        } else {
+            agree_warning.innerHTML = "필수 약관을 모두 동의해주세요.";
+            flag = false;
+        }
+    }
+    return flag;
+}
+
+// 약관 동의 유효성 검사 결과에 따라 모달을 띄우기
+function isModalVisible() {
+    if (validateAgree() == true) {
+        showJoinModal();
+    } else if (validateAgree() == false) {
+        hideJoinModal();
+    }
+}
 
 //가입 버튼 클릭시 실행
 async function handleSubmit() {
-    const formData = new FormData();
-    formData.append("mid", member.value.mid);
-    formData.append("mname", member.value.mname);
-    formData.append("mpassword", member.value.mpassword);
-    formData.append("mbirth", member.value.mbirth);
-    formData.append("msex", member.value.msex);
-    formData.append("mphone", member.value.mphone);
-    formData.append("mbankName", member.value.mbankName);
-    formData.append("mpayAccount", member.value.mpayAccount);
-    formData.append("mintroduce", member.value.mintroduce);
-    console.log(member.value.mid);
-    putMcategory();
-    const elMattach = document.getElementById("file");
-    if (elMattach.files.length != 0) {
-        formData.append("mattach", elMattach.files[0]);
-    }
-    try {
-        const response = await memberAPI.join(formData);
-        const response_cate = await memberAPI.putMcategory(
-            JSON.parse(JSON.stringify(resultcate.value))
-        );
-    } catch (error) {
-        console.log(error);
+    if (validateAgree() == true) {
+        const formData = new FormData();
+        formData.append("mid", member.value.mid);
+        formData.append("mname", member.value.mname);
+        formData.append("mpassword", member.value.mpassword);
+        formData.append("mbirth", member.value.mbirth);
+        formData.append("msex", member.value.msex);
+        formData.append("mphone", member.value.mphone);
+        formData.append("mbankName", member.value.mbankName);
+        formData.append("mpayAccount", member.value.mpayAccount);
+        formData.append("mintroduce", member.value.mintroduce);
+        formData.append("agree", agree.value.agree3);
+        putMcategory();
+
+        const elMattach = document.getElementById("file");
+        if (elMattach.files.length != 0) {
+            formData.append("mattach", elMattach.files[0]);
+        }
+        try {
+            const response = await memberAPI.join(formData);
+            console.log(agree.value.agree3);
+            const response_cate = await memberAPI.putMcategory(
+                JSON.parse(JSON.stringify(resultcate.value))
+            );
+            console.log("회원가입 완료");
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        isModalVisible();
     }
 }
 </script>
