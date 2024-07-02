@@ -293,11 +293,12 @@ function validateAccount() {
 }
 function validatePhone1() {
     let flag = true;
+    const validate_phone_network = /^010$/;
     const validate_phone = /^[0-9]{4}$/;
     const phone_warning1 = document.getElementById("phone_warning1");
 
     if (
-        !validate_phone.test(mphone1.value) ||
+        !validate_phone_network.test(mphone1.value) ||
         !mphone1.value ||
         !validate_phone.test(mphone2.value) ||
         !mphone2.value ||
@@ -315,11 +316,11 @@ function validatePhone1() {
 }
 
 //개인정보 변경
-function updatePrivacy() {
+async function updatePrivacy() {
     //바뀐 전화번호 Concat
     if ((validateAccount() & validateBank() & validatePhone1()) == true) {
         member.value.mphone = mphone1.value + mphone2.value + mphone3.value;
-        memberAPI.updatePrivacy(JSON.parse(JSON.stringify(member.value)));
+        await memberAPI.updatePrivacy(JSON.parse(JSON.stringify(member.value)));
     }
 }
 
