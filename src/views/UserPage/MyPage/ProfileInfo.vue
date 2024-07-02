@@ -48,6 +48,7 @@
                             </button>
                             <CategoryModal
                                 :mid="member.mid"
+                                :mcategory="mcategory"
                                 id="categoryModal"
                                 @close="hideCategoryModal"
                             />
@@ -119,6 +120,9 @@ const member = ref({
     mid: "",
     mintroduce: "",
 });
+
+const mcategory = ref([]);
+
 //이미지
 const mattach = ref(null);
 
@@ -178,6 +182,21 @@ function getJoinAssemble() {
 }
 
 const joinAssembles = getJoinAssemble();
+
+const category = ref([]);
+
+async function getCategoryList() {
+    try {
+        const response = await memberAPI.getCategory();
+        category.value = response.data;
+        console.log(category.value);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getCategoryList();
+
 </script>
 
 <style scoped>

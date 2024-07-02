@@ -39,7 +39,7 @@ import { ref } from "vue";
 
 const emit = defineEmits(["close"]);
 
-const prop = defineProps(["mid"]);
+const prop = defineProps(["mid", "mcategory"]);
 const category = ref([]);
 const selected = ref([false, false, false, false, false]);
 // true의 개수를 세는 cnt
@@ -60,7 +60,7 @@ async function getMcategoryList(mid) {
     try {
         const response = await memberAPI.getMcategory(mid);
         mcategory.value = response.data;
-        console.log(mcategory.value)
+        console.log(mcategory.value);
         console.log(prop.mid);
     } catch (error) {
         console.log(error);
