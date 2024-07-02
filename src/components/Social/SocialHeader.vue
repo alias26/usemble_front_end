@@ -8,12 +8,12 @@
                 <div class="pageOption">
                     <div class="custom-select me-2">
                         <select class="dropdown-select" v-model.trim="viewSelects.viewCategory">
-                            <option :value="all" selected>카테고리</option>
-                            <option value="eat">맛집</option>
-                            <option value="exercise">운동</option>
-                            <option value="study">스터디</option>
-                            <option value="friendship">친목</option>
-                            <option value="travel">여행</option>
+                            <option value="0" selected>카테고리</option>
+                            <option value="1">맛집</option>
+                            <option value="2">운동</option>
+                            <option value="3">스터디</option>
+                            <option value="4">친목</option>
+                            <option value="5">여행</option>
                         </select>
                     </div>
                     <div class="custom-select">
@@ -32,24 +32,9 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter , useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 defineProps(["title"]);
-
-// const router = useRouter();
-
-// const viewSelects = ref({
-//     viewCategory: "카테고리",
-//     viewSort: "정렬",
-// });
-
-// function handleRouting() {
-//     // viewSelects.value.viewCategory = router.query.category;
-//     console.log(viewSelects.value.viewCategory);
-//     if(viewSelects.value.viewCategory === "카테고리"){
-//         router.push("/");
-//     }
-// }
 
 const route = useRoute();
 
@@ -58,8 +43,7 @@ const viewSelects = ref({
     viewSort: "정렬",
 });
 
-viewSelects.value.viewCategory = route.query.category;
-
+viewSelects.value.viewCategory = route.query.category != null ? route.query.category : 0;
 </script>
 
 <style scoped>
