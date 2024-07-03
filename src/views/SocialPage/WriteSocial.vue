@@ -149,7 +149,7 @@ function handleDateSelected(newDate) {
     selectedDate.value = newDate;
 
     // 날짜와 시간을 한국식으로 포맷
-    social.value.sstartDate = format(newDate, "yy/MM/dd", { locale: ko });
+    social.value.sstartDate = format(newDate, "yyyy/MM/dd", { locale: ko });
     social.value.sstartTime = format(newDate, "HH:mm");
 }
 
