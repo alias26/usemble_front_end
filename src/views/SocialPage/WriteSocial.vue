@@ -30,8 +30,6 @@
                 <hr />
                 <div class="mb-3">
                     <CalendarWrite @dateSelected="handleDateSelected" />
-                    <p>선택한 날짜: {{ social.sstartDate }}</p>
-                    <p>선택한 시간: {{ social.sstartTime }}</p>
                 </div>
 
                 <div class="d-flex justify-content-end">
@@ -52,6 +50,7 @@
                         />
                         <div class="info ms-3">
                             <strong>{{ social.stitle }}</strong>
+                            <span>{{ social.sstartDate }} | {{ social.sstartTime }}</span>
                             <span>{{ social.saddress }}</span>
                         </div>
                     </div>
@@ -132,6 +131,7 @@ import KakaoAddress from "./KakaoAddress.vue";
 import CalendarWrite from "@/components/CalendarWrite.vue";
 import WyswygEditor from "@/components/WyswygEditor.vue";
 import AssembleModal from "./AssembleModal.vue";
+import socialAPI from "@/apis/socialAPI";
 //날짜 시간 한국 형식
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -149,7 +149,7 @@ function handleDateSelected(newDate) {
     selectedDate.value = newDate;
 
     // 날짜와 시간을 한국식으로 포맷
-    social.value.sstartDate = format(newDate, "yyyy년 MM월 dd일 (EEE)", { locale: ko });
+    social.value.sstartDate = format(newDate, "yy/MM/dd", { locale: ko });
     social.value.sstartTime = format(newDate, "HH:mm");
 }
 
@@ -216,7 +216,7 @@ function getSocialAddress(address) {
 }
 
 //전송시 이미지 경로를 axios경로로 수정
-function submitHandler() {
+async function submitHandler() {
     const formData = new FormData();
     formData.append("mid", store.state.mid);
     formData.append("ctno", social.value.ctno);
@@ -236,12 +236,9 @@ function submitHandler() {
         formData.append("sthumbnail", input.files[0]);
     }
 
-    console.log(formData);
+    await socialAPI.writeSocial(formData);
 
-    const obj = {};
-    formData.forEach((value, key) => (obj[key] = value));
-
-    console.log(obj);
+    router.push("/");
 }
 </script>
 
