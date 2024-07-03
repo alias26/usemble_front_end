@@ -29,7 +29,9 @@
                 <KakaoAddress @getAddress="getSocialAddress" />
                 <hr />
                 <div class="mb-3">
-                    <CalendarWrite />
+                    <CalendarWrite @dateSelected="handleDateSelected" />
+                    <p>선택한 날짜: {{ social.sstartDate }}</p>
+                    <p>선택한 시간: {{ social.sstartTime }}</p>
                 </div>
 
                 <div class="d-flex justify-content-end">
@@ -130,6 +132,9 @@ import KakaoAddress from "./KakaoAddress.vue";
 import CalendarWrite from "@/components/CalendarWrite.vue";
 import WyswygEditor from "@/components/WyswygEditor.vue";
 import AssembleModal from "./AssembleModal.vue";
+//날짜 시간 한국 형식
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 import { useStore } from "vuex";
 
 const router = useRouter();
@@ -137,13 +142,22 @@ const store = useStore();
 
 const step = ref(false);
 const date = ref(new Date());
+//달력 날짜 선택 했을때
+const selectedDate = ref(null);
+
+function handleDateSelected(newDate) {
+    selectedDate.value = newDate;
+
+    // 날짜와 시간을 한국식으로 포맷
+    social.value.sstartDate = format(newDate, "yyyy년 MM월 dd일 (EEE)", { locale: ko });
+    social.value.sstartTime = format(newDate, "HH:mm");
+}
 
 const social = ref({
     ctno: 0,
     stitle: "",
     scontent: "",
     sstartDate: "",
-    sendDate: "",
     saddress: "",
     sstartTime: "",
     smemberCount: 0,
@@ -209,7 +223,6 @@ function submitHandler() {
     formData.append("stitle", social.value.stitle);
     formData.append("scontent", quill.value.getContent().innerHTML);
     formData.append("sstartDate", social.value.sstartDate);
-    formData.append("sendDate", social.value.sendData);
     formData.append("sstartTime", social.value.sstartTime);
     formData.append("saddress", social.value.saddress);
     formData.append("smemberCount", social.value.smemberCount);
