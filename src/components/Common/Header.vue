@@ -1,7 +1,9 @@
 <template>
     <nav>
         <div id="leftmenu">
-            <RouterLink class="mx-4 nav_text" to="/list">어셈블 둘러보기</RouterLink>
+            <RouterLink class="mx-4 nav_text" @click="reloadList" to="/list"
+                >어셈블 둘러보기</RouterLink
+            >
             <RouterLink id="usemble" class="mx-4" to="/social/write">어셈블!</RouterLink>
         </div>
         <RouterLink to="/"><img id="logoimg" alt="Vue logo" src="@/assets/logo.png" /></RouterLink>
@@ -51,14 +53,24 @@
 
 <script setup>
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const store = useStore();
 const router = useRouter();
+const route = useRoute();
 
 function handleLogout() {
     store.dispatch("deleteAuth");
     router.push("/");
+}
+
+async function reloadList() {
+    if (route.fullPath != route.path) {
+        store.commit("changeActiveWatch");
+        await router.replace({ path: route.path, query: {} });
+        store.commit("changeActiveWatch");
+        router.go(0);
+    }
 }
 </script>
 
