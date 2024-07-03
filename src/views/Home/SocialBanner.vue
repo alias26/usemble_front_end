@@ -4,19 +4,19 @@
             <img src="@/assets/usemble.jpg" width="100%" />
         </div>
         <div class="category container d-flex">
-            <RouterLink class="main_category" to="list?category=1"
+            <RouterLink class="main_category" to="list?ctno=1"
                 ><img src="@/assets/category/eat.png" />맛집</RouterLink
             >
-            <RouterLink class="main_category" to="list?category=2"
+            <RouterLink class="main_category" to="list?ctno=2"
                 ><img src="@/assets/category/exercise.png" />운동</RouterLink
             >
-            <RouterLink class="main_category" to="list?category=3"
+            <RouterLink class="main_category" to="list?ctno=3"
                 ><img src="@/assets/category/study.png" />스터디</RouterLink
             >
-            <RouterLink class="main_category" to="list?category=4"
+            <RouterLink class="main_category" to="list?ctno=4"
                 ><img src="@/assets/category/friendship.png" />친목</RouterLink
             >
-            <RouterLink class="main_category" to="list?category=5"
+            <RouterLink class="main_category" to="list?ctno=5"
                 ><img src="@/assets/category/travel.png" />여행</RouterLink
             >
             <RouterLink class="main_category" to="list"

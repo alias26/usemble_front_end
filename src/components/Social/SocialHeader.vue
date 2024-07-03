@@ -7,7 +7,12 @@
             <div class="wrapper">
                 <div class="pageOption">
                     <div class="custom-select me-2">
-                        <select class="dropdown-select" v-model.trim="viewSelects.viewCategory">
+                        <select
+                            id="ctno"
+                            class="dropdown-select"
+                            v-model.trim="viewSelects.viewCategory"
+                            @change="selectCategory"
+                        >
                             <option value="0" selected>카테고리</option>
                             <option value="1">맛집</option>
                             <option value="2">운동</option>
@@ -18,10 +23,15 @@
                     </div>
                     <div class="custom-select">
                         <!-- <select class="dropdown-select" v-model="viewSelects.viewSort"> -->
-                        <select class="dropdown-select" v-model="viewSelects.viewSort">
-                            <option value="정렬" selected>정렬</option>
-                            <option value="최신순">최신순</option>
-                            <option value="마감임박순">마감임박순</option>
+                        <select
+                            id="sort"
+                            class="dropdown-select"
+                            v-model="viewSelects.viewSort"
+                            @change="selectSort"
+                        >
+                            <option value="" selected>정렬</option>
+                            <option value="recently">최신순</option>
+                            <option value="deadline">마감임박순</option>
                         </select>
                     </div>
                 </div>
@@ -35,15 +45,26 @@ import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 defineProps(["title"]);
+const emit = defineEmits(["handleCategory", "handleSort"]);
 
 const route = useRoute();
 
 const viewSelects = ref({
     viewCategory: "all",
-    viewSort: "정렬",
+    viewSort: "",
 });
 
-viewSelects.value.viewCategory = route.query.category != null ? route.query.category : 0;
+viewSelects.value.viewCategory = route.query.ctno != null ? route.query.ctno : 0;
+
+function selectCategory() {
+    const category = document.getElementById("ctno").value;
+    emit("handleCategory", category);
+}
+
+function selectSort() {
+    const sort = document.getElementById("sort").value;
+    emit("handleSort", sort);
+}
 </script>
 
 <style scoped>

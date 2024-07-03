@@ -2,7 +2,7 @@
     <RouterLink class="main_category" :style="props.style" to="/social/detail">
         <div class="main_list-wrapper">
             <div class="main_styles">
-                <img src="@/assets/us2.jpg" />
+                <img :src="`${axios.defaults.baseURL}/social/sthumb/${props.social.sno}`" />
             </div>
         </div>
         <div class="main_text">
@@ -11,16 +11,17 @@
         <div class="main_additional mb-4">
             <div class="caption mt-2">
                 <p>{{ props.social.saddress }}</p>
-                <span style="margin-bottom: 10px"> {{ Number(props.social.sfee).toLocaleString() }}원~ </span>
+                <span style="margin-bottom: 10px">
+                    {{ Number(props.social.sfee).toLocaleString() }}원~
+                </span>
             </div>
         </div>
     </RouterLink>
 </template>
 
 <script setup>
+import axios from "axios";
 const props = defineProps(["style", "social"]);
-
-
 </script>
 
 <style scoped>

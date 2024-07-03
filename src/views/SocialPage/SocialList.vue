@@ -1,95 +1,148 @@
 <template>
     <div class="pageDetail container" style="max-width: 60%">
-        <SocialHeader title="어셈블하기" />
+        <SocialHeader
+            title="어셈블하기"
+            @handleCategory="handleCategory"
+            @handleSort="handleSort"
+        />
         <div>
             <div class="row" style="display: flex; margin-top: 40px">
                 <SocialCard
                     class="col-4"
                     style="width: 32%"
-                    v-for="(social, index) in socials"
-                    :key="index"
+                    v-for="social in page.socialList"
+                    :key="social.sno"
                     :social="social"
                 />
             </div>
         </div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center" style="border: none">
-                <li class="page">
-                    <a class="page-link text-black" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page"><a class="page-link text-black" href="#">1</a></li>
-                <li class="page"><a class="page-link text-black" href="#">2</a></li>
-                <li class="page"><a class="page-link text-black" href="#">3</a></li>
-                <li class="page">
-                    <a class="page-link text-black" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <div v-if="page.socialList.length != 0" class="d-flex justify-content-center mt-4">
+            <button
+                v-if="page.pager.startPageNo > 1"
+                class="btn page-btn btn-sm me-1"
+                @click="changePageNo(page.pager.startPageNo - 1)"
+            >
+                이전
+            </button>
+            <button
+                v-for="pageNo in page.pager.pageArray"
+                :key="pageNo"
+                :class="page.pager.pageNo == pageNo ? 'cur-page' : ''"
+                class="btn page-btn btn-sm me-1"
+                @click="changePageNo(pageNo)"
+            >
+                {{ pageNo }}
+            </button>
+            <button
+                v-if="page.pager.groupNo < page.pager.totalGroupNo"
+                class="btn page-btn btn-sm me-1"
+                @click="changePageNo(page.pager.endPageNo + 1)"
+            >
+                다음
+            </button>
+        </div>
     </div>
 </template>
 
 <script setup>
+import socialAPI from "@/apis/socialAPI";
 import SocialCard from "@/components/Social/SocialCard.vue";
 import SocialHeader from "@/components/Social/SocialHeader.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 
-function getSocialData(ctno) {
-    const interest = ref([
-        {
-            stitle: "어셈블 이름1",
-            saddress: "주소1",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름2",
-            saddress: "주소2",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름3",
-            saddress: "주소3",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름4",
-            saddress: "주소4",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름5",
-            saddress: "주소5",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름6",
-            saddress: "주소6",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름7",
-            saddress: "주소7",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름8",
-            saddress: "주소8",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름9",
-            saddress: "주소9",
-            sfee: "50000",
-        },
-    ]);
+const route = useRoute();
+const router = useRouter();
 
-    return interest;
+const pageNo = ref(route.query.pageNo || 1);
+const ctno = ref(route.query.ctno || 0);
+const sort = ref(route.query.sort || null);
+
+const page = ref({
+    socialList: [],
+    pager: {},
+});
+
+async function getSocialList(pageNo, ctno, sort) {
+    try {
+        const response = await socialAPI.getSocialList(pageNo, ctno, sort);
+        page.value.socialList = response.data.socialList;
+        page.value.pager = response.data.pager;
+        console.log(page);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-const socials = getSocialData(1);
+getSocialList(pageNo.value, ctno.value, sort.value);
+
+function changePageNo(pageNo) {
+    router.replace({
+        query: { pageNo: pageNo, ctno: route.query.ctno, sort: route.query.sort },
+    });
+}
+
+function handleCategory(ctno) {
+    router.replace({
+        query: { pageNo: route.query.pageNo, ctno: ctno, sort: route.query.sort },
+    });
+}
+
+function handleSort(sort) {
+    router.replace({
+        query: { pageNo: route.query.pageNo, ctno: route.query.ctno, sort: sort },
+    });
+}
+
+const store = useStore();
+
+watch(
+    () => route.query.pageNo,
+    (newPageNo, oldPageNo) => {
+        if (store.state.activeWatch) {
+            if (newPageNo) {
+                getSocialList(newPageNo, ctno.value, sort.value);
+                pageNo.value = newPageNo;
+            } else {
+                getSocialList(1, ctno.value, sort.value);
+                pageNo.value = 1;
+            }
+        }
+    }
+);
+
+watch(
+    () => route.query.ctno,
+    (newCtno, oldCtno) => {
+        if (store.state.activeWatch) {
+            if (newCtno) {
+                getSocialList(pageNo.value, newCtno, sort.value);
+                ctno.value = newCtno;
+            } else {
+                getSocialList(1, 0, sort.value);
+                pageNo.value = 1;
+                ctno.value = 0;
+            }
+        }
+    }
+);
+
+watch(
+    () => route.query.sort,
+    (newSort, oldSort) => {
+        if (store.state.activeWatch) {
+            if (newSort) {
+                getSocialList(pageNo.value, ctno.value, newSort);
+                sort.value = newSort;
+            } else {
+                getSocialList(1, ctno.value, null);
+                pageNo.value = 1;
+                sort.value = null;
+            }
+        }
+    }
+);
 </script>
 
 <style scoped>
@@ -161,8 +214,24 @@ const socials = getSocialData(1);
 .main_additional {
     border-top: 1px solid #ddd;
 }
+/* 
 .btn {
     background-color: #558ccf;
     color: white;
+} */
+
+.cur-page {
+    font-weight: 800;
+    color: #558ccf;
+}
+
+.page-btn {
+    border: none;
+    outline: none;
+}
+
+.cur-page:focus {
+    border: none;
+    outline: none;
 }
 </style>
