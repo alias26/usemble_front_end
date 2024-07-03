@@ -10,7 +10,7 @@
         <template v-slot:body>
             <div class="d-flex justify-content-center">
                 <div class="d-flex me-1">
-                    <div v-for="(cate, index) in category" :key="index">
+                    <div v-for="(cate, index) in modalCategory" :key="index">
                         <input
                             type="button"
                             :value="cate.ctname"
@@ -35,81 +35,84 @@
 <script setup>
 import memberAPI from "@/apis/memberAPI";
 import ModalTemplate from "@/components/ModalTemplate.vue";
-import { ref } from "vue";
+import { ref, watch, onMounted } from "vue";
+import { useStore } from "vuex";
 
 const emit = defineEmits(["close"]);
 
-const prop = defineProps(["mid", "mcategory"]);
-const category = ref([]);
-const selected = ref([false, false, false, false, false]);
-// true의 개수를 세는 cnt
+const modalMcategory = ref([]);
+const modalCategory = ref([]);
+const selected = ref([]);
 const cnt = ref(0);
-const mcategory = ref([]);
+
 async function getCategoryList() {
     try {
         const response = await memberAPI.getCategory();
-        category.value = response.data;
-        // console.log(category.value);
+        modalCategory.value = response.data;
     } catch (error) {
         console.log(error);
     }
 }
-getCategoryList();
-getMcategoryList(prop.mid);
+
 async function getMcategoryList(mid) {
     try {
         const response = await memberAPI.getMcategory(mid);
-        mcategory.value = response.data;
-        console.log(mcategory.value);
-        console.log(prop.mid);
+        modalMcategory.value = response.data;
     } catch (error) {
         console.log(error);
     }
+}
 
-    // for (let i = 0; i < category.value.length; i++) {
-    //     for (let j = 0; j < mcategory.value.length; i++) {
-    //         if (category.value[i].ctno == mcategory.value[j].ctno) {
-    //             selected.value[i] = true;
-    //         }
-    //     }
-    // }
+function initializeSelected() {
+   
+    selected.value = modalCategory.value.map((cat) => modalMcategory.value.includes(cat.ctno));
+    cnt.value = selected.value.filter((val) => val).length;
+    console.log("Category list:", modalCategory.value);
+    console.log("User category list:", modalMcategory.value);
+    console.log("Selected initialized:", selected.value);
 }
 
 function selectCategory(index) {
-    if (cnt.value == 3) {
-        // 카테고리를 3개 선택하면 더이상 선택할 수 없도록 하고, 선택된 카테고리를 선택 취소하면 true -> false
-        if (selected.value[index] == false) {
+    if (cnt.value === 3) {
+        if (selected.value[index]) {
             selected.value[index] = false;
-        } else {
-            selected.value[index] = false;
-            cnt.value = cnt.value - 1;
-            const delValue = mcategory.value.indexOf(category.value[index].ctno);
-            mcategory.value.splice(delValue, 1);
+            cnt.value--;
+            const delValue = modalMcategory.value.indexOf(modalCategory.value[index].ctno);
+            if (delValue !== -1) {
+                modalMcategory.value.splice(delValue, 1);
+            }
         }
-    } else if (cnt.value < 3) {
-        // 선택된 카테고리가 3개 이하이면 다시 선택할 때 true, false 값을 바꿔주고 cnt를 더하거나 뺌
-        if (selected.value[index] == false) {
-            selected.value[index] = true;
-            mcategory.value.push(category.value[index].ctno);
-            cnt.value = cnt.value + 1;
+    } else {
+        selected.value[index] = !selected.value[index];
+        if (selected.value[index]) {
+            modalMcategory.value.push(modalCategory.value[index].ctno);
+            cnt.value++;
         } else {
-            selected.value[index] = false;
-            cnt.value = cnt.value - 1;
-            const delValue = mcategory.value.indexOf(category.value[index].ctno);
-            mcategory.value.splice(delValue, 1);
+            const delValue = modalMcategory.value.indexOf(modalCategory.value[index].ctno);
+            if (delValue !== -1) {
+                modalMcategory.value.splice(delValue, 1);
+                cnt.value--;
+            }
         }
     }
 }
 
-async function updateCategory() {
-    try {
-        const response = await memberAPI.getCategory();
-        const response_mcate = await memberAPI.updateMcategory();
-        category.value = response.value;
-    } catch (error) {
-        console.log(error);
-    }
-}
+const store = useStore();
+
+onMounted(async () => {
+    await getCategoryList();
+    await getMcategoryList(store.state.mid);
+    initializeSelected();
+});
+watch(
+    [modalCategory, modalMcategory],
+    () => {
+        if (modalCategory.value.length && modalMcategory.value.length) {
+            initializeSelected();
+        }
+    },
+    { immediate: true }
+);
 </script>
 
 <style scoped>

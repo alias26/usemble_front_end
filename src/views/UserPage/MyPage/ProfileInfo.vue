@@ -27,10 +27,8 @@
                 <!-- :src="`${axios.defaults.baseURL}/member/mattach/${member.mid}?accessToken=${$store.state.accessToken}`" -->
                 <div class="d-flex flex-column mb-2 ps-4" style="width: 100%">
                     <div class="d-flex">
-                        <div class="d-flex me-1">
-                            <div class="me-1 rounded-pill fw-bold" id="ct-btn">모임</div>
-                            <div class="me-1 rounded-pill fw-bold" id="ct-btn">운동</div>
-                            <div class="rounded-pill fw-bold" id="ct-btn">자기계발</div>
+                        <div class="d-flex me-1" v-for="ctname in mctname" :key="ctname">
+                            <div class="me-1 rounded-pill fw-bold" id="ct-btn">{{ ctname }}</div>
                         </div>
                         <div>
                             <button
@@ -46,12 +44,7 @@
                                 <i class="bi bi-pencil-fill"></i>
                                 수정
                             </button>
-                            <CategoryModal
-                                :mid="member.mid"
-                                :mcategory="mcategory"
-                                id="categoryModal"
-                                @close="hideCategoryModal"
-                            />
+                            <CategoryModal id="categoryModal" @close="hideCategoryModal" />
                         </div>
                     </div>
                     <div id="intro_box" class="bg-light p-4 mt-3">{{ member.mintroduce }}</div>
@@ -109,7 +102,7 @@
 <script setup>
 import SocialCard from "@/components/Social/SocialCard.vue";
 import CategoryModal from "./CategoryModal.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import { Modal } from "bootstrap";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
@@ -121,10 +114,11 @@ const member = ref({
     mintroduce: "",
 });
 
-const mcategory = ref([]);
-
 //이미지
 const mattach = ref(null);
+const category = ref([]);
+const mcategory = ref([]);
+const mctname = ref([]);
 
 onMounted(() => {
     categoryModal = new Modal(document.querySelector("#categoryModal"));
@@ -149,12 +143,29 @@ async function getAttach(mid) {
         console.log(error);
     }
 }
+async function getMcategoryList(mid) {
+    try {
+        const response = await memberAPI.getMcategory(mid);
+        mcategory.value = response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function getCategoryList() {
+    try {
+        const response = await memberAPI.getCategory();
+        category.value = response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 const store = useStore();
 
 getUserProfile(store.state.mid);
-
 getAttach(store.state.mid);
+getMcategoryList(store.state.mid);
+getCategoryList();
 
 function showCategoryModal() {
     categoryModal.show();
@@ -183,20 +194,16 @@ function getJoinAssemble() {
 
 const joinAssembles = getJoinAssemble();
 
-const category = ref([]);
-
-async function getCategoryList() {
-    try {
-        const response = await memberAPI.getCategory();
-        category.value = response.data;
-        console.log(category.value);
-    } catch (error) {
-        console.log(error);
+watchEffect(() => {
+    if (category.value.length && mcategory.value.length) {
+        mctname.value = mcategory.value
+            .map((mcat) => {
+                const matchedCategory = category.value.find((cat) => cat.ctno === mcat.ctno);
+                return matchedCategory ? matchedCategory.ctname : null;
+            })
+            .filter(Boolean); // 일치하는 항목이 없을 경우 null 값을 제거
     }
-}
-
-getCategoryList();
-
+});
 </script>
 
 <style scoped>
