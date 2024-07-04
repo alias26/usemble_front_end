@@ -65,7 +65,7 @@ function handleLogout() {
 }
 
 async function reloadList() {
-    if (route.fullPath != route.path) {
+    if (route.fullPath != route.path && route.path == "/list") {
         store.commit("changeActiveWatch");
         await router.replace({ path: route.path, query: {} });
         store.commit("changeActiveWatch");

@@ -4,7 +4,7 @@
             <div class="d-flex">
                 <div id="userimg">
                     <RouterLink :to="`/user/info?mid=${props.mid}`">
-                        <img :src="mattach" />
+                        <img :src="`${axios.defaults.baseURL}/member/mattach/${props.mid}`" />
                     </RouterLink>
                 </div>
                 <div>
@@ -46,6 +46,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
+import axios from "axios";
 
 const props = defineProps(["mid", "idx", "id", "class"]);
 const emit = defineEmits(["handleLikeHistory"]);
@@ -71,20 +72,7 @@ async function getMember(mid) {
     }
 }
 
-//멤버의 프로필 이미지 불러오기
-async function getAttach(mid) {
-    try {
-        const response = await memberAPI.memberAttachDownload(mid);
-        const blob = response.data;
-        mattach.value = URL.createObjectURL(blob);
-    } catch (error) {
-        console.log(error);
-    }
-}
-
 getMember(props.mid);
-
-getAttach(props.mid);
 
 //좋아요 개수 가져오기
 async function getLikeCnt(mid) {
