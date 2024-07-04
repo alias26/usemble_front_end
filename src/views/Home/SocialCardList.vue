@@ -19,107 +19,105 @@
             />
         </div>
 
-        <div v-if="social!=null">
-            <div v-for="(mcategory, index) in mcategoryList" :key="index">
-                <div v-if="mcategory.ctno == 1">
-                    <h3 class="new_host mb-3 mt-5">🍚 맛집 공유 어셈블</h3>
-                    <h4 class="host_text mb-4">
-                        나만 아는 찐맛집, 우리 같이 가요
-                        <RouterLink
-                            to="/list?pageNo=1&ctno=1"
-                            style="text-decoration-line: none; color: gray; margin-right: 15px"
-                            >전체보기</RouterLink
-                        >
-                    </h4>
-                    <div class="main_page_episodes">
-                        <SocialCard
-                            v-for="(social, index) in social1"
-                            :key="index"
-                            style="width: 24%"
-                            class="me-3"
-                            :social="social"
-                        />
-                    </div>
+        <div v-for="(mcategory, index) in mcategoryList" :key="index">
+            <div v-if="mcategory.ctno == 1 && social1 != null">
+                <h3 class="new_host mb-3 mt-5">🍚 맛집 공유 어셈블</h3>
+                <h4 class="host_text mb-4">
+                    나만 아는 찐맛집, 우리 같이 가요
+                    <RouterLink
+                        to="/list?pageNo=1&ctno=1"
+                        style="text-decoration-line: none; color: gray; margin-right: 15px"
+                        >전체보기</RouterLink
+                    >
+                </h4>
+                <div class="main_page_episodes">
+                    <SocialCard
+                        v-for="(social, index) in social1"
+                        :key="index"
+                        style="width: 24%"
+                        class="me-3"
+                        :social="social"
+                    />
                 </div>
-                <div v-if="mcategory.ctno == 2">
-                    <h3 class="new_host mb-3 mt-5">💪 운동 어셈블</h3>
-                    <h4 class="host_text mb-4">
-                        지겨운 작심삼일, 운동메이트들과 함께해요!
-                        <RouterLink
-                            to="/list?pageNo=1&ctno=2"
-                            style="text-decoration-line: none; color: gray; margin-right: 15px"
-                            >전체보기</RouterLink
-                        >
-                    </h4>
-                    <div class="main_page_episodes">
-                        <SocialCard
-                            v-for="(social, index) in social2"
-                            :key="index"
-                            style="width: 24%"
-                            class="me-3"
-                            :social="social"
-                        />
-                    </div>
+            </div>
+            <div v-if="mcategory.ctno == 2 && social2.value != null">
+                <h3 class="new_host mb-3 mt-5">💪 운동 어셈블</h3>
+                <h4 class="host_text mb-4">
+                    지겨운 작심삼일, 운동메이트들과 함께해요!
+                    <RouterLink
+                        to="/list?pageNo=1&ctno=2"
+                        style="text-decoration-line: none; color: gray; margin-right: 15px"
+                        >전체보기</RouterLink
+                    >
+                </h4>
+                <div class="main_page_episodes">
+                    <SocialCard
+                        v-for="(social, index) in social2"
+                        :key="index"
+                        style="width: 24%"
+                        class="me-3"
+                        :social="social"
+                    />
                 </div>
-                <div v-if="mcategory.ctno == 3">
-                    <h3 class="new_host mb-3 mt-5">📚 내일을 위한 어셈블</h3>
-                    <h4 class="host_text mb-4">
-                        스터디 구할 땐 여기!
-                        <RouterLink
-                            to="/list?pageNo=1&ctno=3"
-                            style="text-decoration-line: none; color: gray; margin-right: 15px"
-                            >전체보기</RouterLink
-                        >
-                    </h4>
-                    <div class="main_page_episodes">
-                        <SocialCard
-                            v-for="(social, index) in social3"
-                            :key="index"
-                            style="width: 24%"
-                            class="me-3"
-                            :social="social"
-                        />
-                    </div>
+            </div>
+            <div v-if="mcategory.ctno == 3 && social3.value != null">
+                <h3 class="new_host mb-3 mt-5">📚 내일을 위한 어셈블</h3>
+                <h4 class="host_text mb-4">
+                    스터디 구할 땐 여기!
+                    <RouterLink
+                        to="/list?pageNo=1&ctno=3"
+                        style="text-decoration-line: none; color: gray; margin-right: 15px"
+                        >전체보기</RouterLink
+                    >
+                </h4>
+                <div class="main_page_episodes">
+                    <SocialCard
+                        v-for="(social, index) in social3"
+                        :key="index"
+                        style="width: 24%"
+                        class="me-3"
+                        :social="social"
+                    />
                 </div>
-                <div v-if="mcategory.ctno == 4">
-                    <h3 class="new_host mb-3 mt-5">💘 자만추 어셈블</h3>
-                    <h4 class="host_text mb-4">
-                        혹시 모르죠~ 여기서 만날지도
-                        <RouterLink
-                            to="/list?pageNo=1&ctno=4"
-                            style="text-decoration-line: none; color: gray; margin-right: 15px"
-                            >전체보기</RouterLink
-                        >
-                    </h4>
-                    <div class="main_page_episodes">
-                        <SocialCard
-                            v-for="(social, index) in social4"
-                            :key="index"
-                            style="width: 24%"
-                            class="me-3"
-                            :social="social"
-                        />
-                    </div>
+            </div>
+            <div v-if="mcategory.ctno == 4 && social4.value != null">
+                <h3 class="new_host mb-3 mt-5">💘 자만추 어셈블</h3>
+                <h4 class="host_text mb-4">
+                    혹시 모르죠~ 여기서 만날지도
+                    <RouterLink
+                        to="/list?pageNo=1&ctno=4"
+                        style="text-decoration-line: none; color: gray; margin-right: 15px"
+                        >전체보기</RouterLink
+                    >
+                </h4>
+                <div class="main_page_episodes">
+                    <SocialCard
+                        v-for="(social, index) in social4"
+                        :key="index"
+                        style="width: 24%"
+                        class="me-3"
+                        :social="social"
+                    />
                 </div>
-                <div v-if="mcategory.ctno == 5">
-                    <h3 class="new_host mb-3 mt-5">🎨 문화/예술 어셈블</h3>
-                    <h4 class="host_text mb-4">
-                        이런저런 취향 나누며 친해져요~
-                        <RouterLink
-                            to="/list?pageNo=1&ctno=5"
-                            style="text-decoration-line: none; color: gray; margin-right: 15px"
-                            >전체보기</RouterLink
-                        >
-                    </h4>
-                    <div class="main_page_episodes">
-                        <SocialCard
-                            v-for="(social, index) in social5"
-                            :key="index"
-                            style="width: 24%"
-                            class="me-3"
-                            :social="social"
-                        />
-                    </div>
+            </div>
+            <div v-if="mcategory.ctno == 5 && social5.value != null">
+                <h3 class="new_host mb-3 mt-5">🎨 문화/예술 어셈블</h3>
+                <h4 class="host_text mb-4">
+                    이런저런 취향 나누며 친해져요~
+                    <RouterLink
+                        to="/list?pageNo=1&ctno=5"
+                        style="text-decoration-line: none; color: gray; margin-right: 15px"
+                        >전체보기</RouterLink
+                    >
+                </h4>
+                <div class="main_page_episodes">
+                    <SocialCard
+                        v-for="(social, index) in social5"
+                        :key="index"
+                        style="width: 24%"
+                        class="me-3"
+                        :social="social"
+                    />
                 </div>
             </div>
         </div>
