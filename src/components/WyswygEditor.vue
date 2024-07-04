@@ -68,6 +68,7 @@ function imageHandler() {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
+    input.setAttribute("width", "100%");
     input.click();
 
     input.addEventListener("change", async () => {
