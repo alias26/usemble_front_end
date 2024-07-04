@@ -68,7 +68,6 @@ function imageHandler() {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
-    input.setAttribute("width", "100%");
     input.click();
 
     input.addEventListener("change", async () => {
@@ -82,6 +81,13 @@ function imageHandler() {
             const range = quill.getSelection();
 
             quill.insertEmbed(range.index, "image", axios.defaults.baseURL + imgUrl);
+
+            const [leaf] = quill.getLeaf(range.index);
+            if (leaf && leaf.domNode && leaf.domNode.tagName === "IMG") {
+                leaf.domNode.setAttribute("width", "100%");
+            }
+
+            quill.setSelection(range.index + 1);
         } catch (error) {
             console.log(error);
         }
