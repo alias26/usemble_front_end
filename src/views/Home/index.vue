@@ -4,7 +4,14 @@
             <div class="ms-auto me-auto">
                 <SocialBanner />
             </div>
-            <SocialCardList :socials="socials1" />
+            <SocialCardList
+                :socials="socials"
+                :social1="social1"
+                :social2="social2"
+                :social3="social3"
+                :social4="social4"
+                :social5="social5"
+            />
         </div>
     </div>
 </template>
@@ -12,36 +19,54 @@
 <script setup>
 import SocialCardList from "./SocialCardList.vue";
 import SocialBanner from "./SocialBanner.vue";
-import { ref } from "vue";
+import socialAPI from "@/apis/socialAPI";
 
-function getSocialData(ctno) {
-    const interest = ref([
-        {
-            stitle: "어셈블 이름1",
-            saddress: "주소1",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름2",
-            saddress: "주소2",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름3",
-            saddress: "주소3",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름4",
-            saddress: "주소4",
-            sfee: "50000",
-        },
-    ]);
+import { onMounted, ref } from "vue";
 
-    return interest;
+const props = defineProps(["socials"]);
+const socials = ref([]);
+
+onMounted(async () => {
+    await getMainSocialList();
+    separator();
+});
+
+async function getMainSocialList() {
+    try {
+        const response = await socialAPI.mainSocial();
+        socials.value = response.data;
+        console.log(socials.value);
+    } catch (error) {
+        console.log(error);
+    }
+}
+const social1 = ref([]);
+const social2 = ref([]);
+const social3 = ref([]);
+const social4 = ref([]);
+const social5 = ref([]);
+
+function separator() {
+    for (let i = 0; i < socials.value.length; i++) {
+        if (socials.value[i].ctno == 1) {
+            social1.value.push(socials.value[i]);
+        } else if (socials.value[i].ctno == 2) {
+            social2.value.push(socials.value[i]);
+        } else if (socials.value[i].ctno == 3) {
+            social3.value.push(socials.value[i]);
+        } else if (socials.value[i].ctno == 4) {
+            social4.value.push(socials.value[i]);
+        } else if (socials.value[i].ctno == 5) {
+            social5.value.push(socials.value[i]);
+        }
+    }
 }
 
-const socials1 = getSocialData(1);
+console.log(social1);
+console.log(social2);
+console.log(social3);
+console.log(social4);
+console.log(social5);
 </script>
 
 <style scoped></style>

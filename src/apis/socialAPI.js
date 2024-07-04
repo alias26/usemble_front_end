@@ -9,6 +9,10 @@ function getSocialList(pageNo, ctno, sort) {
     return axios.get("/social/list" + "?pageNo=" + pageNo + "&ctno=" + ctno + "&sort=" + sort);
 }
 
+function mainSocial() {
+    return axios.get("/social/mainSocial");
+}
+
 function getSocial(sno) {
     return axios.get("/social/read/" + sno);
 }
@@ -40,6 +44,7 @@ function cancelSocialJoin(mid, sno) {
 export default {
     writeSocial,
     getSocialList,
+    mainSocial,
     getSocial,
     getSjoinCnt,
     updateSocialStatus,

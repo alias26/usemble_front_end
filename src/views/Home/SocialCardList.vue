@@ -1,28 +1,171 @@
 <template>
     <div class="main ms-auto me-auto" style="height: auto; width: 65%; min-width: 700px">
-        <h3 class="new_host mb-3 mt-5">따끈따끈 신규 호스트</h3>
+        <h3 class="new_host mb-3 mt-5">🐣 따끈따끈 신규 어셈블</h3>
         <h4 class="host_text mb-4">
-            초보 호스트님들은 기대하고 설레~
-            <RouterLink to="/list" style="text-decoration-line: none; color: black; margin-right: 15px;"
+            초보 호스트님들은 기대하고 설레하실거예요~
+            <RouterLink
+                to="/list"
+                style="text-decoration-line: none; color: gray; margin-right: 15px"
                 >전체보기</RouterLink
             >
         </h4>
         <div class="main_page_episodes">
             <SocialCard
-                v-for="(social, index) in props.socials"
+                v-for="(social, index) in socials"
                 :key="index"
                 style="width: 24%"
                 class="me-3"
                 :social="social"
             />
         </div>
+
+        <div v-if="social!=null">
+            <div v-for="(mcategory, index) in mcategoryList" :key="index">
+                <div v-if="mcategory.ctno == 1">
+                    <h3 class="new_host mb-3 mt-5">🍚 맛집 공유 어셈블</h3>
+                    <h4 class="host_text mb-4">
+                        나만 아는 찐맛집, 우리 같이 가요
+                        <RouterLink
+                            to="/list?pageNo=1&ctno=1"
+                            style="text-decoration-line: none; color: gray; margin-right: 15px"
+                            >전체보기</RouterLink
+                        >
+                    </h4>
+                    <div class="main_page_episodes">
+                        <SocialCard
+                            v-for="(social, index) in social1"
+                            :key="index"
+                            style="width: 24%"
+                            class="me-3"
+                            :social="social"
+                        />
+                    </div>
+                </div>
+                <div v-if="mcategory.ctno == 2">
+                    <h3 class="new_host mb-3 mt-5">💪 운동 어셈블</h3>
+                    <h4 class="host_text mb-4">
+                        지겨운 작심삼일, 운동메이트들과 함께해요!
+                        <RouterLink
+                            to="/list?pageNo=1&ctno=2"
+                            style="text-decoration-line: none; color: gray; margin-right: 15px"
+                            >전체보기</RouterLink
+                        >
+                    </h4>
+                    <div class="main_page_episodes">
+                        <SocialCard
+                            v-for="(social, index) in social2"
+                            :key="index"
+                            style="width: 24%"
+                            class="me-3"
+                            :social="social"
+                        />
+                    </div>
+                </div>
+                <div v-if="mcategory.ctno == 3">
+                    <h3 class="new_host mb-3 mt-5">📚 내일을 위한 어셈블</h3>
+                    <h4 class="host_text mb-4">
+                        스터디 구할 땐 여기!
+                        <RouterLink
+                            to="/list?pageNo=1&ctno=3"
+                            style="text-decoration-line: none; color: gray; margin-right: 15px"
+                            >전체보기</RouterLink
+                        >
+                    </h4>
+                    <div class="main_page_episodes">
+                        <SocialCard
+                            v-for="(social, index) in social3"
+                            :key="index"
+                            style="width: 24%"
+                            class="me-3"
+                            :social="social"
+                        />
+                    </div>
+                </div>
+                <div v-if="mcategory.ctno == 4">
+                    <h3 class="new_host mb-3 mt-5">💘 자만추 어셈블</h3>
+                    <h4 class="host_text mb-4">
+                        혹시 모르죠~ 여기서 만날지도
+                        <RouterLink
+                            to="/list?pageNo=1&ctno=4"
+                            style="text-decoration-line: none; color: gray; margin-right: 15px"
+                            >전체보기</RouterLink
+                        >
+                    </h4>
+                    <div class="main_page_episodes">
+                        <SocialCard
+                            v-for="(social, index) in social4"
+                            :key="index"
+                            style="width: 24%"
+                            class="me-3"
+                            :social="social"
+                        />
+                    </div>
+                </div>
+                <div v-if="mcategory.ctno == 5">
+                    <h3 class="new_host mb-3 mt-5">🎨 문화/예술 어셈블</h3>
+                    <h4 class="host_text mb-4">
+                        이런저런 취향 나누며 친해져요~
+                        <RouterLink
+                            to="/list?pageNo=1&ctno=5"
+                            style="text-decoration-line: none; color: gray; margin-right: 15px"
+                            >전체보기</RouterLink
+                        >
+                    </h4>
+                    <div class="main_page_episodes">
+                        <SocialCard
+                            v-for="(social, index) in social5"
+                            :key="index"
+                            style="width: 24%"
+                            class="me-3"
+                            :social="social"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
+import memberAPI from "@/apis/memberAPI";
 import SocialCard from "@/components/Social/SocialCard.vue";
 
-const props = defineProps(["socials"]);
+import { onMounted, ref } from "vue";
+import { useStore } from "vuex";
+
+const props = defineProps(["socials", "social1", "social2", "social3", "social4", "social5"]);
+
+const store = useStore();
+
+onMounted(async () => {
+    await getCategoryList();
+    await getMcategoryList(store.state.mid);
+});
+
+const categoryList = ref([]);
+
+async function getCategoryList() {
+    try {
+        const response = await memberAPI.getCategory();
+        categoryList.value = response.data;
+        console.log(categoryList.value);
+        console.log(store.state.mid);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const mcategoryList = ref([]);
+
+async function getMcategoryList(mid) {
+    try {
+        const response = await memberAPI.getMcategory(mid);
+        mcategoryList.value = response.data;
+        console.log(mcategoryList.value);
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>
 
 <style scoped>

@@ -13,11 +13,9 @@
             <h3>{{ props.social.stitle }}</h3>
         </div>
         <div class="main_additional mb-4">
-            <div class="caption mt-2">
-                <p>{{ props.social.saddress }}</p>
-                <span style="margin-bottom: 10px">
-                    {{ Number(props.social.sfee).toLocaleString() }}원~
-                </span>
+            <div class="caption mt-3">
+                <p class="mb-1">{{ props.social.saddress }}</p>
+                <span> {{ Number(props.social.sfee).toLocaleString() }}원~ </span>
             </div>
         </div>
     </RouterLink>
@@ -41,7 +39,6 @@ const props = defineProps(["style", "social"]);
 }
 .main_styles > img {
     height: 230px;
-    margin-bottom: 8px;
     width: 100%;
     position: relative;
     object-fit: cover;
@@ -85,6 +82,5 @@ const props = defineProps(["style", "social"]);
 .main_category {
     text-decoration-line: none;
     color: black;
-    margin-bottom: 30px;
 }
 </style>
