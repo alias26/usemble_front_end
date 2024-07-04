@@ -237,6 +237,7 @@ async function submitHandler() {
     }
 
     await socialAPI.writeSocial(formData);
+    assembleModal.hide();
 
     router.push("/");
 }
