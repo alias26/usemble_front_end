@@ -1,17 +1,17 @@
 <template>
     <div id="container">
         <div id="detail_content">
-            <img src="../../assets/thum.jpg" />
+            <img :src="`${axios.defaults.baseURL}/social/sthumb/${social.sno}`" />
             <div id="title">{{ social.stitle }}</div>
             <div id="address">{{ social.saddress }}</div>
-            <div id="date">{{ social.swriteDate }}</div>
+            <div id="date">{{ socialDate.date }} {{ socialDate.time }}</div>
 
             <hr />
-            <UserProfile :mid="social.mid"></UserProfile>
-            
+            <UserProfile v-if="social.mid !== ''" :mid="social.mid"></UserProfile>
+
             <h4 id="content-title">모임 일정</h4>
             <div class="mt-3 mb-4" id="join">
-                <CalendarRead :sstartDate="social.sstartDate" />
+                <CalendarRead v-if="social.sstartDate !== ''" :sstartDate="social.sstartDate" />
                 <div id="join-right">
                     <div id="join-right-detail">
                         <div>
@@ -30,22 +30,16 @@
                                 <div id="join-info-txt">
                                     <div class="d-flex">
                                         <div class="me-5">
-                                            <span class="date">{{ social.sstartDate }}</span>
-                                            <span
-                                                v-if="social.sstartDate != social.sendDate"
-                                                class="date"
-                                            >
-                                                ~ {{ social.sendDate }}</span
-                                            >
+                                            <span class="date">{{ socialDate.date }} </span>
+
                                             <div>
-                                                <span id="info-txt-time">오후 5시</span>
+                                                <span id="info-txt-time">{{
+                                                    socialDate.time
+                                                }}</span>
                                                 <span class="mx-2" id="info-txt-fee"
                                                     >{{
                                                         Number(social.sfee).toLocaleString()
                                                     }}원</span
-                                                >
-                                                <span id="info-txt-member"
-                                                    >{{ social.smemberCount }}인</span
                                                 >
                                             </div>
                                         </div>
@@ -57,8 +51,41 @@
                             </div>
                         </div>
                         <div id="usbtn">
-                            <button id="btn_us" class="btn mb-3" @click="joinSocial">
-                                참여하기
+                            <button
+                                v-if="isJoin && !isAlreadyJoin"
+                                id="btn_us"
+                                class="btn mb-3"
+                                @click="joinSocial"
+                            >
+                                {{ social.sjoinCnt }} / {{ social.smemberCount }}인 참여하기
+                            </button>
+
+                            <button
+                                v-if="isFull && !isWriter && !isAlreadyJoin"
+                                id="btn_us"
+                                class="btn mb-3"
+                                disabled
+                            >
+                                인원이 가득찬 어셈블입니다.
+                            </button>
+                            <button
+                                v-if="isAlreadyJoin"
+                                id="btn_us"
+                                class="btn mb-3"
+                                @click="showCancelSocialJoinModal"
+                            >
+                                취소하기
+                            </button>
+                            <button
+                                v-if="isWriter"
+                                id="btn_us"
+                                class="btn mb-3"
+                                @click="showCancelSocialModal"
+                            >
+                                취소하기
+                            </button>
+                            <button v-if="isDeadline" id="btn_us" class="btn mb-3" disabled>
+                                마감된 어셈블입니다.
                             </button>
                         </div>
                     </div>
@@ -67,77 +94,201 @@
             <hr />
             <div>
                 <h4 id="content-title">오시는 길</h4>
-                <div id="content">
+                <div class="content">
                     <h5 id="location">{{ social.saddress }}</h5>
                     <p id="subtext">*정확한 위치는 호스트의 사정에 의해 변경될 수 있습니다.</p>
-                    <KakaoMap ref="kakaoMap" :saddress="social.saddress" />
+                    <KakaoMap
+                        v-if="social.saddress !== ''"
+                        ref="kakaoMap"
+                        :saddress="social.saddress"
+                    />
                 </div>
             </div>
             <hr />
             <div>
                 <h4 id="content-title">어셈블 소개</h4>
-                <div id="content" class="d-flex flex-column">
-                    <span
-                        >안녕하세요. 성남 근처에서 작은 와인집을 운영하고 있는 호스트 귀요미
-                        입니다.</span
-                    >
-                    <img class="my-3" id="contentimg" src="../../assets/와인바.jpg" alt="" />
-                    <span>모임 주제는 그리 중요하지 않습니다. 그냥 술 먹으러 오세용.</span>
-                    <img class="my-3" id="contentimg" src="../../assets/와인바2.jpg" alt="" />
-                    <span
-                        >Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the
-                        1500s, when an unknown printer took a galley of type and scrambled it to
-                        make a type specimen book. It has survived not only five centuries, but also
-                        the leap into electronic typesetting, remaining essentially unchanged. It
-                        was popularised in the 1960s with the release of Letraset sheets containing
-                        Lorem Ipsum passages, and more recently with desktop publishing software
-                        like Aldus PageMaker including versions of Lorem Ipsum.
-                    </span>
-                    <img class="mt-3" id="contentimg" src="../../assets/와인바3.jpg" alt="" />
-                </div>
+                <div id="social-detail" class="d-flex flex-column content"></div>
             </div>
             <hr />
         </div>
+        <CancelSocialJoinModal
+            id="cancelSocialJoinModal"
+            @close="hideCancelSocialJoinModal"
+            @cancel="cancelSocialJoin"
+        />
+        <CancelSocialModal
+            id="cancelSocialModal"
+            @close="hideCancelSocialModal"
+            @cancel="cancelSocial"
+        />
     </div>
 </template>
 <script setup>
 import KakaoMap from "@/components/KakaoMap.vue";
 import UserProfile from "@/components/UserProfile.vue";
 import CalendarRead from "@/components/CalendarRead.vue";
-import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import CancelSocialJoinModal from "./CancelSocialJoinModal.vue";
+import CancelSocialModal from "./CancelSocialModal.vue";
+import { onBeforeMount, onMounted, ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import socialAPI from "@/apis/socialAPI";
+import axios from "axios";
+import { useStore } from "vuex";
+import { Modal } from "bootstrap";
 
 const router = useRouter();
+const route = useRoute();
 const kakaoMap = ref(null);
+const store = useStore();
 
-const socialdata = ref({
-    swriteDate: "2024.06.18 (화) 19:00",
-    sstartDate: "2024.06.20",
-    sendDate: "2024.06.20",
+const sno = ref(route.query.sno);
+const isWriter = ref(false);
+const isDeadline = ref(false);
+const isFull = ref(false);
+const isJoin = ref(false);
+const isAlreadyJoin = ref(false);
+
+const social = ref({
+    sno: "",
+    mid: "",
+    ctno: "",
+    stitle: "",
+    scontent: "",
+    swriteDate: "",
+    sdeadline: "",
+    sstartDate: "",
+    sstartTime: "",
+    sfee: "",
+    smemberCount: "",
+    saddress: "",
+    sstatus: "",
+    sjoinCnt: 0,
 });
 
-function getSocialDetail() {
-    const social = ref({
-        stitle: "와인, 새로운 만남!",
-        scontent: "",
-        swriteDate: "2024.06.18 (화) 19:00",
-        sstartDate: "2024.06.20",
-        sendDate: "2024.06.20",
-        sfee: 50000,
-        saddress: "경기 성남시 분당구 정자일로 239",
-        mid: "myeonghwan57",
-        smemberCount: 7,
-        scolor: "red",
-    });
+const sjoin = ref({
+    sno: "",
+    mid: "",
+});
 
-    return social;
+async function getSocialDetail(sno) {
+    try {
+        const response = await socialAPI.getSocial(sno);
+        social.value.sno = response.data.social.sno;
+        social.value.mid = response.data.social.mid;
+        social.value.ctno = response.data.social.ctno;
+        social.value.stitle = response.data.social.stitle;
+        social.value.scontent = response.data.social.scontent;
+        social.value.swriteDate = response.data.social.swriteDate;
+        social.value.sdeadline = response.data.social.sdeadline;
+        social.value.sstartDate = response.data.social.sstartDate;
+        social.value.sstartTime = response.data.social.sstartTime;
+        social.value.sfee = response.data.social.sfee;
+        social.value.smemberCount = response.data.social.smemberCount;
+        social.value.sstatus = response.data.social.sstatus;
+        social.value.saddress = response.data.social.saddress;
+
+        sjoin.value.mid = store.state.mid;
+        sjoin.value.sno = social.value.sno;
+
+        const joinCheckResponse = await socialAPI.getSjoinState(sjoin.value.mid, sjoin.value.sno);
+        isAlreadyJoin.value = joinCheckResponse.data.sjoinState;
+
+        const sjoinResponse = await socialAPI.getSjoinCnt(sno);
+        social.value.sjoinCnt = sjoinResponse.data.sjoinCnt;
+
+        isWriter.value = social.value.mid == store.state.mid;
+        isDeadline.value = new Date(social.value.sdeadline) < new Date();
+        isFull.value = social.value.sstatus == "full";
+        isJoin.value =
+            !isWriter.value && !isDeadline.value && social.value.sstatus == "recruitment"
+                ? true
+                : false;
+
+        changeDateFormat();
+        showContent();
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-const social = getSocialDetail();
+getSocialDetail(sno.value);
+
+const socialDate = ref({
+    date: "",
+    time: "",
+});
+
+function changeDateFormat() {
+    const day = ["일", "월", "화", "수", "목", "금", "토"];
+    let originDateFormat = new Date(social.value.sstartDate);
+
+    let resultDateFormat =
+        originDateFormat.getFullYear() +
+        "년 " +
+        (originDateFormat.getMonth() + 1) +
+        "월 " +
+        originDateFormat.getDate() +
+        "일 (" +
+        day[originDateFormat.getDay()] +
+        ")";
+
+    socialDate.value.date = resultDateFormat;
+
+    let timeList = social.value.sstartTime.split(":");
+
+    socialDate.value.time = timeList[0] + "시 " + timeList[1] + "분";
+}
+
+function showContent() {
+    document.getElementById("social-detail").innerHTML = social.value.scontent;
+}
 
 function joinSocial() {
-    router.push("/social/pay?sno=1");
+    router.push("/social/pay?sno=" + sno.value);
+}
+
+let cancelSocialJoinModal = null;
+let cancelSocialModal = null;
+
+onMounted(() => {
+    cancelSocialJoinModal = new Modal(document.getElementById("cancelSocialJoinModal"));
+    cancelSocialModal = new Modal(document.getElementById("cancelSocialModal"));
+});
+
+function showCancelSocialJoinModal() {
+    cancelSocialJoinModal.show();
+}
+
+function hideCancelSocialJoinModal() {
+    cancelSocialJoinModal.hide();
+}
+
+function showCancelSocialModal() {
+    cancelSocialModal.show();
+}
+
+function hideCancelSocialModal() {
+    cancelSocialModal.hide();
+}
+
+async function cancelSocialJoin() {
+    try {
+        await socialAPI.cancelSocialJoin(sjoin.value.mid, sjoin.value.sno);
+        cancelSocialJoinModal.hide();
+    } catch (error) {
+        console.log(error);
+    }
+    router.push("/");
+}
+
+async function cancelSocial() {
+    try {
+        await socialAPI.updateSocialStatus(sno.value, "cancel");
+        cancelSocialModal.hide();
+    } catch (error) {
+        console.log(error);
+    }
+    router.push("/");
 }
 </script>
 
@@ -270,7 +421,7 @@ img {
     object-fit: cover;
     margin-bottom: 10px;
 }
-#content {
+.content {
     font-weight: 500;
     margin: 0 auto;
     width: 90%;

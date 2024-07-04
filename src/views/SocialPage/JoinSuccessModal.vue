@@ -2,24 +2,29 @@
     <ModalTemplate>
         <template v-slot:header>
             <div class="p-1">
-                <h5 class="fw-bold">결제 하시겠습니까?</h5>
+                <h5 class="fw-bold">어셈블!</h5>
             </div>
         </template>
         <template v-slot:body>
-            <div></div>
+            <div><span>성공적으로 어셈블에 참여했습니다!</span></div>
         </template>
         <template v-slot:footer>
-            <button class="btnCancel" @click="emit('close')" data-bs-dismiss="modal">취소</button>
-            <button class="btn" @click="emit('close')" data-bs-dismiss="modal">결제하기</button>
+            <button class="btn" @click="goUrlHome" data-bs-dismiss="modal">닫기</button>
         </template>
     </ModalTemplate>
 </template>
 
 <script setup>
 import ModalTemplate from "@/components/ModalTemplate.vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const emit = defineEmits(["close"]);
 
+function goUrlHome() {
+    emit("close");
+    router.push("/");
+}
 </script>
 
 <style scoped>
@@ -37,7 +42,7 @@ const emit = defineEmits(["close"]);
     font-size: 16px;
     font-weight: 600;
 }
-.btnCancel{
+.btnCancel {
     background-color: #ebf0f7;
     border: none;
     color: #558ccf;

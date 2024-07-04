@@ -1,5 +1,9 @@
 <template>
-    <RouterLink class="main_category" :style="props.style" to="/social/detail">
+    <RouterLink
+        class="main_category"
+        :style="props.style"
+        :to="`/social/detail?sno=${props.social.sno}`"
+    >
         <div class="main_list-wrapper">
             <div class="main_styles">
                 <img :src="`${axios.defaults.baseURL}/social/sthumb/${props.social.sno}`" />
