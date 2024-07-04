@@ -90,14 +90,16 @@ function putMcategory(resultcate) {
     return axios.post("/member/putMcategory", resultcate);
 }
 
-function updateMcategory() {
-    return axios.patch("/member/updateMcategory");
+function updateMcategory(resultcate) {
+    return axios.post("/member/updateMcategory", resultcate);
 }
 
 function putAgree(mid) {
     return axios.post("/member/putAgree?mid=" + mid);
 }
-
+// function deleteMcategory(mid) {
+//     return axios.delete("/member/deleteMcategory?mid=" + mid);
+// }
 export default {
     login,
     join,

@@ -39,12 +39,16 @@
                                     font-size: 15px;
                                     border-color: lightgray;
                                 "
-                                @click="showCategoryModal"
+                                @click="showCategoryModal()"
                             >
                                 <i class="bi bi-pencil-fill"></i>
                                 수정
                             </button>
-                            <CategoryModal id="categoryModal" @close="hideCategoryModal" />
+                            <CategoryModal
+                                id="categoryModal"
+                                @close="hideCategoryModal"
+                                @reload="getMcategoryList(store.state.mid)"
+                            />
                         </div>
                     </div>
                     <div id="intro_box" class="bg-light p-4 mt-3">{{ member.mintroduce }}</div>
@@ -106,7 +110,9 @@ import { onMounted, ref, watchEffect } from "vue";
 import { Modal } from "bootstrap";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 let categoryModal = null;
 
 const member = ref({

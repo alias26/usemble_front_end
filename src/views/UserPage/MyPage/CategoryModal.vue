@@ -27,7 +27,7 @@
         </template>
 
         <template v-slot:footer>
-            <button class="btn" @click="emit('close')">확인</button>
+            <button class="btn" @click="confirmSelection()">확인</button>
         </template>
     </ModalTemplate>
 </template>
@@ -38,11 +38,13 @@ import ModalTemplate from "@/components/ModalTemplate.vue";
 import { ref, watch, onMounted } from "vue";
 import { useStore } from "vuex";
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "change"]);
+const prop = defineProps(["mid"]);
 
 const modalMcategory = ref([]);
+const newModalMcategory = ref([]);
 const modalCategory = ref([]);
-const selected = ref([]);
+const selected = ref([modalCategory.value.map((cat) => modalMcategory.value.includes(cat.ctno))]);
 const cnt = ref(0);
 
 async function getCategoryList() {
@@ -64,12 +66,12 @@ async function getMcategoryList(mid) {
 }
 
 function initializeSelected() {
-   
+    selected.value = [];
     selected.value = modalCategory.value.map((cat) => modalMcategory.value.includes(cat.ctno));
     cnt.value = selected.value.filter((val) => val).length;
-    console.log("Category list:", modalCategory.value);
-    console.log("User category list:", modalMcategory.value);
-    console.log("Selected initialized:", selected.value);
+    console.log(selected.value);
+    console.log(modalMcategory.value);
+    console.log(modalCategory.value);
 }
 
 function selectCategory(index) {
@@ -77,24 +79,25 @@ function selectCategory(index) {
         if (selected.value[index]) {
             selected.value[index] = false;
             cnt.value--;
-            const delValue = modalMcategory.value.indexOf(modalCategory.value[index].ctno);
+            const delValue = newModalMcategory.value.indexOf(modalCategory.value[index].ctno);
             if (delValue !== -1) {
-                modalMcategory.value.splice(delValue, 1);
+                newModalMcategory.value.splice(delValue, 1);
             }
         }
     } else {
         selected.value[index] = !selected.value[index];
         if (selected.value[index]) {
-            modalMcategory.value.push(modalCategory.value[index].ctno);
+            newModalMcategory.value.push(modalCategory.value[index].ctno);
             cnt.value++;
         } else {
-            const delValue = modalMcategory.value.indexOf(modalCategory.value[index].ctno);
+            const delValue = newModalMcategory.value.indexOf(modalCategory.value[index].ctno);
             if (delValue !== -1) {
-                modalMcategory.value.splice(delValue, 1);
+                newModalMcategory.value.splice(delValue, 1);
                 cnt.value--;
             }
         }
     }
+    console.log(newModalMcategory.value);
 }
 
 const store = useStore();
@@ -113,6 +116,32 @@ watch(
     },
     { immediate: true }
 );
+const resultcate = ref([]);
+async function updateMcategory() {
+    putMcategory();
+    console.log(resultcate.value);
+    const response = await memberAPI.updateMcategory(JSON.parse(JSON.stringify(resultcate.value)));
+}
+
+function confirmSelection() {
+    emit("close");
+    emit("reload");
+    updateMcategory();
+}
+
+// =========================================================
+
+function putMcategory() {
+    resultcate.value = [];
+    for (let i = 0; i < newModalMcategory.value.length; i++) {
+        let mcate = { mid: "", ctno: "" };
+        mcate.mid = store.state.mid;
+        mcate.ctno = newModalMcategory.value[i];
+        resultcate.value.push(mcate);
+        console.log(mcate.ctno);
+        console.log(mcate.mid);
+    }
+}
 </script>
 
 <style scoped>
