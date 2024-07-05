@@ -20,7 +20,7 @@
         </div>
 
         <div v-for="(mcategory, index) in mcategoryList" :key="index">
-            <div v-if="mcategory.ctno == 1 && mainlist1 != null">
+            <div v-if="mcategory.ctno == 1 && mainlist1 != null && mainlist1.length != 0">
                 <h3 class="new_host mb-3 mt-5">🍚 맛집 공유 어셈블</h3>
                 <h4 class="host_text mb-4">
                     나만 아는 찐맛집, 우리 같이 가요
@@ -40,7 +40,7 @@
                     />
                 </div>
             </div>
-            <div v-if="mcategory.ctno == 2 && mainlist2 != null">
+            <div v-if="mcategory.ctno == 2 && mainlist2 != null && mainlist2.length != 0">
                 <h3 class="new_host mb-3 mt-5">💪 운동 어셈블</h3>
                 <h4 class="host_text mb-4">
                     지겨운 작심삼일, 운동메이트들과 함께해요!
@@ -60,7 +60,7 @@
                     />
                 </div>
             </div>
-            <div v-if="mcategory.ctno == 3 && mainlist3 != null">
+            <div v-if="mcategory.ctno == 3 && mainlist3 != null && mainlist3.length != 0">
                 <h3 class="new_host mb-3 mt-5">📚 내일을 위한 어셈블</h3>
                 <h4 class="host_text mb-4">
                     스터디 구할 땐 여기!
@@ -80,7 +80,7 @@
                     />
                 </div>
             </div>
-            <div v-if="mcategory.ctno == 4 && mainlist4 != null">
+            <div v-if="mcategory.ctno == 4 && mainlist4 != null && mainlist4.length != 0">
                 <h3 class="new_host mb-3 mt-5">💘 자만추 어셈블</h3>
                 <h4 class="host_text mb-4">
                     혹시 모르죠~ 여기서 만날지도
@@ -100,7 +100,7 @@
                     />
                 </div>
             </div>
-            <div v-if="mcategory.ctno == 5 && mainlist5 != null">
+            <div v-if="mcategory.ctno == 5 && mainlist5 != null && mainlist5.length != 0">
                 <h3 class="new_host mb-3 mt-5">🎨 문화/예술 어셈블</h3>
                 <h4 class="host_text mb-4">
                     이런저런 취향 나누며 친해져요~
