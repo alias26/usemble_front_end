@@ -67,14 +67,10 @@ async function getMcategoryList(mid) {
 }
 
 function initializeSelected() {
-    console.log(modalMcategory.value);
-    console.log(modalCategory.value);
-
     selected.value = modalCategory.value.map((cat) =>
         modalMcategory.value.some((mcat) => mcat.ctno === cat.ctno)
     );
     cnt.value = selected.value.filter((val) => val).length;
-    console.log(cnt.value);
 }
 
 function selectCategory(index) {
@@ -104,7 +100,6 @@ function selectCategory(index) {
             }
         }
     }
-    console.log(newModalMcategory.value);
 }
 
 const store = useStore();

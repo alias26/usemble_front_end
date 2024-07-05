@@ -233,24 +233,6 @@ function updateMcategory(updatedMcategories) {
             console.error("Error updating Mcategory", error);
         });
 }
-
-// function initializeSelected() {
-//     selected.value = category.value.map((cat) => mcategory.value.includes(cat.ctno));
-//     cnt.value = selected.value.filter((val) => val).length;
-//     console.log(selected.value);
-//     console.log(mcategory.value);
-//     console.log(category.value);
-// }
-
-// watch(
-//     [category, mcategory],
-//     () => {
-//         if (category.value.length && mcategory.value.length) {
-//             initializeSelected();
-//         }
-//     },
-//     { immediate: true }
-// );
 </script>
 
 <style scoped>
