@@ -1,7 +1,9 @@
 <template>
     <ModalTemplate>
-        <template v-slot:header><span class="header fs-4">리뷰 작성</span></template>
-        <template v-slot:body><textarea class="p-3">리뷰를 작성해주세요.</textarea></template>
+        <template v-slot:header
+            ><span class="header"><h4>내역 삭제</h4></span></template
+        >
+        <template v-slot:body><h5>정말로 내역을 삭제하시겠습니까?</h5></template>
         <template v-slot:footer>
             <button
                 type="button"
@@ -11,7 +13,7 @@
             >
                 닫기
             </button>
-            <button type="button" class="btn btn-delete">작성하기</button>
+            <button type="button" @click="emit('delete')" class="btn btn-delete">삭제하기</button>
         </template>
     </ModalTemplate>
 </template>
@@ -19,7 +21,7 @@
 <script setup>
 import ModalTemplate from "@/components/ModalTemplate.vue";
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "delete"]);
 </script>
 
 <style scoped>
@@ -27,12 +29,6 @@ const emit = defineEmits(["close"]);
     font-weight: 600;
     color: black;
     font-size: 18px;
-}
-
-textarea {
-    width: 100%;
-    height: 300px;
-    resize: none;
 }
 
 .btn-delete {

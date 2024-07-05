@@ -69,7 +69,6 @@ async function getSocialList(pageNo, ctno, sort) {
         const response = await socialAPI.getSocialList(pageNo, ctno, sort);
         page.value.socialList = response.data.socialList;
         page.value.pager = response.data.pager;
-        console.log(page);
     } catch (error) {
         console.log(error);
     }

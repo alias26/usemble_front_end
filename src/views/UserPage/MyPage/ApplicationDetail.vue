@@ -2,61 +2,205 @@
     <div class="d-flex justify-content-between" id="socialinfo">
         <div class="d-flex">
             <div id="socialimg">
-                <img src="@/assets/와인바.jpg" />
+                <img :src="`${axios.defaults.baseURL}/social/sthumb/${props.application.sno}`" />
             </div>
             <div>
                 <div id="socialtitle">{{ props.application.stitle }}</div>
                 <div id="socialcontent">
-                    <!-- <div class="mb-1">분재를 현대식으로 좀 더 쉽게 배워보세요.</div> -->
                     <div class="mb-1">{{ props.application.saddress }}</div>
                 </div>
                 <div id="socialprice">{{ Number(props.application.sfee).toLocaleString() }}원</div>
             </div>
         </div>
         <div>
-            <button class="d-flex btn me-4" id="review-btn" @click="showReviewModal">
-                리뷰작성
-            </button>
-            <button class="d-flex btn mt-2 me-4" id="delete-btn" @click="showDelModal">
-                삭제하기
-            </button>
+            <div v-if="new Date(props.application.sdeadline) <= new Date()">
+                <button
+                    v-if="!isReview"
+                    class="d-flex btn me-4"
+                    id="review-btn"
+                    @click="showWriteReviewModal"
+                >
+                    리뷰작성
+                </button>
+                <button
+                    v-if="isReview"
+                    class="d-flex btn me-4"
+                    id="review-btn"
+                    @click="showUpdateReviewModal"
+                >
+                    리뷰수정
+                </button>
+                <button
+                    class="d-flex btn mt-2 me-4"
+                    id="delete-btn"
+                    @click="showDeleteJoinHistoryModal"
+                >
+                    삭제하기
+                </button>
+            </div>
+            <div v-if="new Date(props.application.sdeadline) > new Date()">
+                <button
+                    class="d-flex btn mt-2 me-4"
+                    id="delete-btn"
+                    @click="showCancelSocialJoinModal"
+                >
+                    취소하기
+                </button>
+            </div>
         </div>
-        <ReviewModal :id="'reviewModal' + props.application.sno" @close="hideReviewModal" />
-        <DeleteModal :id="'delModal' + props.application.sno" @close="hideDelModal" />
+        <WriteReviewModal
+            v-if="props.application.sno != null"
+            :id="'writeReviewModal' + props.application.sno"
+            @close="hideWriteReviewModal"
+        />
+        <UpdateReviewModal
+            v-if="props.application.sno != null"
+            :id="'updateReviewModal' + props.application.sno"
+            @close="hideUpdateReviewModal"
+        />
+        <DeleteJoinHistoryModal
+            v-if="props.application.sno != null"
+            :id="'deleteJoinHistoryModal' + props.application.sno"
+            @close="hideDeleteJoinHistoryModal"
+            @delete="deleteJoinHistory"
+        />
+        <CancelSocialJoinModal
+            v-if="props.application.sno != null"
+            :id="'cancelSocialJoinModal' + props.application.sno"
+            @close="hideCancelSocialJoinModal"
+            @cancel="cancelSocialJoin"
+        />
     </div>
     <hr class="mx-3" />
 </template>
 <script setup>
-import { onMounted } from "vue";
 import { Modal } from "bootstrap";
-import ReviewModal from "./ReviewModal.vue";
-import DeleteModal from "./DeleteModal.vue";
+import WriteReviewModal from "./WriteReviewModal.vue";
+import UpdateReviewModal from "./UpdateReviewModal.vue";
+import DeleteJoinHistoryModal from "./DeleteJoinHistoryModal.vue";
+import CancelSocialJoinModal from "@/components/Social/CancelSocialJoinModal.vue";
+import axios from "axios";
+import socialAPI from "@/apis/socialAPI";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { onMounted, ref, provide } from "vue";
+import reviewAPI from "@/apis/reviewAPI";
 
 const props = defineProps(["application"]);
+const emit = defineEmits(["reload"]);
+const router = useRouter();
+const store = useStore();
 
-let reviewModal = null;
-let delModal = null;
+let writeReviewModal = null;
+let updateReviewModal = null;
+let deleteJoinHistoryModal = null;
+let cancelSocialJoinModal = null;
+
+const isReview = ref(false);
 
 onMounted(() => {
-    reviewModal = new Modal(document.getElementById("reviewModal" + props.application.sno));
-    delModal = new Modal(document.getElementById("delModal" + props.application.sno));
+    writeReviewModal = new Modal(
+        document.getElementById("writeReviewModal" + props.application.sno)
+    );
+    updateReviewModal = new Modal(
+        document.getElementById("updateReviewModal" + props.application.sno)
+    );
+    deleteJoinHistoryModal = new Modal(
+        document.getElementById("deleteJoinHistoryModal" + props.application.sno)
+    );
+    cancelSocialJoinModal = new Modal(
+        document.getElementById("cancelSocialJoinModal" + props.application.sno)
+    );
 });
 
-function showReviewModal() {
-    reviewModal.show();
+function showWriteReviewModal() {
+    writeReviewModal.show();
 }
 
-function showDelModal() {
-    delModal.show();
+function hideWriteReviewModal() {
+    writeReviewModal.hide();
 }
 
-function hideReviewModal() {
-    reviewModal.hide();
+function showDeleteJoinHistoryModal() {
+    deleteJoinHistoryModal.show();
 }
 
-function hideDelModal() {
-    delModal.hide();
+function hideDeleteJoinHistoryModal() {
+    deleteJoinHistoryModal.hide();
 }
+
+function showUpdateReviewModal() {
+    updateReviewModal.show();
+}
+
+function hideUpdateReviewModal() {
+    updateReviewModal.hide();
+}
+
+function showCancelSocialJoinModal() {
+    cancelSocialJoinModal.show();
+}
+
+function hideCancelSocialJoinModal() {
+    cancelSocialJoinModal.hide();
+}
+
+async function cancelSocialJoin() {
+    try {
+        await socialAPI.cancelSocialJoin(store.state.mid, props.application.sno);
+        emit("reload");
+        cancelSocialJoinModal.hide();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function deleteJoinHistory() {
+    try {
+        await socialAPI.cancelSocialJoin(review.value.mid, review.value.sno);
+        if (isReview.value) {
+            await reviewAPI.deleteReview(review.value.mid, review.value.sno);
+            isReview.value = !isReview.value;
+        }
+        emit("reload");
+        deleteJoinHistoryModal.hide();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function getIsReview() {
+    try {
+        const response = await reviewAPI.getIsReview(store.state.mid, props.application.sno);
+        isReview.value = response.data.isReview;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getIsReview();
+
+const review = ref({
+    mid: store.state.mid,
+    sno: props.application.sno,
+    rcontent: "",
+});
+
+provide("review", review);
+provide("isReview", isReview);
+
+async function getReview() {
+    try {
+        const response = await reviewAPI.getReview(review.value.mid, review.value.sno);
+        if (response.data.review != null) {
+            review.value.rcontent = response.data.review.rcontent || "";
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getReview();
 </script>
 <style scoped>
 img {

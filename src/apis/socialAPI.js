@@ -41,6 +41,26 @@ function cancelSocialJoin(mid, sno) {
     return axios.delete("/social/sjoin/cancel?mid=" + mid + "&sno=" + sno);
 }
 
+function getJoinHistory(pageNo, mid) {
+    return axios.get("/social/history/join?mid=" + mid + "&jPageNo=" + pageNo);
+}
+
+function getRecruitHistory(pageNo, mid) {
+    return axios.get("/social/history/recruit?mid=" + mid + "&rPageNo=" + pageNo);
+}
+
+function getJoinMemberList(sno) {
+    return axios.get("/social/sjoin/list/" + sno);
+}
+
+function isDeadline(sno) {
+    return axios.get("/social/deadline/" + sno);
+}
+
+function refuseJoinMember(mid, sno) {
+    return axios.delete("/social/sjoin/refuse?mid=" + mid + "&sno=" + sno);
+}
+
 export default {
     writeSocial,
     getSocialList,
@@ -52,4 +72,9 @@ export default {
     joinSocial,
     getSjoinState,
     cancelSocialJoin,
+    getJoinHistory,
+    getRecruitHistory,
+    getJoinMemberList,
+    isDeadline,
+    refuseJoinMember,
 };

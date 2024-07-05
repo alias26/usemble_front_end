@@ -2,47 +2,77 @@
     <div class="d-flex justify-content-between" id="socialinfo">
         <div class="d-flex">
             <div id="socialimg">
-                <img src="@/assets/와인바.jpg" />
+                <img :src="`${axios.defaults.baseURL}/social/sthumb/${props.recruitment.sno}`" />
             </div>
             <div>
                 <div id="socialtitle">{{ props.recruitment.stitle }}</div>
                 <div id="socialcontent">
-                    <!-- <div class="mb-1">분재를 현대식으로 좀 더 쉽게 배워보세요.</div> -->
                     <div class="mb-1">{{ props.recruitment.saddress }}</div>
                 </div>
                 <div id="socialprice">{{ Number(props.recruitment.sfee).toLocaleString() }}원</div>
             </div>
         </div>
         <div class="justify-content-center align-items-center">
-            <RouterLink class="text-decoration-none" to="./recruitmentStatus">
+            <RouterLink
+                class="text-decoration-none"
+                :to="`./recruitmentStatus?sno=${props.recruitment.sno}`"
+            >
                 <button class="d-flex btn me-4 mb-2" id="host-btn">모집 현황</button>
             </RouterLink>
-            <button class="d-flex btn me-4" id="host-btn" @click="showDelModal">삭제하기</button>
+            <button
+                v-if="new Date(props.recruitment.sdeadline) > new Date()"
+                class="d-flex btn me-4"
+                id="host-btn"
+                @click="showCancelSocialModal"
+            >
+                취소하기
+            </button>
         </div>
-        <DeleteModal :id="'delModal' + props.recruitment.sno" @close="hideDelModal" />
+        <CancelSocialModal
+            :id="'cancelSocialModal' + props.recruitment.sno"
+            @close="hideCancelSocialModal"
+            @cancel="cancelSocial"
+        />
     </div>
     <hr class="mx-3" />
 </template>
 
 <script setup>
 import { onMounted } from "vue";
-import DeleteModal from "./DeleteModal.vue";
+import CancelSocialModal from "@/components/Social/CancelSocialModal.vue";
 import { Modal } from "bootstrap";
+import axios from "axios";
+import { useRouter } from "vue-router";
+import socialAPI from "@/apis/socialAPI";
 
 const props = defineProps(["recruitment"]);
+const emit = defineEmits(["reload"]);
+const router = useRouter();
 
-let delModal = null;
+let cancelSocialModal = null;
 
 onMounted(() => {
-    delModal = new Modal(document.getElementById("delModal" + props.recruitment.sno));
+    cancelSocialModal = new Modal(
+        document.getElementById("cancelSocialModal" + props.recruitment.sno)
+    );
 });
 
-function showDelModal() {
-    delModal.show();
+function showCancelSocialModal() {
+    cancelSocialModal.show();
 }
 
-function hideDelModal() {
-    delModal.hide();
+function hideCancelSocialModal() {
+    cancelSocialModal.hide();
+}
+
+async function cancelSocial() {
+    try {
+        await socialAPI.updateSocialStatus(props.recruitment.sno, "cancel");
+        emit("reload");
+        cancelSocialModal.hide();
+    } catch (error) {
+        console.log(error);
+    }
 }
 </script>
 

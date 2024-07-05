@@ -127,8 +127,8 @@
 import KakaoMap from "@/components/KakaoMap.vue";
 import UserProfile from "@/components/UserProfile.vue";
 import CalendarRead from "@/components/CalendarRead.vue";
-import CancelSocialJoinModal from "./CancelSocialJoinModal.vue";
-import CancelSocialModal from "./CancelSocialModal.vue";
+import CancelSocialJoinModal from "@/components/Social/CancelSocialJoinModal.vue";
+import CancelSocialModal from "@/components/Social/CancelSocialModal.vue";
 import { onBeforeMount, onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import socialAPI from "@/apis/socialAPI";
