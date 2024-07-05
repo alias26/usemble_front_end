@@ -220,7 +220,7 @@ function updateMcategory(updatedMcategories) {
 const applyList = ref([]);
 async function getApplyAssemble(mid) {
     try {
-        const response = await socialAPI.getApplyAssemble(mid);
+        const response = await socialAPI.applyAssemble(mid);
         applyList.value = response.data;
         for (let i = 1; i < applyList.value.length; i++) {
             if (applyList.value.length > 3) {
