@@ -39,12 +39,13 @@ import { ref, watch, onMounted } from "vue";
 import { useStore } from "vuex";
 
 const emit = defineEmits(["close", "change"]);
-const prop = defineProps(["mid"]);
 
 const modalMcategory = ref([]);
 const newModalMcategory = ref([]);
 const modalCategory = ref([]);
-const selected = ref([modalCategory.value.map((cat) => modalMcategory.value.includes(cat.ctno))]);
+const selected = ref(
+    modalCategory.value.map((cat) => modalMcategory.value.some((mcat) => mcat.ctno === cat.ctno))
+);
 const cnt = ref(0);
 
 async function getCategoryList() {
@@ -66,15 +67,21 @@ async function getMcategoryList(mid) {
 }
 
 function initializeSelected() {
-    selected.value = [];
-    selected.value = modalCategory.value.map((cat) => modalMcategory.value.includes(cat.ctno));
-    cnt.value = selected.value.filter((val) => val).length;
-    console.log(selected.value);
     console.log(modalMcategory.value);
     console.log(modalCategory.value);
+
+    selected.value = modalCategory.value.map((cat) =>
+        modalMcategory.value.some((mcat) => mcat.ctno === cat.ctno)
+    );
+    cnt.value = selected.value.filter((val) => val).length;
+    console.log(cnt.value);
 }
 
 function selectCategory(index) {
+    for (let i = 0; i < modalMcategory.value.length; i++) {
+        newModalMcategory.value.push(modalMcategory.value[i].ctno);
+    }
+
     if (cnt.value === 3) {
         if (selected.value[index]) {
             selected.value[index] = false;
@@ -116,31 +123,11 @@ watch(
     },
     { immediate: true }
 );
-const resultcate = ref([]);
-async function updateMcategory() {
-    putMcategory();
-    console.log(resultcate.value);
-    const response = await memberAPI.updateMcategory(JSON.parse(JSON.stringify(resultcate.value)));
-}
 
 function confirmSelection() {
+    const selectedCategories = modalCategory.value.filter((cat, index) => selected.value[index]);
+    emit("change", selectedCategories);
     emit("close");
-    emit("reload");
-    updateMcategory();
-}
-
-// =========================================================
-
-function putMcategory() {
-    resultcate.value = [];
-    for (let i = 0; i < newModalMcategory.value.length; i++) {
-        let mcate = { mid: "", ctno: "" };
-        mcate.mid = store.state.mid;
-        mcate.ctno = newModalMcategory.value[i];
-        resultcate.value.push(mcate);
-        console.log(mcate.ctno);
-        console.log(mcate.mid);
-    }
 }
 </script>
 

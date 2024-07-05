@@ -3,10 +3,9 @@
         <div id="pro" class="text-start">
             <div class="d-flex justify-content-between">
                 <div class="mb-2 fs-4 fw-bolder">프로필</div>
-
                 <div>
-                    <RouterLink to="./profileUpdate"
-                        ><button
+                    <RouterLink to="./profileUpdate">
+                        <button
                             id="update-btn"
                             class="btn border fw-bold"
                             style="
@@ -17,14 +16,13 @@
                             "
                         >
                             프로필 수정
-                        </button></RouterLink
-                    >
+                        </button>
+                    </RouterLink>
                 </div>
             </div>
 
             <div class="d-flex">
                 <img id="proimg" alt="" :src="mattach" />
-                <!-- :src="`${axios.defaults.baseURL}/member/mattach/${member.mid}?accessToken=${$store.state.accessToken}`" -->
                 <div class="d-flex flex-column mb-2 ps-4" style="width: 100%">
                     <div class="d-flex">
                         <div class="d-flex me-1" v-for="ctname in mctname" :key="ctname">
@@ -47,7 +45,7 @@
                             <CategoryModal
                                 id="categoryModal"
                                 @close="hideCategoryModal"
-                                @reload="getMcategoryList(store.state.mid)"
+                                @change="updateMcategory"
                             />
                         </div>
                     </div>
@@ -106,7 +104,7 @@
 <script setup>
 import SocialCard from "@/components/Social/SocialCard.vue";
 import CategoryModal from "./CategoryModal.vue";
-import { onMounted, ref, watchEffect } from "vue";
+import { onMounted, ref, watchEffect, watch } from "vue";
 import { Modal } from "bootstrap";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
@@ -125,6 +123,8 @@ const mattach = ref(null);
 const category = ref([]);
 const mcategory = ref([]);
 const mctname = ref([]);
+// const selected = ref([category.value.map((cat) => mcategory.value.includes(cat.ctno))]);
+// const cnt = ref(0);
 
 onMounted(() => {
     categoryModal = new Modal(document.querySelector("#categoryModal"));
@@ -210,6 +210,47 @@ watchEffect(() => {
             .filter(Boolean); // 일치하는 항목이 없을 경우 null 값을 제거
     }
 });
+
+function updateMcategory(updatedMcategories) {
+    mcategory.value = updatedMcategories;
+    mctname.value = mcategory.value
+        .map((mcat) => {
+            const matchedCategory = category.value.find((cat) => cat.ctno === mcat.ctno);
+            return matchedCategory ? matchedCategory.ctname : null;
+        })
+        .filter(Boolean);
+    // 서버에 업데이트 요청을 보냄
+    const resultcate = updatedMcategories.map((mcat) => ({
+        mid: store.state.mid,
+        ctno: mcat.ctno,
+    }));
+    memberAPI
+        .updateMcategory(resultcate)
+        .then(() => {
+            console.log("Mcategory updated successfully");
+        })
+        .catch((error) => {
+            console.error("Error updating Mcategory", error);
+        });
+}
+
+// function initializeSelected() {
+//     selected.value = category.value.map((cat) => mcategory.value.includes(cat.ctno));
+//     cnt.value = selected.value.filter((val) => val).length;
+//     console.log(selected.value);
+//     console.log(mcategory.value);
+//     console.log(category.value);
+// }
+
+// watch(
+//     [category, mcategory],
+//     () => {
+//         if (category.value.length && mcategory.value.length) {
+//             initializeSelected();
+//         }
+//     },
+//     { immediate: true }
+// );
 </script>
 
 <style scoped>
