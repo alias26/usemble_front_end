@@ -40,7 +40,7 @@
                     </button> -->
                     <div v-if="toMe">
                         <Review
-                            v-for="(toMeReview, index) in toMeReviews"
+                            v-for="(toMeReview, index) in recieveReviewPage.reviewList"
                             :key="index"
                             :review="toMeReview"
                         />
@@ -59,8 +59,12 @@
 </template>
 
 <script setup>
+import reviewAPI from "@/apis/reviewAPI";
 import Review from "@/components/Review.vue";
 import { ref } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
 const toMe = ref(true);
 const fromMe = ref(false);
 
@@ -74,26 +78,22 @@ const fromMeClick = () => {
     toMe.value = false;
 };
 
-function getToMeReviews() {
-    const toMeReviews = ref([
-        {
-            stitle: "현대식 분재 그리고 와인1",
-            mname: "귀요미",
-            sddate: "24.06.21",
-            rcontent:
-                "호스트님이 어색하지 않게 잘 리드해주시는 점이 좋았습니다! 처음 이런거 참여해봤는데 신선하고 재미있는 경험이였습니다. 호스트님이 어색하지 않게 잘 리드해주시는 점이 좋았습니다! 처음 이런거 참여해봤는데 신선하고 재미있는 경험이였습니다. ",
-        },
-        {
-            stitle: "현대식 분재 그리고 와인1",
-            mname: "귀요미",
-            sddate: "24.06.21",
-            rcontent:
-                "호스트님이 어색하지 않게 잘 리드해주시는 점이 좋았습니다! 처음 이런거 참여해봤는데 신선하고 재미있는 경험이였습니다. ",
-        },
-    ]);
-    return toMeReviews;
+const recieveReviewPage = ref({
+    pager: {},
+    reviewList: [],
+});
+
+async function getRecieveReviewList(mid) {
+    try {
+        const response = await reviewAPI.getRecieveReviewList(mid);
+        recieveReviewPage.value.pager = response.data.pager;
+        recieveReviewPage.value.reviewList = response.data.reviewList;
+    } catch (error) {
+        console.log(error);
+    }
 }
-const toMeReviews = getToMeReviews();
+
+getRecieveReviewList(store.state.mid);
 
 function getFromMeReviews() {
     const fromMeReviews = ref([
