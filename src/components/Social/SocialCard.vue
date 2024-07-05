@@ -9,7 +9,7 @@
                 <img :src="`${axios.defaults.baseURL}/social/sthumb/${props.social.sno}`" />
             </div>
         </div>
-        <div class="main_text">
+        <div class="main_text my-3">
             <h3>{{ props.social.stitle }}</h3>
         </div>
         <div class="main_additional mb-4">

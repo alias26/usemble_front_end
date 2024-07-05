@@ -23,7 +23,6 @@ import socialAPI from "@/apis/socialAPI";
 
 import { onMounted, ref } from "vue";
 
-const props = defineProps(["socials"]);
 const socials = ref([]);
 
 onMounted(async () => {
@@ -35,11 +34,11 @@ async function getMainSocialList() {
     try {
         const response = await socialAPI.mainSocial();
         socials.value = response.data;
-        console.log(socials.value);
     } catch (error) {
         console.log(error);
     }
 }
+
 const social1 = ref([]);
 const social2 = ref([]);
 const social3 = ref([]);
@@ -61,12 +60,6 @@ function separator() {
         }
     }
 }
-
-console.log(social1);
-console.log(social2);
-console.log(social3);
-console.log(social4);
-console.log(social5);
 </script>
 
 <style scoped></style>
