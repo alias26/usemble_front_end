@@ -91,9 +91,9 @@
                     <SocialCard
                         class="me-3 col-4"
                         id="social-card"
-                        v-for="(assemble, index) in joinAssembles"
+                        v-for="(social, index) in applyList"
                         :key="index"
-                        :social="assemble"
+                        :social="social"
                     />
                 </div>
             </div>
@@ -109,8 +109,14 @@ import { Modal } from "bootstrap";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
 import { useRouter } from "vue-router";
+import socialAPI from "@/apis/socialAPI";
 
-const router = useRouter();
+const props = defineProps(["socials"]);
+
+onMounted(() => {
+    categoryModal = new Modal(document.querySelector("#categoryModal"));
+});
+
 let categoryModal = null;
 
 const member = ref({
@@ -125,10 +131,6 @@ const mcategory = ref([]);
 const mctname = ref([]);
 // const selected = ref([category.value.map((cat) => mcategory.value.includes(cat.ctno))]);
 // const cnt = ref(0);
-
-onMounted(() => {
-    categoryModal = new Modal(document.querySelector("#categoryModal"));
-});
 
 //유저 프로필 가져오기
 async function getUserProfile(mid) {
@@ -181,25 +183,6 @@ function hideCategoryModal() {
     categoryModal.hide();
 }
 
-function getJoinAssemble() {
-    const interest = ref([
-        {
-            stitle: "어셈블 이름1",
-            saddress: "주소1",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름2",
-            saddress: "주소2",
-            sfee: "50000",
-        },
-    ]);
-
-    return interest;
-}
-
-const joinAssembles = getJoinAssemble();
-
 watchEffect(() => {
     if (category.value.length && mcategory.value.length) {
         mctname.value = mcategory.value
@@ -233,6 +216,25 @@ function updateMcategory(updatedMcategories) {
             console.error("Error updating Mcategory", error);
         });
 }
+
+const applyList = ref([]);
+async function getApplyAssemble(mid) {
+    try {
+        const response = await socialAPI.getApplyAssemble(mid);
+        applyList.value = response.data;
+        for (let i = 1; i < applyList.value.length; i++) {
+            if (applyList.value.length > 3) {
+                applyList.value = applyList.value.slice(0, 3);
+            } else {
+                applyList.value = applyList.value.slice(0, applyList.value.length);
+            }
+        }
+        console.log(applyList.value);
+    } catch (error) {
+        console.log(error);
+    }
+}
+getApplyAssemble(store.state.mid);
 </script>
 
 <style scoped>

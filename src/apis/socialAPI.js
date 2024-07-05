@@ -61,6 +61,10 @@ function refuseJoinMember(mid, sno) {
     return axios.delete("/social/sjoin/refuse?mid=" + mid + "&sno=" + sno);
 }
 
+function applyAssemble(mid) {
+    return axios.get("/social/applyAssemble?mid=" + mid);
+}
+
 export default {
     writeSocial,
     getSocialList,
@@ -77,4 +81,5 @@ export default {
     getJoinMemberList,
     isDeadline,
     refuseJoinMember,
+    applyAssemble,
 };
