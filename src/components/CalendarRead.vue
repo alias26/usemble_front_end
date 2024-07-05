@@ -22,7 +22,21 @@ const props = defineProps(["sstartDate"]);
 let today = new Date(props.sstartDate);
 let month = today.getMonth() + 1;
 let year = today.getFullYear();
-const disabledDates = ref([{ start: null, end: new Date(props.sstartDate) - 1 }]);
+
+let endDate = new Date(props.sstartDate);
+endDate.setDate(today.getDate() - 1);
+let startDate = new Date(props.sstartDate);
+startDate.setDate(today.getDate() + 1);
+const disabledDates = ref([
+    {
+        start: null,
+        end: endDate,
+    },
+    {
+        start: startDate,
+        end: null,
+    },
+]);
 </script>
 
 <style>
@@ -63,5 +77,8 @@ const disabledDates = ref([{ start: null, end: new Date(props.sstartDate) - 1 }]
 }
 .CalendarRead .vc-time-select-group {
     display: none;
+}
+.CalendarRead .vc-highlight-content-solid .vc-white {
+    color: black;
 }
 </style>

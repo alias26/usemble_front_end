@@ -9,6 +9,7 @@
             is24hr
             showTime
             @update:model-value="handleDateSelected"
+            :disabled-dates="disabledDates"
         ></vc-date-picker>
     </div>
 </template>
@@ -29,6 +30,14 @@ function handleDateSelected(newDate) {
 let today = new Date();
 let month = today.getMonth() + 1;
 let year = today.getFullYear();
+let endDate = new Date(today);
+endDate.setDate(today.getDate() + 1);
+const disabledDates = ref([
+    {
+        start: null,
+        end: endDate,
+    },
+]);
 </script>
 <style>
 .CalendarWrite .vc-day {
