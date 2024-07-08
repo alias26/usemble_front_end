@@ -20,14 +20,15 @@
 import SocialCardList from "./SocialCardList.vue";
 import SocialBanner from "./SocialBanner.vue";
 import socialAPI from "@/apis/socialAPI";
-
 import { onMounted, ref } from "vue";
+import { useStore } from "vuex";
 
+const store = useStore();
 const socials = ref([]);
 
 onMounted(async () => {
     await getMainSocialList();
-    separator();
+    getMainCateSocialList(store.state.mid);
 });
 
 async function getMainSocialList() {
@@ -45,19 +46,24 @@ const social3 = ref([]);
 const social4 = ref([]);
 const social5 = ref([]);
 
-function separator() {
-    for (let i = 0; i < socials.value.length; i++) {
-        if (socials.value[i].ctno == 1) {
-            social1.value.push(socials.value[i]);
-        } else if (socials.value[i].ctno == 2) {
-            social2.value.push(socials.value[i]);
-        } else if (socials.value[i].ctno == 3) {
-            social3.value.push(socials.value[i]);
-        } else if (socials.value[i].ctno == 4) {
-            social4.value.push(socials.value[i]);
-        } else if (socials.value[i].ctno == 5) {
-            social5.value.push(socials.value[i]);
+async function getMainCateSocialList(mid) {
+    try {
+        const response = await socialAPI.mainCateSocial(mid);
+        for (let i = 0; i < response.data.length; i++) {
+            if (response.data[i].ctno == 1) {
+                social1.value.push(response.data[i]);
+            } else if (response.data[i].ctno == 2) {
+                social2.value.push(response.data[i]);
+            } else if (response.data[i].ctno == 3) {
+                social3.value.push(response.data[i]);
+            } else if (response.data[i].ctno == 4) {
+                social4.value.push(response.data[i]);
+            } else if (response.data[i].ctno == 5) {
+                social5.value.push(response.data[i]);
+            }
         }
+    } catch (error) {
+        console.log(error);
     }
 }
 </script>

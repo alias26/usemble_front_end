@@ -11,7 +11,7 @@
         </h4>
         <div class="main_page_episodes">
             <SocialCard
-                v-for="(social, index) in mainlist"
+                v-for="(social, index) in socials"
                 :key="index"
                 style="width: 24%"
                 class="me-3"
@@ -20,7 +20,7 @@
         </div>
 
         <div v-for="(mcategory, index) in mcategoryList" :key="index">
-            <div v-if="mcategory.ctno == 1 && mainlist1 != null && mainlist1.length != 0">
+            <div v-if="mcategory.ctno == 1 && social1 != null && social1.length != 0">
                 <h3 class="new_host mb-3 mt-5">🍚 맛집 공유 어셈블</h3>
                 <h4 class="host_text mb-4">
                     나만 아는 찐맛집, 우리 같이 가요
@@ -32,7 +32,7 @@
                 </h4>
                 <div class="main_page_episodes">
                     <SocialCard
-                        v-for="(social, index) in mainlist1"
+                        v-for="(social, index) in social1"
                         :key="index"
                         style="width: 24%"
                         class="me-3"
@@ -40,7 +40,7 @@
                     />
                 </div>
             </div>
-            <div v-if="mcategory.ctno == 2 && mainlist2 != null && mainlist2.length != 0">
+            <div v-if="mcategory.ctno == 2 && social2 != null && social2.length != 0">
                 <h3 class="new_host mb-3 mt-5">💪 운동 어셈블</h3>
                 <h4 class="host_text mb-4">
                     지겨운 작심삼일, 운동메이트들과 함께해요!
@@ -52,7 +52,7 @@
                 </h4>
                 <div class="main_page_episodes">
                     <SocialCard
-                        v-for="(social, index) in mainlist2"
+                        v-for="(social, index) in social2"
                         :key="index"
                         style="width: 24%"
                         class="me-3"
@@ -60,7 +60,7 @@
                     />
                 </div>
             </div>
-            <div v-if="mcategory.ctno == 3 && mainlist3 != null && mainlist3.length != 0">
+            <div v-if="mcategory.ctno == 3 && social3 != null && social3.length != 0">
                 <h3 class="new_host mb-3 mt-5">📚 내일을 위한 어셈블</h3>
                 <h4 class="host_text mb-4">
                     스터디 구할 땐 여기!
@@ -72,7 +72,7 @@
                 </h4>
                 <div class="main_page_episodes">
                     <SocialCard
-                        v-for="(social, index) in mainlist3"
+                        v-for="(social, index) in social3"
                         :key="index"
                         style="width: 24%"
                         class="me-3"
@@ -80,7 +80,7 @@
                     />
                 </div>
             </div>
-            <div v-if="mcategory.ctno == 4 && mainlist4 != null && mainlist4.length != 0">
+            <div v-if="mcategory.ctno == 4 && social4 != null && social4.length != 0">
                 <h3 class="new_host mb-3 mt-5">💘 자만추 어셈블</h3>
                 <h4 class="host_text mb-4">
                     혹시 모르죠~ 여기서 만날지도
@@ -92,7 +92,7 @@
                 </h4>
                 <div class="main_page_episodes">
                     <SocialCard
-                        v-for="(social, index) in mainlist4"
+                        v-for="(social, index) in social4"
                         :key="index"
                         style="width: 24%"
                         class="me-3"
@@ -100,7 +100,7 @@
                     />
                 </div>
             </div>
-            <div v-if="mcategory.ctno == 5 && mainlist5 != null && mainlist5.length != 0">
+            <div v-if="mcategory.ctno == 5 && social5 != null && social5.length != 0">
                 <h3 class="new_host mb-3 mt-5">🎨 문화/예술 어셈블</h3>
                 <h4 class="host_text mb-4">
                     이런저런 취향 나누며 친해져요~
@@ -112,7 +112,7 @@
                 </h4>
                 <div class="main_page_episodes">
                     <SocialCard
-                        v-for="(social, index) in mainlist5"
+                        v-for="(social, index) in social5"
                         :key="index"
                         style="width: 24%"
                         class="me-3"
@@ -138,7 +138,7 @@ const store = useStore();
 onMounted(async () => {
     await getCategoryList();
     await getMcategoryList(store.state.mid);
-    mainList();
+    // mainList();
 });
 
 const categoryList = ref([]);
@@ -161,34 +161,6 @@ async function getMcategoryList(mid) {
     } catch (error) {
         console.log(error);
     }
-}
-
-const mainlist = ref([]);
-const mainlist1 = ref([]);
-const mainlist2 = ref([]);
-const mainlist3 = ref([]);
-const mainlist4 = ref([]);
-const mainlist5 = ref([]);
-
-function mainList() {
-    for (let i = 1; i < 6; i++) {
-        if (props.socials.length > 4) {
-            mainlist.value = props.socials.slice(0, 4);
-            mainlist1.value = props.social1.slice(0, 4);
-            mainlist2.value = props.social2.slice(0, 4);
-            mainlist3.value = props.social3.slice(0, 4);
-            mainlist4.value = props.social3.slice(0, 4);
-            mainlist5.value = props.social3.slice(0, 4);
-        } else {
-            mainlist.value = props.socials.slice(0, props.socials.length);
-            mainlist1.value = props.social2.slice(0, props.social2.length);
-            mainlist2.value = props.social2.slice(0, props.social2.length);
-            mainlist3.value = props.social2.slice(0, props.social2.length);
-            mainlist4.value = props.social2.slice(0, props.social2.length);
-            mainlist5.value = props.social2.slice(0, props.social2.length);
-        }
-    }
-
 }
 </script>
 

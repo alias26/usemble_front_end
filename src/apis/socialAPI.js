@@ -62,7 +62,15 @@ function refuseJoinMember(mid, sno) {
 }
 
 function applyAssemble(mid) {
-    return axios.get("/social/applyAssemble?mid=" + mid);
+    return axios.get("/social/apply?mid=" + mid);
+}
+
+function recruitAssemble(mid) {
+    return axios.get("/social/recruit?mid=" + mid);
+}
+
+function mainCateSocial(mid) {
+    return axios.get("/social/mainCateSocial?mid=" + mid);
 }
 
 function getSearchList(keyword) {
@@ -86,5 +94,7 @@ export default {
     isDeadline,
     refuseJoinMember,
     applyAssemble,
+    recruitAssemble,
+    mainCateSocial,
     getSearchList,
 };
