@@ -7,7 +7,9 @@
                     class="form-control"
                     type="text"
                     id="sample5_address"
-                    placeholder="주소를 입력해주세요"
+                    placeholder="주소를 검색해주세요"
+                    style="background-color: #efefef"
+                    readonly
                 />
                 <input
                     class="btn btn-dark ms-2"
