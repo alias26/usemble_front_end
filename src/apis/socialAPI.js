@@ -62,7 +62,7 @@ function refuseJoinMember(mid, sno) {
 }
 
 function applyAssemble(mid) {
-    return axios.get("/social/apply?mid=" + mid);
+    return axios.get("/social/applyAssemble?mid=" + mid);
 }
 
 function recruitAssemble(mid) {

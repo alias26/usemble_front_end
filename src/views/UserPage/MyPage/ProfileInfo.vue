@@ -108,14 +108,16 @@ import { onMounted, ref, watchEffect, watch } from "vue";
 import { Modal } from "bootstrap";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
-import { useRouter } from "vue-router";
 import socialAPI from "@/apis/socialAPI";
+import { useRoute } from "vue-router";
 
 const props = defineProps(["socials"]);
 
 onMounted(() => {
     categoryModal = new Modal(document.querySelector("#categoryModal"));
 });
+
+const route = useRoute();
 
 let categoryModal = null;
 
@@ -217,23 +219,18 @@ function updateMcategory(updatedMcategories) {
         });
 }
 
+// 신청한 어셈블 가져오기
 const applyList = ref([]);
 async function getApplyAssemble(mid) {
     try {
         const response = await socialAPI.applyAssemble(mid);
         applyList.value = response.data;
-        for (let i = 1; i < applyList.value.length; i++) {
-            if (applyList.value.length > 3) {
-                applyList.value = applyList.value.slice(0, 3);
-            } else {
-                applyList.value = applyList.value.slice(0, applyList.value.length);
-            }
-        }
         console.log(applyList.value);
     } catch (error) {
         console.log(error);
     }
 }
+
 getApplyAssemble(store.state.mid);
 </script>
 
