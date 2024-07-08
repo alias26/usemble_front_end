@@ -65,6 +65,10 @@ function applyAssemble(mid) {
     return axios.get("/social/applyAssemble?mid=" + mid);
 }
 
+function getSearchList(keyword) {
+    return axios.get("/social/search", {params: {keyword: String(keyword)}});
+}
+
 export default {
     writeSocial,
     getSocialList,
@@ -82,4 +86,5 @@ export default {
     isDeadline,
     refuseJoinMember,
     applyAssemble,
+    getSearchList,
 };
