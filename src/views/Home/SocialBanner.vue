@@ -17,7 +17,7 @@
                 ><img src="@/assets/category/friendship.png" />친목</RouterLink
             >
             <RouterLink class="main_category" to="list?ctno=5"
-                ><img src="@/assets/category/travel.png" />여행</RouterLink
+                ><img src="@/assets/category/art.png" />문화예술</RouterLink
             >
             <RouterLink class="main_category" to="list"
                 ><img src="@/assets/category/all.png" />전체보기</RouterLink
