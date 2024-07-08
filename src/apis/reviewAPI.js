@@ -21,8 +21,12 @@ function deleteReview(mid, sno) {
     return axios.delete("/review/delete?mid=" + mid + "&sno=" + sno);
 }
 
-function getRecieveReviewList(mid) {
-    return axios.get("/review/recieve?mid=" + mid);
+function getRecieveReviewList(pageNo, mid) {
+    return axios.get("/review/recieve?mid=" + mid + "&rPageNo=" + pageNo);
+}
+
+function getLeaveReviewList(pageNo, mid) {
+    return axios.get("/review/leave?mid=" + mid + "&lPageNo=" + pageNo);
 }
 
 export default {
@@ -32,4 +36,5 @@ export default {
     updateReview,
     deleteReview,
     getRecieveReviewList,
+    getLeaveReviewList,
 };

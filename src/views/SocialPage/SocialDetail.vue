@@ -52,7 +52,7 @@
                         </div>
                         <div id="usbtn">
                             <button
-                                v-if="isJoin && !isAlreadyJoin"
+                                v-if="!isDeadline && isJoin && !isAlreadyJoin"
                                 id="btn_us"
                                 class="btn mb-3"
                                 @click="joinSocial"
@@ -61,7 +61,7 @@
                             </button>
 
                             <button
-                                v-if="isFull && !isWriter && !isAlreadyJoin"
+                                v-if="!isDeadline && isFull && !isWriter && !isAlreadyJoin"
                                 id="btn_us"
                                 class="btn mb-3"
                                 disabled
@@ -69,7 +69,7 @@
                                 인원이 가득찬 어셈블입니다.
                             </button>
                             <button
-                                v-if="isAlreadyJoin"
+                                v-if="!isDeadline && isAlreadyJoin"
                                 id="btn_us"
                                 class="btn mb-3"
                                 @click="showCancelSocialJoinModal"
@@ -77,7 +77,7 @@
                                 취소하기
                             </button>
                             <button
-                                v-if="isWriter"
+                                v-if="!isDeadline && isWriter"
                                 id="btn_us"
                                 class="btn mb-3"
                                 @click="showCancelSocialModal"
