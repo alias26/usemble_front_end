@@ -1,12 +1,12 @@
 <template>
-    <Header v-if="!$route.path.startsWith('/admin')" />
+    <Header v-if="!$route.path.startsWith('/admin') && !$route.path.startsWith('/Admin')" />
 
     <div id="wrap">
         <router-view />
         <TopButton />
     </div>
 
-    <Footer v-if="!$route.path.startsWith('/admin')" />
+    <Footer v-if="!$route.path.startsWith('/admin') && !$route.path.startsWith('/Admin')" />
 </template>
 
 <script setup>
