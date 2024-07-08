@@ -66,14 +66,7 @@
             <div class="card-body review-space">
                 <h5>함께한 분들의 후기 {{ member.reviewCnt }}</h5>
                 <div class="review-empty" v-if="recieveReviewPage.reviewList.length == 0">
-                    <div>아직 작성된 후기가 없습니다.</div>
-                    <button
-                        class="p-3 bg-black text-white rounded-1 fw-bold"
-                        style="font-size: 14px; border: none"
-                        @click="goWriteAssemble"
-                    >
-                        어셈블 작성하기
-                    </button>
+                    <span class="review-empty-text">아직 작성된 후기가 없습니다.</span>
                 </div>
                 <Review
                     v-for="toMeReview in recieveReviewPage.reviewList"
@@ -403,11 +396,15 @@ h5 {
 }
 
 .review-space {
-    position: relative;
 }
 
 .review-empty {
-    font-size: 14px;
+    position: relative;
+    height: 150px;
+}
+
+.review-empty-text {
+    font-size: 16px;
     text-align: center;
     position: absolute;
     top: 50%;

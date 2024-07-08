@@ -1,7 +1,7 @@
 <template>
     <Header v-if="!$route.path.startsWith('/admin') && !$route.path.startsWith('/Admin')" />
 
-    <div id="wrap">
+    <div :class="{ wrap: !$route.path.startsWith('/user/info') }">
         <router-view />
         <TopButton />
     </div>
@@ -28,7 +28,8 @@ import TopButton from "@/components/TopButton.vue";
     flex-direction: column;
     min-height: 100vh; /* viewport의 전체 높이를 차지 */
 }
-#wrap {
-    padding-bottom: 150px;
+
+.wrap {
+    padding-bottom: 50px;
 }
 </style>
