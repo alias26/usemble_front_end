@@ -2,7 +2,7 @@ import axiosConfig from "@/apis/axiosConfig";
 import { createStore } from "vuex";
 
 export default createStore({
-    state: { mid: "", mname: "", mrole: "", accessToken: "", activeWatch: true },
+    state: { mid: "", mname: "", mrole: "", accessToken: "", activeWatch: true, isAlarm: false },
     getters: {
         getMid(state, getters, rootState, rootGetters) {
             return state.mid;
@@ -17,6 +17,9 @@ export default createStore({
             return state.accessToken;
         },
         getActiveWatch(state, getters, rootState, rootGetters) {
+            return state.activeWatch;
+        },
+        getIsAlarm(state, getters, rootState, rootGetters) {
             return state.activeWatch;
         },
     },
@@ -35,6 +38,9 @@ export default createStore({
         },
         changeActiveWatch(state) {
             state.activeWatch = !state.activeWatch;
+        },
+        changeIsAlarm(state, payload) {
+            state.isAlarm = payload;
         },
     },
     actions: {

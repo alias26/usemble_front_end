@@ -26,9 +26,14 @@
                     좋아요
                 </RouterLink>
             </li>
-            <li class="nav-item mb-4">
+            <li class="nav-item">
                 <RouterLink to="/mypage/assembleReview" class="nav-link" style="font-size: 14px">
                     후기
+                </RouterLink>
+            </li>
+            <li class="nav-item mb-4">
+                <RouterLink to="/mypage/alarm" class="nav-link" style="font-size: 14px">
+                    알림
                 </RouterLink>
             </li>
             <li class="nav-item">

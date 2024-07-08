@@ -94,6 +94,11 @@ const routes = [
                         /* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage/RecruitmentStatus"
                     ),
             },
+            {
+                path: "alarm",
+                component: () =>
+                    import(/* webpackChunkName: "MyPage" */ "@/views/UserPage/MyPage/UserAlarm"),
+            },
         ],
     },
 ];

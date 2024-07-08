@@ -97,9 +97,19 @@ function updateMcategory(resultcate) {
 function putAgree(mid) {
     return axios.post("/member/putAgree?mid=" + mid);
 }
-// function deleteMcategory(mid) {
-//     return axios.delete("/member/deleteMcategory?mid=" + mid);
-// }
+
+function getAlarmList(pageNo, mid) {
+    return axios.get("/member/alarm?mid=" + mid + "&pageNo=" + pageNo);
+}
+
+function checkAlarm(ano) {
+    return axios.patch("/member/alarm/check?ano=" + ano);
+}
+
+function isAlarm(mid) {
+    return axios.get("/member/alarm/state?mid=" + mid);
+}
+
 export default {
     login,
     join,
@@ -125,4 +135,7 @@ export default {
     putMcategory,
     updateMcategory,
     putAgree,
+    getAlarmList,
+    checkAlarm,
+    isAlarm,
 };
