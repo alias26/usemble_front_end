@@ -106,7 +106,7 @@
             </div>
             <hr />
             <div>
-                <h4 id="content-title">어셈블 소개</h4>
+                <h4 id="content-title" class="mb-3">어셈블 소개</h4>
                 <div id="social-detail" class="d-flex flex-column content"></div>
             </div>
             <hr />
