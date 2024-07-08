@@ -53,14 +53,16 @@
             </div>
         </div>
         <UserSocialList
+            v-if="recruitList.length !=0"
             :title="member.mname + '님이 진행 중인 어셈블'"
-            link="/user/inprogress"
-            :socials="inProgressedeSocials"
+            link="/user/recruit"
+            :socials="recruitList"
         />
         <UserSocialList
+        v-if="recruitedList.length !=0"
             :title="member.mname + '님이 진행한 어셈블'"
-            link="/user/progressed"
-            :socials="progressedeSocials"
+            link="/user/recruited"
+            :socials="recruitedList"
         />
         <div class="card mt-4">
             <div class="card-body review-space">
@@ -120,6 +122,12 @@ import memberAPI from "@/apis/memberAPI";
 import Review from "@/components/Review.vue";
 import UserSocialList from "./UserSocialList.vue";
 import reviewAPI from "@/apis/reviewAPI";
+import socialAPI from "@/apis/socialAPI";
+
+onMounted(() => {
+    getRecruitAssemble(route.query.mid);
+    getRecruitedAssemble(route.query.mid);
+});
 
 //멤버 정보
 const member = ref({
@@ -236,53 +244,29 @@ async function getReviewCnt(mid) {
 
 getReviewCnt(mid);
 
-function getInProgressSocials() {
-    const socials = ref([
-        {
-            stitle: "어셈블 이름1",
-            saddress: "주소1",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름2",
-            saddress: "주소2",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름3",
-            saddress: "주소3",
-            sfee: "50000",
-        },
-    ]);
-
-    return socials;
+// 모집중인 어셈블 가져오기
+const recruitList = ref([]);
+async function getRecruitAssemble(mid) {
+    try {
+        const response = await socialAPI.recruitAssemble(mid);
+        recruitList.value = response.data;
+        console.log(recruitList.value);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-const inProgressedeSocials = getInProgressSocials(member.value.mid);
-
-function getProgressedSocials() {
-    const socials = ref([
-        {
-            stitle: "어셈블 이름1",
-            saddress: "주소1",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름2",
-            saddress: "주소2",
-            sfee: "50000",
-        },
-        {
-            stitle: "어셈블 이름3",
-            saddress: "주소3",
-            sfee: "50000",
-        },
-    ]);
-
-    return socials;
+// 마감된 어셈블 가져오기
+const recruitedList = ref([]);
+async function getRecruitedAssemble(mid) {
+    try {
+        const response = await socialAPI.recruitedAssemble(mid);
+        recruitedList.value = response.data;
+        console.log(recruitedList.value);
+    } catch (error) {
+        console.log(error);
+    }
 }
-
-const progressedeSocials = getProgressedSocials(member.value.mid);
 
 const recieveReviewPage = ref({
     pager: {},

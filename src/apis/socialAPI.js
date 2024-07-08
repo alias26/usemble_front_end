@@ -66,7 +66,11 @@ function applyAssemble(mid) {
 }
 
 function recruitAssemble(mid) {
-    return axios.get("/social/recruit?mid=" + mid);
+    return axios.get("/social/recruitAssemble?mid=" + mid);
+}
+
+function recruitedAssemble(mid) {
+    return axios.get("/social/recruitedAssemble?mid=" + mid);
 }
 
 function mainCateSocial(mid) {
@@ -74,7 +78,7 @@ function mainCateSocial(mid) {
 }
 
 function getSearchList(keyword) {
-    return axios.get("/social/search", {params: {keyword: String(keyword)}});
+    return axios.get("/social/search", { params: { keyword: String(keyword) } });
 }
 
 export default {
@@ -97,4 +101,5 @@ export default {
     recruitAssemble,
     mainCateSocial,
     getSearchList,
+    recruitedAssemble,
 };
