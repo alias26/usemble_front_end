@@ -63,24 +63,70 @@
             :socials="progressedeSocials"
         />
         <div class="card mt-4">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h5>함께한 분들의 후기 {{ member.reviewCnt }}</h5>
-                    <RouterLink class="show-more" to="/">더보기</RouterLink>
+            <div class="card-body review-space">
+                <h5>함께한 분들의 후기 {{ member.reviewCnt }}</h5>
+                <div class="review-empty" v-if="recieveReviewPage.reviewList.length == 0">
+                    <div>아직 작성된 후기가 없습니다.</div>
+                    <button
+                        class="p-3 bg-black text-white rounded-1 fw-bold"
+                        style="font-size: 14px; border: none"
+                        @click="goWriteAssemble"
+                    >
+                        어셈블 작성하기
+                    </button>
                 </div>
-                <Review v-for="(review, index) in reviews" :key="index" :review="review" />
+                <Review
+                    v-for="toMeReview in recieveReviewPage.reviewList"
+                    :key="toMeReview.sno"
+                    :review="toMeReview"
+                />
+                <div
+                    v-if="recieveReviewPage.reviewList.length != 0"
+                    class="d-flex justify-content-center mt-4"
+                >
+                    <button
+                        v-if="recieveReviewPage.reviewList.startPageNo > 1"
+                        class="btn page-btn btn-sm me-1"
+                        @click="
+                            changeRpageNo(recieveReviewPage.pager.startPageNo - 1, $store.state.mid)
+                        "
+                    >
+                        이전
+                    </button>
+                    <button
+                        v-for="pageNo in recieveReviewPage.pager.pageArray"
+                        :key="pageNo"
+                        :class="recieveReviewPage.pager.pageNo == pageNo ? 'cur-page' : ''"
+                        class="btn page-btn btn-sm me-1"
+                        @click="changeRpageNo(pageNo, $store.state.mid)"
+                    >
+                        {{ pageNo }}
+                    </button>
+                    <button
+                        v-if="
+                            recieveReviewPage.pager.groupNo < recieveReviewPage.pager.totalGroupNo
+                        "
+                        class="btn page-btn btn-sm me-1"
+                        @click="
+                            changeRpageNo(recieveReviewPage.pager.endPageNo + 1, $store.state.mid)
+                        "
+                    >
+                        다음
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { onMounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
 import Review from "@/components/Review.vue";
 import UserSocialList from "./UserSocialList.vue";
+import reviewAPI from "@/apis/reviewAPI";
 
 //멤버 정보
 const member = ref({
@@ -94,6 +140,7 @@ const member = ref({
 });
 
 const route = useRoute();
+const router = useRouter();
 const store = useStore();
 const mid = route.query.mid;
 
@@ -244,28 +291,38 @@ function getProgressedSocials() {
 
 const progressedeSocials = getProgressedSocials(member.value.mid);
 
-const review1 = {
-    stitle: "어셈블 제목1",
-    mname: "이름",
-    rcontent: "진짜 너무 재미있는 시간이였습니다!",
-    sddate: "2023.4.29",
-};
+const recieveReviewPage = ref({
+    pager: {},
+    reviewList: [],
+});
 
-const review2 = {
-    stitle: "어셈블 제목2",
-    mname: "이름",
-    rcontent: "진짜 너무 재미있는 시간이였습니다!",
-    sddate: "2023.4.29",
-};
+const rPageNo = ref(route.query.rPageNo || 1);
 
-const review3 = {
-    stitle: "어셈블 제목3",
-    mname: "이름",
-    rcontent: "진짜 너무 재미있는 시간이였습니다!",
-    sddate: "2023.4.29",
-};
+async function getRecieveReviewList(pageNo, mid) {
+    try {
+        const response = await reviewAPI.getRecieveReviewList(pageNo, mid);
+        recieveReviewPage.value.pager = response.data.pager;
+        recieveReviewPage.value.reviewList = response.data.reviewList;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-const reviews = [review1, review2, review3];
+getRecieveReviewList(rPageNo.value, route.query.mid);
+
+watch(route, (newRoute, oldRoute) => {
+    if (newRoute.query.rPageNo) {
+        getRecieveReviewList(newRoute.query.rPageNo, route.query.mid);
+        rPageNo.value = newRoute.query.rPageNo;
+    } else {
+        getRecieveReviewList(1, route.query.mid);
+        rPageNo.value = 1;
+    }
+});
+
+function changeRpageNo(argPageNo) {
+    router.push(`/user/info?mid=${route.query.mid}&rPageNo=${argPageNo}`);
+}
 </script>
 
 <style scoped>
@@ -343,5 +400,33 @@ h5 {
     color: #858585;
     /* text-decoration: none; */
     margin: auto 0px;
+}
+
+.review-space {
+    position: relative;
+}
+
+.review-empty {
+    font-size: 14px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cur-page {
+    font-weight: 800;
+    color: #558ccf;
+}
+
+.page-btn {
+    border: none;
+    outline: none;
+}
+
+.cur-page:focus {
+    border: none;
+    outline: none;
 }
 </style>

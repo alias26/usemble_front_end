@@ -58,8 +58,12 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
     scrollBehavior(to, from, savedPosition) {
-        // 항상 최상단으로 이동
-        return { top: 0, behavior: "instant" };
+        if (savedPosition) {
+            return { ...savedPosition, behavior: "instant" };
+        } else {
+            // 항상 최상단으로 이동
+            return { top: 0, behavior: "instant" };
+        }
     },
 });
 
