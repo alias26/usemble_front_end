@@ -10,7 +10,9 @@
                         type="text"
                         placeholder="주제/공간 등이 드러나는 이름을 입력해 주세요."
                         v-model="social.stitle"
+                        @change="validTitle"
                     />
+                    <span class="warning">{{ titleWarn }}</span>
                 </div>
 
                 <div class="form-group image mt-4 mb-2">
@@ -25,15 +27,18 @@
                             />
                         </label>
                     </div>
+                    <span class="warning">{{ imageWarn }}</span>
                 </div>
                 <KakaoAddress @getAddress="getSocialAddress" />
+                <span class="warning">{{ addressWarn }}</span>
                 <hr />
                 <div class="mb-3">
                     <CalendarWrite @dateSelected="handleDateSelected" />
+                    <span class="warning">{{ calendarWarn }}</span>
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <button type="button" @click="changeStep" class="btn btn-next rounded">
+                    <button type="button" @click="nextStep" class="btn btn-next rounded">
                         다음 >
                     </button>
                 </div>
@@ -68,18 +73,21 @@
                             />
                         </label>
                     </div>
+                    <span class="warning">{{ sfeeWarn }}</span>
                 </div>
                 <div class="form-group mt-4">
                     <label class="form-label">인원 수</label>
                     <div class="input-group">
                         <label data-domain="명">
                             <input
+                                id="smemberCount"
                                 class="form-control"
                                 type="number"
                                 placeholder="인원 수"
                                 v-model="social.smemberCount"
                             />
                         </label>
+                        <span class="warning">{{ memberCntWarn }}</span>
                     </div>
                 </div>
                 <div class="form-group mt-4">
@@ -96,15 +104,17 @@
                         <option :value="4">친목</option>
                         <option :value="5">문화예술</option>
                     </select>
+                    <span class="warning">{{ ctnoWarn }}</span>
                 </div>
                 <div class="mt-3">
                     <WyswygEditor ref="quill" />
+                    <span class="warning">{{ contentWarn }}</span>
                 </div>
                 <hr />
                 <div class="d-flex justify-content-end">
                     <button
                         type="button"
-                        @click="changeStep"
+                        @click="backStep"
                         class="btn btn-outline-secondary rounded me-2"
                     >
                         뒤로가기
@@ -151,6 +161,7 @@ function handleDateSelected(newDate) {
     // 날짜와 시간을 한국식으로 포맷
     social.value.sstartDate = format(newDate, "yyyy/MM/dd", { locale: ko });
     social.value.sstartTime = format(newDate, "HH:mm");
+    validCalendar();
 }
 
 const social = ref({
@@ -174,6 +185,7 @@ function loadThumb() {
             document.getElementById("thumbnail2").src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
+        validImage();
     } else {
         document.getElementById("thumbnail").src = "";
         document.getElementById("thumbnail2").src = "";
@@ -184,21 +196,34 @@ let assembleModal = null;
 
 onMounted(() => {
     assembleModal = new Modal(document.getElementById("assembleModal"));
-    // document.addEventListener(
-    //     "keydown",
-    //     function (event) {
-    //         if (event.keyCode === 13) {
-    //             event.preventDefault();
-    //         }
-    //     },
-    //     true
-    // );
+    document.addEventListener(
+        "keydown",
+        function (event) {
+            if (event.keyCode === 13 && event.target.tagName == "INPUT") {
+                event.preventDefault();
+            }
+        },
+        true
+    );
 });
 
 const quill = ref(null);
 
 //뒤로가기, 다음 클릭 시 페이지 상태 변환
-function changeStep() {
+function nextStep() {
+    let isValid = true;
+    isValid &= validTitle();
+    isValid &= validImage();
+    isValid &= validAddress();
+    isValid &= validCalendar();
+
+    if (isValid) {
+        step.value = !step.value;
+        window.scrollTo({ top: 80, left: 0, behavior: "instant" });
+    }
+}
+
+function backStep() {
     step.value = !step.value;
     window.scrollTo({ top: 80, left: 0, behavior: "instant" });
 }
@@ -213,10 +238,26 @@ function hideAssembleModal() {
 
 function getSocialAddress(address) {
     social.value.saddress = address;
+    validAddress();
 }
 
 //전송시 이미지 경로를 axios경로로 수정
 async function submitHandler() {
+    let isValid = true;
+    isValid &= validTitle();
+    isValid &= validImage();
+    isValid &= validAddress();
+    isValid &= validCalendar();
+    isValid &= validFee();
+    isValid &= validSmemberCount();
+    isValid &= validCategory();
+    isValid &= validContent();
+
+    if (!isValid) {
+        assembleModal.hide();
+        return;
+    }
+
     const formData = new FormData();
     formData.append("mid", store.state.mid);
     formData.append("ctno", social.value.ctno);
@@ -228,7 +269,6 @@ async function submitHandler() {
     formData.append("smemberCount", social.value.smemberCount);
 
     const sfee = document.getElementById("sfee").value.split(",").join("");
-
     formData.append("sfee", sfee);
 
     const input = document.getElementById("file");
@@ -240,6 +280,111 @@ async function submitHandler() {
     assembleModal.hide();
 
     router.push("/");
+}
+
+//유효성 검사 추가
+const titleWarn = ref("");
+const imageWarn = ref("");
+const addressWarn = ref("");
+const calendarWarn = ref("");
+const sfeeWarn = ref("");
+const memberCntWarn = ref("");
+const ctnoWarn = ref("");
+const contentWarn = ref("");
+
+function validTitle() {
+    let stitle = social.value.stitle;
+    let stitleNoEmpty = social.value.stitle.replace(/\s/g, "");
+    const regexNumberOnly = /^[0-9]+$/;
+    const regexInvalidKorean = /[ㄱ-ㅎㅏ-ㅣ]/;
+
+    if (stitle.length < 5) {
+        titleWarn.value = "제목을 5자 이상 작성해주세요.";
+        return false;
+    } else if (stitle.length >= 30) {
+        titleWarn.value = "제목은 30자 이상 입력하실 수 없습니다.";
+        return false;
+    } else if (stitleNoEmpty.replace(/\s/g, "").length == 0) {
+        titleWarn.value = "공백만으로 제목을 입력하실 수 없습니다.";
+        return false;
+    } else if (regexNumberOnly.test(stitleNoEmpty)) {
+        titleWarn.value = "숫자로만 이루어진 제목은 입력하실 수 없습니다.";
+        return false;
+    } else if (regexInvalidKorean.test(stitleNoEmpty)) {
+        titleWarn.value = "한글의 자음, 모음만으로 제목을 입력하실 수 없습니다.";
+        return false;
+    }
+    titleWarn.value = "";
+    return true;
+}
+
+function validImage() {
+    const image = document.getElementById("file");
+    if (image.files[0] == null) {
+        imageWarn.value = "썸네일을 추가해주세요.";
+        return false;
+    }
+    imageWarn.value = "";
+    return true;
+}
+
+function validAddress() {
+    if (social.value.saddress == "") {
+        addressWarn.value = "어셈블할 주소를 입력해주세요.";
+        return false;
+    }
+    addressWarn.value = "";
+    return true;
+}
+
+function validCalendar() {
+    if (selectedDate.value == null) {
+        calendarWarn.value = "날짜와 시간을 선택해주세요.";
+        return false;
+    }
+    calendarWarn.value = "";
+    return true;
+}
+
+function validFee() {
+    const sfee = document.getElementById("sfee").value;
+    if (sfee == "") {
+        sfeeWarn.value = "금액을 입력해주세요.";
+        return false;
+    }
+    sfeeWarn.value = "";
+    return true;
+}
+
+function validSmemberCount() {
+    const nop = document.getElementById("smemberCount").value;
+    if (nop <= 0) {
+        memberCntWarn.value = "최소 1명 이상의 어셈블 인원이 필요합니다.";
+        return false;
+    } else if (nop > 20) {
+        memberCntWarn.value = "최대 20명의 어셈블 인원까지 가능합니다.";
+        return false;
+    }
+    memberCntWarn.value = "";
+    return true;
+}
+
+function validCategory() {
+    if (social.value.ctno == 0) {
+        ctnoWarn.value = "카테고리를 선택해주세요.";
+        return false;
+    }
+    ctnoWarn.value = "";
+    return true;
+}
+
+function validContent() {
+    let content = quill.value.getContent().textContent;
+    if (content == "null" || content.replace(/\s/g, "") == "") {
+        contentWarn.value = "내용을 입력해주세요.";
+        return false;
+    }
+    return true;
 }
 </script>
 
@@ -308,5 +453,10 @@ input::-webkit-inner-spin-button {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
+}
+
+.warning {
+    font-size: 14px;
+    color: red;
 }
 </style>
