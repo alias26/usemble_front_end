@@ -10,14 +10,12 @@
         <div class="form-group row">
             <h5 class="col-sm-2">작성일</h5>
             <div class="col-sm-10">
-                <p>{{ notice.ndate }}</p>
+                <p>{{ new Date(notice.ndate).toLocaleDateString() }}</p>
             </div>
         </div>
         <div class="form-group row">
             <h5 class="col-sm-2">내용</h5>
-            <div class="col-sm-10">
-                <p id="notice-content"></p>
-            </div>
+            <div class="col-sm-10" id="notice-content"></div>
         </div>
         <div class="form-group row mt-3">
             <div class="col-sm-12 d-flex justify-content-end">
@@ -25,7 +23,7 @@
                     수정
                 </button>
                 <button type="button" class="btn btn-danger" @click="goNoticeList()">
-                    뒤로가기
+                    목록으로
                 </button>
             </div>
         </div>
