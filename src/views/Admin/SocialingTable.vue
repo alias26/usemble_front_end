@@ -1,6 +1,22 @@
 <template>
     <div class="p-3 mt-4">
-        <h4>소셜링 관리</h4>
+        <div class="d-flex justify-content-between mb-2">
+            <h4>소셜링 관리</h4>
+            <div class="d-flex">
+                <select class="form-select" id="option" style="width: 100px">
+                    <option value="title" selected>제목</option>
+                    <option value="mid">아이디</option>
+                </select>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="keyword"
+                    @keydown.enter="getSocialListSearch(1, true)"
+                    style="width: 250px"
+                />
+            </div>
+        </div>
+
         <table class="table table-bordered text-center">
             <tr>
                 <th style="width: 40px">번호</th>
@@ -66,6 +82,7 @@ const page = ref({
 });
 
 const route = useRoute();
+const search = ref(false);
 const pageNo = ref(route.query.pageNo || 1);
 
 async function getSocialList(pageNo) {
@@ -92,11 +109,24 @@ function changePageNo(argPageNo) {
 
 //요청 경로의 변경을 감시
 watch(route, (newRoute, oldRoute) => {
+    if (newRoute.fullPath == oldRoute.path && search.value) {
+        search.value = false;
+        getSocialList(1);
+        pageNo.value = 1;
+    }
     if (newRoute.query.pageNo) {
-        getSocialList(newRoute.query.pageNo);
+        if (!search.value) {
+            getSocialList(newRoute.query.pageNo);
+        } else {
+            getSocialListSearch(newRoute.query.pageNo);
+        }
         pageNo.value = newRoute.query.pageNo;
     } else {
-        getSocialList(1);
+        if (!search.value) {
+            getSocialList(1);
+        } else {
+            getSocialListSearch(1);
+        }
         pageNo.value = 1;
     }
 });
@@ -108,10 +138,28 @@ function detailSocial(sno) {
 function detailmember(mid) {
     router.push(`/user/info?mid=${mid}`);
 }
+
 async function changeStatus(social) {
     if (social.sstatus !== "cancel") {
         social.sstatus = "cancel";
         await adminAPI.updateSocialStatus(social.sno);
+    }
+}
+
+async function getSocialListSearch(spageNo, again = false) {
+    try {
+        if (again) {
+            search.value = true;
+            router.replace({ query: { pageNo: 1 } });
+            pageNo.value = 1;
+        }
+        const option = document.getElementById("option").value;
+        const keyword = document.getElementById("keyword").value;
+        const response = await adminAPI.getSocialListSearch(spageNo, keyword, option);
+        page.value.socials = response.data.socials;
+        page.value.pager = response.data.pager;
+    } catch (error) {
+        console.log(error);
     }
 }
 </script>
