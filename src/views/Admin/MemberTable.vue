@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between mb-2">
             <h4>회원 관리</h4>
             <div class="d-flex">
-                <select class="form-select" id="option">
+                <select class="form-select" id="option" style="width: 100px">
                     <option value="name" selected>이름</option>
                     <option value="mid">아이디</option>
                 </select>
@@ -12,6 +12,7 @@
                     class="form-control"
                     id="keyword"
                     @keydown.enter="getMemberListSearch(1, true)"
+                    style="width: 250px"
                 />
             </div>
         </div>
