@@ -2,7 +2,7 @@
     <div class="p-3 mt-4">
         <h4>공지사항 관리</h4>
         <table class="table table-bordered text-center">
-            <tr style="height: 50px">
+            <tr style="height: 60px">
                 <th style="width: 40px">번호</th>
                 <th style="width: 220px">제목</th>
                 <th style="width: 80px">날짜</th>
@@ -18,12 +18,47 @@
                 <td>{{ formatDate(notice.ndate) }}</td>
                 <td>{{ notice.mid }}</td>
                 <td class="d-flex justify-content-center">
-                    <RouterLink to="/admin/noticeUpdate">
+                    <RouterLink :to="`/admin/noticeUpdate?nno=${notice.nno}`">
                         <button class="btn btn-outline-success btn-md">수정하기</button>
                     </RouterLink>
                     <div>
-                        <button class="btn btn-outline-danger btn-md">삭제하기</button>
+                        <button
+                            class="btn btn-outline-danger btn-md"
+                            @click="handleRemove(notice.nno)"
+                        >
+                            삭제하기
+                        </button>
                     </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <button class="btn btn-sm me-1" @click="changePageNo(1)">처음</button>
+                    <button
+                        v-if="page.pager.groupNo > 1"
+                        class="btn btn-sm me-1"
+                        @click="changePageNo(page.pager.startPageNo - 1)"
+                    >
+                        이전
+                    </button>
+                    <button
+                        v-for="pageNo in page.pager.pageArray"
+                        :key="pageNo"
+                        class="btn btn-sm me-1"
+                        @click="changePageNo(pageNo)"
+                    >
+                        {{ pageNo }}
+                    </button>
+                    <button
+                        v-if="page.pager.groupNo < page.pager.totalGroupNo"
+                        class="btn btn-sm me-1"
+                        @click="changePageNo(page.pager.endPageNo + 1)"
+                    >
+                        다음
+                    </button>
+                    <button class="btn btn-sm me-1" @click="changePageNo(page.pager.totalPageNo)">
+                        맨끝
+                    </button>
                 </td>
             </tr>
         </table>
@@ -68,7 +103,16 @@ function formatDate(dateString) {
 
 const router = useRouter();
 function changePageNo(argPageNo) {
-    router.push(`/Admin/NoticeTable?pageNo=${argPageNo}`);
+    router.push(`/admin/NoticeTable?pageNo=${argPageNo}`);
+}
+async function handleRemove(nno) {
+    try {
+        await adminAPI.noticeDelete(nno);
+        await getNoticeList(pageNo.value);
+        router.push("/admin/NoticeTable");
+    } catch (error) {
+        console.log(error);
+    }
 }
 watch(route, (newRoute, oldRoute) => {
     if (newRoute.query.pageNo) {

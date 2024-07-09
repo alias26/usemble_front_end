@@ -90,7 +90,7 @@ function formatDate(dateString) {
 
 const router = useRouter();
 function changePageNo(argPageNo) {
-    router.push(`/Admin/MemberTable?pageNo=${argPageNo}`);
+    router.push(`/admin/MemberTable?pageNo=${argPageNo}`);
 }
 //요청 경로의 변경을 감시
 watch(route, (newRoute, oldRoute) => {

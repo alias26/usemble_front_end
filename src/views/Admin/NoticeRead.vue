@@ -21,7 +21,9 @@
         </div>
         <div class="form-group row mt-3">
             <div class="col-sm-12 d-flex justify-content-end">
-                <button type="button" class="btn btn-success me-2">수정</button>
+                <button type="button" class="btn btn-success me-2" @click="goNoticeupdate">
+                    수정
+                </button>
                 <button type="button" class="btn btn-danger" @click="goNoticeList">뒤로가기</button>
             </div>
         </div>
@@ -35,6 +37,8 @@ import { useRouter, useRoute } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const nno = ref(route.query.nno);
+
+
 const notice = ref({
     mid: "",
     ntitle: "",
@@ -52,12 +56,14 @@ async function getNotice(nno) {
     notice.value.ndate = response.data.ndate;
     notice.value.ncontent = response.data.ncontent;
     showContent();
-    console.log(notice.value);
 }
 getNotice(nno.value);
 
 function goNoticeList() {
     router.back();
+}
+function goNoticeupdate() {
+    router.push(`/admin/noticeUpdate?nno=${nno.value}`);
 }
 </script>
 

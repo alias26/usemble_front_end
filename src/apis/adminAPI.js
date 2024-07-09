@@ -10,14 +10,20 @@ function getSocialList(pageNo = 1) {
 function getReviewList(pageNo = 1) {
     return axios.get("/admin/reviewList", { params: { pageNo: pageNo } });
 }
-function writeNotice(formData) {
-    return axios.post("/notice/write", formData);
+function writeNotice(notice) {
+    return axios.post("/notice/write", notice);
 }
 function getNoticeList(pageNo = 1) {
     return axios.get("/admin/noticeList", { params: { pageNo: pageNo } });
 }
 function getNotice(nno) {
-    return axios.get("/notice/read/"+ nno);
+    return axios.get("/notice/read/" + nno);
+}
+function noticeUpdate(notice) {
+    return axios.put("/notice/update", notice);
+}
+function noticeDelete(nno) {
+    return axios.delete("notice/delete/" + nno);
 }
 export default {
     getMemberList,
@@ -26,4 +32,6 @@ export default {
     writeNotice,
     getNoticeList,
     getNotice,
+    noticeUpdate,
+    noticeDelete,
 };
