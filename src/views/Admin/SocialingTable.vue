@@ -3,28 +3,23 @@
         <h4>소셜링 관리</h4>
         <table class="table table-bordered text-center">
             <tr>
-                <th style="width: 1%">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="1" />
-                    </div>
-                </th>
                 <th style="width: 40px">번호</th>
-                <th style="width: 400px">제목</th>
-                <th style="width: 80px">글쓴이</th>
+                <th style="width: 250px">제목</th>
+                <th style="width: 70px">글쓴이</th>
                 <th style="width: 90px">작성일</th>
-                <th style="width: 80px">관리</th>
+                <th style="width: 70px">관리</th>
             </tr>
             <tr v-for="social in page.socials" :key="social.sno">
-                <td>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="1" />
-                    </div>
-                </td>
                 <td>{{ social.sno }}</td>
-                <td>{{ social.stitle }}</td>
-                <td>{{ social.mid }}</td>
+                <td @click="detailSocial(social.sno)">{{ social.stitle }}</td>
+                <td @click="detailmember(social.mid)">{{ social.mid }}</td>
                 <td>{{ formatDate(social.swriteDate) }}</td>
-                <td>{{ social.sstatus }}</td>
+                <td>
+                    <button class="btn btn-sm me-1" @click="changeStatus(social)">
+                        <!-- social.sstatus 값에 따라 버튼 텍스트 변경 -->
+                        {{ social.sstatus === "cancel" ? "취소" : "취소 가능" }}
+                    </button>
+                </td>
             </tr>
             <tr>
                 <td colspan="5" class="text-center">
@@ -106,6 +101,19 @@ watch(route, (newRoute, oldRoute) => {
     }
 });
 getSocialList(pageNo.value);
+
+function detailSocial(sno) {
+    router.push(`/social/detail?sno=${sno}`);
+}
+function detailmember(mid) {
+    router.push(`/user/info?mid=${mid}`);
+}
+async function changeStatus(social) {
+    if (social.sstatus !== "cancel") {
+        social.sstatus = "cancel";
+        await adminAPI.updateSocialStatus(social.sno);
+    }
+}
 </script>
 
 <style scoped></style>
