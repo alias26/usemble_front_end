@@ -6,7 +6,9 @@
             </div>
         </template>
         <template v-slot:body>
-            <div>{{ message }}</div>
+            <div>
+                <h5>{{ message }}</h5>
+            </div>
         </template>
         <template v-slot:footer>
             <button class="btn" @click="goUrlBack" data-bs-dismiss="modal">뒤로가기</button>

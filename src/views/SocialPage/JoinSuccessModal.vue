@@ -6,7 +6,7 @@
             </div>
         </template>
         <template v-slot:body>
-            <div><span>성공적으로 어셈블에 참여했습니다!</span></div>
+            <div><h5>성공적으로 어셈블에 참여했습니다!</h5></div>
         </template>
         <template v-slot:footer>
             <button class="btn" @click="goUrlHome" data-bs-dismiss="modal">닫기</button>
