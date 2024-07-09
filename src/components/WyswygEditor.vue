@@ -52,7 +52,7 @@ function loadEditor() {
     });
 
     if (props.content != null) {
-        document.querySelector(".ql-editor").innerHTML = props.content;
+        quill.clipboard.dangerouslyPasteHTML(0, props.content);
     }
 
     quill.getModule("toolbar").addHandler("image", function () {
