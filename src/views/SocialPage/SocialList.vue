@@ -84,13 +84,13 @@ function changePageNo(pageNo) {
 
 function handleCategory(ctno) {
     router.replace({
-        query: { pageNo: route.query.pageNo, ctno: ctno, sort: route.query.sort },
+        query: { pageNo: 1, ctno: ctno, sort: route.query.sort },
     });
 }
 
 function handleSort(sort) {
     router.replace({
-        query: { pageNo: route.query.pageNo, ctno: route.query.ctno, sort: sort },
+        query: { pageNo: 1, ctno: route.query.ctno, sort: sort },
     });
 }
 
