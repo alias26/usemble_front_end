@@ -70,6 +70,10 @@ function validateReview() {
         warning.value = true;
         warnMessage.value = "하이퍼링크는 리뷰에 포함하실 수 없습니다.";
         return false;
+    } else if (reviewCopy.rcontent.length > 100) {
+        warning.value = true;
+        warnMessage.value = "리뷰는 100자 이내로 작성해주세요.";
+        return false;
     } else {
         warning.value = false;
         warnMessage.value = "";
