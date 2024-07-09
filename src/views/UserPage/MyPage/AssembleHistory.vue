@@ -152,11 +152,13 @@ const rPageNo = ref(route.query.rPageNo || 1);
 const applyClick = () => {
     apply.value = true;
     recruit.value = false;
+    changeJpageNo(1, store.state.mid);
 };
 
 const recruitClick = () => {
     apply.value = false;
     recruit.value = true;
+    changeRpageNo(1, store.state.mid);
 };
 
 const joinHistoryPage = ref({

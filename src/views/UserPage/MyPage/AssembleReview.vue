@@ -147,11 +147,13 @@ const rPageNo = ref(route.query.rPageNo || 1);
 const toMeClick = () => {
     toMe.value = true;
     fromMe.value = false;
+    changeLpageNo(1);
 };
 
 const fromMeClick = () => {
     fromMe.value = true;
     toMe.value = false;
+    changeRpageNo(1);
 };
 
 const recieveReviewPage = ref({
