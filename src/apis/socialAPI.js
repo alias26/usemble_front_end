@@ -21,8 +21,8 @@ function getSjoinCnt(sno) {
     return axios.get("/social/sjoin/count/" + sno);
 }
 
-function updateSocialStatus(sno, sstatus) {
-    return axios.patch("/social/update/" + sno + "/" + sstatus);
+function deleteSocial(sno) {
+    return axios.patch("/social/delete/" + sno);
 }
 
 function getSpayInfo(sno) {
@@ -94,7 +94,7 @@ export default {
     mainSocial,
     getSocial,
     getSjoinCnt,
-    updateSocialStatus,
+    deleteSocial,
     getSpayInfo,
     joinSocial,
     getSjoinState,

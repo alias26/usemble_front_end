@@ -84,8 +84,17 @@
                             >
                                 취소하기
                             </button>
-                            <button v-if="isDeadline" id="btn_us" class="btn mb-3" disabled>
-                                마감된 어셈블입니다.
+                            <button
+                                v-if="
+                                    isDeadline ||
+                                    social.sstatus == 'cancel' ||
+                                    social.sstatus == 'delete'
+                                "
+                                id="btn_us"
+                                class="btn mb-3"
+                                disabled
+                            >
+                                현재 참여하실 수 없는 어셈블입니다.
                             </button>
                         </div>
                     </div>
@@ -283,7 +292,7 @@ async function cancelSocialJoin() {
 
 async function cancelSocial() {
     try {
-        await socialAPI.updateSocialStatus(sno.value, "cancel");
+        await socialAPI.deleteSocial(sno.value);
         cancelSocialModal.hide();
     } catch (error) {
         console.log(error);

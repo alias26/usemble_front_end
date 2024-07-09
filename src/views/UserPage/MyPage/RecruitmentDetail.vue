@@ -73,7 +73,7 @@ function hideCancelSocialModal() {
 
 async function cancelSocial() {
     try {
-        await socialAPI.updateSocialStatus(props.recruitment.sno, "cancel");
+        await socialAPI.deleteSocial(props.recruitment.sno);
         emit("reload");
         cancelSocialModal.hide();
     } catch (error) {
