@@ -5,17 +5,18 @@
             <tr style="height: 50px">
                 <th style="width: 40px">번호</th>
                 <th style="width: 220px">제목</th>
-                <th style="width: 40px">날짜</th>
+                <th style="width: 80px">날짜</th>
                 <th style="width: 40px">작성자</th>
                 <th style="width: 40px">관리</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>
-                    <RouterLink to="/admin/noticeRead">후기 작성 및 이벤트 참여 관련</RouterLink>
-                </td>
-                <td>24.06.17</td>
-                <td>user1@naver.com</td>
+            <tr v-for="notice in page.notices" :key="notice.nno">
+                <td>{{ notice.nno }}</td>
+                <RouterLink id="ntitle" :to="`/admin/noticeRead?nno=${notice.nno}`"
+                    ><td>{{ notice.ntitle }}</td></RouterLink
+                >
+
+                <td>{{ formatDate(notice.ndate) }}</td>
+                <td>{{ notice.mid }}</td>
                 <td class="d-flex justify-content-center">
                     <RouterLink to="/admin/noticeUpdate">
                         <button class="btn btn-outline-success btn-md">수정하기</button>
@@ -34,12 +35,61 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, watch } from "vue";
+import adminAPI from "@/apis/adminAPI";
+import { useRoute, useRouter } from "vue-router";
+
+const page = ref({
+    notices: [],
+    pager: {},
+});
+
+const route = useRoute();
+const pageNo = ref(route.query.pageNo || 1);
+
+async function getNoticeList(pageNo) {
+    try {
+        const response = await adminAPI.getNoticeList(pageNo);
+        page.value.notices = response.data.notices;
+        page.value.pager = response.data.pager;
+        console.log(page.value.notices);
+        //page.value = response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function formatDate(dateString) {
+    const options = { year: "numeric", month: "long", day: "numeric", weekday: "long" };
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("ko-KR", options).format(date);
+}
+
+const router = useRouter();
+function changePageNo(argPageNo) {
+    router.push(`/Admin/NoticeTable?pageNo=${argPageNo}`);
+}
+watch(route, (newRoute, oldRoute) => {
+    if (newRoute.query.pageNo) {
+        getNoticeList(newRoute.query.pageNo);
+        pageNo.value = newRoute.query.pageNo;
+    } else {
+        getNoticeList(1);
+        pageNo.value = 1;
+    }
+});
+getNoticeList(pageNo.value);
+</script>
 
 <style scoped>
 img {
     width: 55px;
     height: 55px;
     border-radius: 50%;
+}
+#ntitle {
+    text-decoration: none;
+    border-style: none;
 }
 </style>
