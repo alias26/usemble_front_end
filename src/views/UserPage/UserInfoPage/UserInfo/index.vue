@@ -234,7 +234,7 @@ async function getSocialCnt(mid) {
 
 getSocialCnt(mid);
 
-//리뷰 작성 수 가져오기
+//리뷰 받은 수 가져오기
 async function getReviewCnt(mid) {
     try {
         const response = await memberAPI.getReviewCnt(mid);
