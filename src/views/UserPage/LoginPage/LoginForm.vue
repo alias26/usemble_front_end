@@ -90,9 +90,13 @@ async function handleLogin() {
                 if (document.getElementById("autoLogin").checked) {
                     //로컬스토리지 저장
                     store.dispatch("saveAuthLocal", payload);
+                    const responseAlarm = await memberAPI.isAlarm(payload.mid);
+                    store.commit("changeIsAlarm", responseAlarm.data.isAlarm);
                 } else {
                     //세션스토리지 저장
                     store.dispatch("saveAuthSession", payload);
+                    const responseAlarm = await memberAPI.isAlarm(payload.mid);
+                    store.commit("changeIsAlarm", responseAlarm.data.isAlarm);
                 }
                 router.push("/");
             } else {
