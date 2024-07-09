@@ -53,15 +53,15 @@
             </div>
         </div>
         <UserSocialList
-            v-if="recruitList.length !=0"
+            v-if="recruitList.length != 0"
             :title="member.mname + '님이 진행 중인 어셈블'"
-            link="/user/recruit"
+            :link="`/user/recruit?mid=${member.mid}`"
             :socials="recruitList"
         />
         <UserSocialList
-        v-if="recruitedList.length !=0"
+            v-if="recruitedList.length != 0"
             :title="member.mname + '님이 진행한 어셈블'"
-            link="/user/recruited"
+            :link="`/user/recruited?mid=${member.mid}`"
             :socials="recruitedList"
         />
         <div class="card mt-4">
@@ -115,7 +115,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, provide, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
@@ -174,6 +174,8 @@ async function getMember(mid) {
 }
 
 getMember(mid);
+
+provide("member", member);
 
 //나의 좋아요 상태
 const like = ref(false);

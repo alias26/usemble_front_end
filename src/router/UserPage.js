@@ -6,19 +6,19 @@ const routes = [
             import(/* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserInfo"),
     },
     {
-        path: "/user/inprogress",
-        name: "userinprogress",
+        path: "/user/recruit",
+        name: "userrecruit",
         component: () =>
             import(
-                /* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserInProgress.vue"
+                /* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserRecruit.vue"
             ),
     },
     {
-        path: "/user/progressed",
-        name: "userprogressed",
+        path: "/user/recruited",
+        name: "userrecruited",
         component: () =>
             import(
-                /* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserProgressed"
+                /* webpackChunkName: "UserPage" */ "../views/UserPage/UserInfoPage/UserRecruited"
             ),
     },
     {

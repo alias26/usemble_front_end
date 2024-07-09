@@ -81,6 +81,13 @@ function getSearchList(keyword) {
     return axios.get("/social/search", { params: { keyword: String(keyword) } });
 }
 
+function inprograss(mid) {
+    return axios.get("/social/inprograss?mid=" + mid);
+}
+
+function prograssed(mid) {
+    return axios.get("/social/prograssed?mid=" + mid);
+}
 export default {
     writeSocial,
     getSocialList,
@@ -102,4 +109,6 @@ export default {
     mainCateSocial,
     getSearchList,
     recruitedAssemble,
+    inprograss,
+    prograssed,
 };

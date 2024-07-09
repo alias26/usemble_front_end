@@ -44,7 +44,7 @@
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
-defineProps(["title"]);
+const props = defineProps(["title"]);
 const emit = defineEmits(["handleCategory", "handleSort"]);
 
 const route = useRoute();

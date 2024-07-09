@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <h5>{{ title }}</h5>
-                <RouterLink class="show-more" :to="props.link">더보기</RouterLink>
+                <RouterLink class="show-more" :to="props.link" :title="title">더보기</RouterLink>
             </div>
             <div class="row mt-3">
                 <SocialCard
@@ -21,6 +21,7 @@
 import SocialCard from "@/components/Social/SocialCard.vue";
 
 const props = defineProps(["title", "link", "socials"]);
+
 </script>
 
 <style scoped>
