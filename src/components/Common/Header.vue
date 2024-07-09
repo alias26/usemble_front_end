@@ -33,7 +33,7 @@
                 <RouterLink v-if="$store.state.mrole === 'ROLE_ADMIN'" class="nav_text" to="/admin"
                     >관리자페이지</RouterLink
                 >
-                <RouterLink to="/myPage/alarm">
+                <RouterLink to="/myPage/alarm" v-if="$store.state.mrole === 'ROLE_USER'">
                     <button
                         class="btn"
                         type="button"
