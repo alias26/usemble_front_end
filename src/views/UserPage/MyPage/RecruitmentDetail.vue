@@ -2,10 +2,16 @@
     <div class="d-flex justify-content-between" id="socialinfo">
         <div class="d-flex">
             <div id="socialimg">
-                <img :src="`${axios.defaults.baseURL}/social/sthumb/${props.recruitment.sno}`" />
+                <RouterLink :to="`/social/detail?sno=${props.recruitment.sno}`">
+                    <img
+                        :src="`${axios.defaults.baseURL}/social/sthumb/${props.recruitment.sno}`"
+                    />
+                </RouterLink>
             </div>
             <div>
-                <div id="socialtitle">{{ props.recruitment.stitle }}</div>
+                <RouterLink class="no-deco" :to="`/social/detail?sno=${props.recruitment.sno}`">
+                    <div id="socialtitle">{{ props.recruitment.stitle }}</div>
+                </RouterLink>
                 <div id="socialcontent">
                     <div class="mb-1">{{ props.recruitment.saddress }}</div>
                 </div>
@@ -115,5 +121,9 @@ img {
     font-weight: 700;
     width: 120px;
     height: 40px;
+}
+
+.no-deco {
+    text-decoration: none;
 }
 </style>
