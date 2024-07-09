@@ -11,16 +11,16 @@
             </tr>
             <tr v-for="notice in page.notices" :key="notice.nno">
                 <td>{{ notice.nno }}</td>
-                <RouterLink id="ntitle" :to="`/admin/noticeRead?nno=${notice.nno}`"
-                    ><td>{{ notice.ntitle }}</td></RouterLink
-                >
-
+                <td id="ntitle" @click="handleRead(notice.nno)">{{ notice.ntitle }}</td>
                 <td>{{ formatDate(notice.ndate) }}</td>
                 <td>{{ notice.mid }}</td>
                 <td class="d-flex justify-content-center">
-                    <RouterLink :to="`/admin/noticeUpdate?nno=${notice.nno}`">
-                        <button class="btn btn-outline-success btn-md">수정하기</button>
-                    </RouterLink>
+                    <button
+                        class="btn btn-outline-success btn-md"
+                        @click="handleupdate(notice.nno)"
+                    >
+                        수정하기
+                    </button>
                     <div>
                         <button
                             class="btn btn-outline-danger btn-md"
@@ -81,6 +81,7 @@ const page = ref({
 });
 
 const route = useRoute();
+
 const pageNo = ref(route.query.pageNo || 1);
 
 async function getNoticeList(pageNo) {
@@ -88,7 +89,6 @@ async function getNoticeList(pageNo) {
         const response = await adminAPI.getNoticeList(pageNo);
         page.value.notices = response.data.notices;
         page.value.pager = response.data.pager;
-        console.log(page.value.notices);
         //page.value = response.data;
     } catch (error) {
         console.log(error);
@@ -101,9 +101,20 @@ function formatDate(dateString) {
     return new Intl.DateTimeFormat("ko-KR", options).format(date);
 }
 
-const router = useRouter();
-function changePageNo(argPageNo) {
-    router.push(`/admin/NoticeTable?pageNo=${argPageNo}`);
+async function handleRead(nno) {
+    try {
+        router.push(`/admin/NoticeRead?nno=${nno}&pageNo=${pageNo.value}`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function handleupdate(nno) {
+    try {
+        router.push(`/admin/NoticeUpdate?nno=${nno}&pageNo=${pageNo.value}`);
+    } catch (error) {
+        console.log(error);
+    }
 }
 async function handleRemove(nno) {
     try {
@@ -114,6 +125,12 @@ async function handleRemove(nno) {
         console.log(error);
     }
 }
+
+const router = useRouter();
+function changePageNo(argPageNo) {
+    router.push(`/admin/NoticeTable?pageNo=${argPageNo}`);
+}
+
 watch(route, (newRoute, oldRoute) => {
     if (newRoute.query.pageNo) {
         getNoticeList(newRoute.query.pageNo);
@@ -132,8 +149,11 @@ img {
     height: 55px;
     border-radius: 50%;
 }
-#ntitle {
+#ntitle_link {
     text-decoration: none;
+}
+#ntitle {
     border-style: none;
+    text-decoration: none;
 }
 </style>

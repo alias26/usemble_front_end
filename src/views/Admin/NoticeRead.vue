@@ -21,10 +21,12 @@
         </div>
         <div class="form-group row mt-3">
             <div class="col-sm-12 d-flex justify-content-end">
-                <button type="button" class="btn btn-success me-2" @click="goNoticeupdate">
+                <button type="button" class="btn btn-success me-2" @click="goNoticeupdate()">
                     수정
                 </button>
-                <button type="button" class="btn btn-danger" @click="goNoticeList">뒤로가기</button>
+                <button type="button" class="btn btn-danger" @click="goNoticeList()">
+                    뒤로가기
+                </button>
             </div>
         </div>
     </div>
@@ -37,7 +39,7 @@ import { useRouter, useRoute } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const nno = ref(route.query.nno);
-
+const pageNo = ref(route.query.pageNo);
 
 const notice = ref({
     mid: "",
@@ -60,10 +62,10 @@ async function getNotice(nno) {
 getNotice(nno.value);
 
 function goNoticeList() {
-    router.back();
+    router.push(`/admin/NoticeTable?pageNo=${pageNo.value}`);
 }
 function goNoticeupdate() {
-    router.push(`/admin/noticeUpdate?nno=${nno.value}`);
+    router.push(`/admin/NoticeUpdate?nno=${nno.value}&pageNo=${pageNo.value}`);
 }
 </script>
 

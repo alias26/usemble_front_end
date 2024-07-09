@@ -45,6 +45,7 @@ const router = useRouter();
 
 const notice = ref({});
 const nno = ref(route.query.nno);
+const pageNo = ref(route.query.pageNo);
 
 async function getNotice(nno) {
     const response = await adminAPI.getNotice(nno);
@@ -53,7 +54,7 @@ async function getNotice(nno) {
 getNotice(nno.value);
 
 function handleCancel() {
-    router.back();
+    router.push(`/admin/NoticeTable?pageNo=${pageNo.value}`);
 }
 
 const quill = ref(null);
@@ -64,7 +65,7 @@ async function handleSubmit() {
     console.log(notice.value);
     try {
         await adminAPI.noticeUpdate(JSON.parse(JSON.stringify(notice.value)));
-        router.push(`/admin/NoticeRead?nno=${nno.value}`);
+        router.push(`/admin/NoticeRead?nno=${nno.value}&pageNo=${pageNo.value}`);
     } catch (error) {
         console.log(error);
     }
