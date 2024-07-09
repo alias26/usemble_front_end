@@ -77,8 +77,8 @@ function mainCateSocial(mid) {
     return axios.get("/social/mainCateSocial?mid=" + mid);
 }
 
-function getSearchList(keyword) {
-    return axios.get("/social/search", { params: { keyword: String(keyword) } });
+function getSearchList(keyword, pageNo) {
+    return axios.get("/social/search?", { params: { keyword: keyword, pageNo: pageNo } });
 }
 
 function inprograss(mid) {
