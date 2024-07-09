@@ -1,7 +1,7 @@
 <template>
     <div class="p-3 mt-4">
         <h4>후기 관리</h4>
-        <table class="table table-bordered text-center">
+        <table class="table table-bordered text-center" style="border-width: 1">
             <tr style="height: 50px">
                 <th style="width: 150px">참여한 소셜링</th>
                 <th style="width: 200px">내용</th>
@@ -19,15 +19,58 @@
                 <td class="rcontent">{{ review.rcontent }}</td>
                 <td>{{ formatDate(review.rdate) }}</td>
                 <td>{{ review.mid }}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-success" @click="showReviewModal(review)">
+                        상세보기
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <button class="btn btn-sm me-1" @click="changePageNo(1)">처음</button>
+                    <button
+                        v-if="page.pager.groupNo > 1"
+                        class="btn btn-sm me-1"
+                        @click="changePageNo(page.pager.startPageNo - 1)"
+                    >
+                        이전
+                    </button>
+                    <button
+                        v-for="pageNo in page.pager.pageArray"
+                        :key="pageNo"
+                        class="btn btn-sm me-1"
+                        @click="changePageNo(pageNo)"
+                    >
+                        {{ pageNo }}
+                    </button>
+                    <button
+                        v-if="page.pager.groupNo < page.pager.totalGroupNo"
+                        class="btn btn-sm me-1"
+                        @click="changePageNo(page.pager.endPageNo + 1)"
+                    >
+                        다음
+                    </button>
+                    <button class="btn btn-sm me-1" @click="changePageNo(page.pager.totalPageNo)">
+                        맨끝
+                    </button>
+                </td>
             </tr>
         </table>
+        <ReviewModal
+            id="reviewModal"
+            @close="hideReviewModal"
+            :review="review"
+            @reload="getReviewList($route.query.pageNo)"
+        />
     </div>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { onMounted, provide, ref, watch } from "vue";
 import adminAPI from "@/apis/adminAPI";
 import { useRoute, useRouter } from "vue-router";
+import ReviewModal from "./ReviewModal.vue";
+import { Modal } from "bootstrap";
 
 const page = ref({
     reviews: [],
@@ -42,20 +85,21 @@ async function getReviewList(pageNo) {
         const response = await adminAPI.getReviewList(pageNo);
         page.value.reviews = response.data.reviews;
         page.value.pager = response.data.pager;
-        console.log(page.value.reviews);
-        //page.value = response.data;
     } catch (error) {
         console.log(error);
     }
 }
+
 function formatDate(dateString) {
     const options = { year: "numeric", month: "long", day: "numeric", weekday: "long" };
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("ko-KR", options).format(date);
 }
+
 const router = useRouter();
+
 function changePageNo(argPageNo) {
-    router.push(`/Admin/ReviewTable?pageNo=${argPageNo}`);
+    router.push(`/admin/ReviewTable?pageNo=${argPageNo}`);
 }
 //요청 경로의 변경을 감시
 watch(route, (newRoute, oldRoute) => {
@@ -69,6 +113,23 @@ watch(route, (newRoute, oldRoute) => {
 });
 
 getReviewList(pageNo.value);
+
+let reviewModal = null;
+
+onMounted(() => {
+    reviewModal = new Modal(document.getElementById("reviewModal"));
+});
+
+const review = ref({ sno: 0, stitle: "", rdate: "", rcontent: "" });
+
+function showReviewModal(reviewParam) {
+    review.value = reviewParam;
+    reviewModal.show();
+}
+
+function hideReviewModal() {
+    reviewModal.hide();
+}
 </script>
 
 <style scoped>
