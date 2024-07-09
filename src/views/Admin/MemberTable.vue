@@ -16,11 +16,24 @@
                 <td>{{ member.msex }}</td>
                 <td>{{ formatDate(member.mdate) }}</td>
                 <td class="d-flex justify-content-center">
-                    <RouterLink to="/admin/memberDetail">
+                    <RouterLink :to="`/admin/memberDetail?mid=${member.mid}`">
                         <button class="btn btn-outline-success btn-md">상세보기</button>
                     </RouterLink>
                     <div>
-                        <button class="btn btn-outline-danger btn-md">비활성화</button>
+                        <button
+                            v-if="member.menabled"
+                            @click="changeMemberState(member)"
+                            class="btn btn-outline-danger btn-md"
+                        >
+                            비활성화
+                        </button>
+                        <button
+                            v-if="!member.menabled"
+                            @click="changeMemberState(member)"
+                            class="btn btn-outline-primary btn-md"
+                        >
+                            활성화
+                        </button>
                     </div>
                 </td>
             </tr>
@@ -62,6 +75,7 @@
 import { ref, watch } from "vue";
 import adminAPI from "@/apis/adminAPI";
 import { useRoute, useRouter } from "vue-router";
+import memberAPI from "@/apis/memberAPI";
 
 const page = ref({
     members: [],
@@ -104,6 +118,15 @@ watch(route, (newRoute, oldRoute) => {
 });
 
 getMemberList(pageNo.value);
+
+async function changeMemberState(member) {
+    try {
+        const response = await adminAPI.changeMemberState(JSON.parse(JSON.stringify(member)));
+        getMemberList(pageNo.value);
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>
 
 <style scoped>
