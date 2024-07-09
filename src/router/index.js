@@ -60,7 +60,7 @@ const router = createRouter({
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return { ...savedPosition, behavior: "instant" };
-        } else {
+        } else if (to.path != from.path) {
             // 항상 최상단으로 이동
             return { top: 0, behavior: "instant" };
         }
