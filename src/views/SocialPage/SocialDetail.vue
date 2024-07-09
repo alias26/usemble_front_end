@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="usbtn">
+                        <div id="usbtn" v-if="$store.state.mrole != 'ROLE_ADMIN'">
                             <button
                                 v-if="!isDeadline && isJoin && !isAlreadyJoin"
                                 id="btn_us"
@@ -98,6 +98,11 @@
                                 disabled
                             >
                                 현재 참여하실 수 없는 어셈블입니다.
+                            </button>
+                        </div>
+                        <div id="usbtn" v-if="$store.state.mrole == 'ROLE_ADMIN'">
+                            <button id="btn_us" class="btn mb-3" @click="cancelSocialAdmin">
+                                취소하기
                             </button>
                         </div>
                     </div>
@@ -147,6 +152,7 @@ import socialAPI from "@/apis/socialAPI";
 import axios from "axios";
 import { useStore } from "vuex";
 import { Modal } from "bootstrap";
+import adminAPI from "@/apis/adminAPI";
 
 const router = useRouter();
 const route = useRoute();
@@ -301,6 +307,14 @@ async function cancelSocial() {
         console.log(error);
     }
     router.push("/");
+}
+
+async function cancelSocialAdmin(sno) {
+    try {
+        await adminAPI.updateSocialStatus(sno);
+    } catch (error) {
+        console.log(error);
+    }
 }
 </script>
 
