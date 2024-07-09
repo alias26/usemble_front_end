@@ -1,7 +1,10 @@
 <template>
     <div id="container">
         <div id="detail_content">
-            <img :src="`${axios.defaults.baseURL}/social/sthumb/${social.sno}`" />
+            <img
+                class="sthumbImage"
+                :src="`${axios.defaults.baseURL}/social/sthumb/${social.sno}`"
+            />
             <div id="title">{{ social.stitle }}</div>
             <div id="address">{{ social.saddress }}</div>
             <div id="date">{{ socialDate.date }} {{ socialDate.time }}</div>
@@ -314,6 +317,10 @@ async function cancelSocial() {
 
 img {
     width: 100%;
+}
+.sthumbImage {
+    height: 450px;
+    object-fit: cover;
 }
 #title {
     font-size: 30px;
