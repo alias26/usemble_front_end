@@ -58,6 +58,12 @@ function updateSocialStatus(sno) {
     return axios.patch("/admin/social/cancel/" + sno);
 }
 
+function getMemberListSearch(pageNo, keyword, option) {
+    return axios.get(
+        "/admin/memberList/search?pageNo=" + pageNo + "&keyword=" + keyword + "&option=" + option
+    );
+}
+
 export default {
     getMemberList,
     getSocialList,
@@ -74,4 +80,5 @@ export default {
     updateSocialStatus,
     noticeUpdate,
     noticeDelete,
+    getMemberListSearch,
 };
