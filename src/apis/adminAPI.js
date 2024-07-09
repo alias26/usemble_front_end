@@ -63,6 +63,15 @@ function getMemberListSearch(pageNo, keyword, option) {
         "/admin/memberList/search?pageNo=" + pageNo + "&keyword=" + keyword + "&option=" + option
     );
 }
+function getSocialListSearch(pageNo, keyword, option) {
+    return axios.get(
+        "/admin/socialList/search?pageNo=" + pageNo + "&keyword=" + keyword + "&option=" + option
+    );
+}
+
+function getSexCnt(sex) {
+    return axios.get("/admin/countSex/" + sex);
+}
 
 export default {
     getMemberList,
@@ -81,4 +90,6 @@ export default {
     noticeUpdate,
     noticeDelete,
     getMemberListSearch,
+    getSocialListSearch,
+    getSexCnt,
 };

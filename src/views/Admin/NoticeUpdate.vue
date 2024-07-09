@@ -12,7 +12,7 @@
                 <label for="ncontent" class="col-sm-2 col-form-label">내용</label>
                 <div class="col-sm-10">
                     <WyswygEditor
-                        v-if="notice.nno != null"
+                        v-if="notice.ncontent != null"
                         ref="quill"
                         :content="notice.ncontent"
                         contentType="html"
