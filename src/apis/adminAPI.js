@@ -69,10 +69,15 @@ function getSocialListSearch(pageNo, keyword, option) {
     );
 }
 
-function getSexCnt(sex) {
-    return axios.get("/admin/countSex/" + sex);
+function getMemberAll() {
+    return axios.get("/admin/countAll");
 }
-
+function getSocialAll() {
+    return axios.get("/admin/countAllSocial");
+}
+function getCategoryName() {
+    return axios.get("/admin/getCateName");
+}
 export default {
     getMemberList,
     getSocialList,
@@ -91,5 +96,7 @@ export default {
     noticeDelete,
     getMemberListSearch,
     getSocialListSearch,
-    getSexCnt,
+    getMemberAll,
+    getSocialAll,
+    getCategoryName,
 };

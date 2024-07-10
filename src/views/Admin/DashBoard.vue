@@ -3,137 +3,52 @@
         <div class="d-flex justify-content-center mt-5">
             <div id="box">
                 <div class="d-flex" id="member_left">
-                    <span id="membertxt">총 회원수</span>
-                    <span id="membercnt">1200</span>
+                    <span id="membertxt">회원</span>
                 </div>
-                <div id="box_content" class="d-flex">
-                    <div id="bar_grp">
-                        <div id="bar_content" class="d-flex">
-                            <span id="title">10대</span>
-                            <div class="progress-bar">
-                                <div class="progress-10"></div>
-                            </div>
-                            <span id="content">10%</span>
-                        </div>
-                        <div id="bar_content" class="d-flex">
-                            <span id="title">20대</span>
-                            <div class="progress-bar">
-                                <div class="progress-20"></div>
-                            </div>
-                            <span id="content">40%</span>
-                        </div>
-                        <div id="bar_content" class="d-flex">
-                            <span id="title">30대</span>
-                            <div class="progress-bar">
-                                <div class="progress-30"></div>
-                            </div>
-                            <span id="content">30%</span>
-                        </div>
-                        <div id="bar_content" class="d-flex">
-                            <span id="title">40대</span>
-                            <div class="progress-bar">
-                                <div class="progress-40"></div>
-                            </div>
-                            <span id="content">15%</span>
-                        </div>
-                        <div id="bar_content" class="d-flex">
-                            <span id="title">50대</span>
-                            <div class="progress-bar">
-                                <div class="progress-50"></div>
-                            </div>
-                            <span id="content">5%</span>
-                        </div>
+                <div id="box_content" class="d-flex justify-content-evenly">
+                    <div class="d-flex flex-column" style="text-align: center">
+                        <i id="all" class="bi bi-people-fill"></i>
+                        <span id="membercnt">{{ all }} 명</span>
                     </div>
-                    <div id="circle_grp">
-                        <div>
-                            <div id="circle_title1">
-                                남자 <span><i id="m_color" class="bi bi-square-fill"></i></span>
-                            </div>
-                            <div id="circle_title1">
-                                여자 <span><i id="w_color" class="bi bi-square-fill"></i></span>
-                            </div>
-                        </div>
-                        <div id="pie"></div>
+                    <div class="d-flex flex-column" style="text-align: center">
+                        <i id="male" class="bi bi-person-standing"></i>
+                        <span id="membercnt">{{ male }} 명</span>
+                    </div>
+                    <div class="d-flex flex-column" style="text-align: center">
+                        <i id="female" class="bi bi-person-standing-dress"></i>
+                        <span id="membercnt">{{ female }} 명</span>
                     </div>
                 </div>
             </div>
             <div id="box">
                 <div class="d-flex" id="social_left">
-                    <span id="socialtxt">전체 소셜링</span>
-                    <span id="socialcnt">600</span>
+                    <span id="socialtxt">소셜링</span>
                 </div>
-                <div id="box_content" class="d-flex">
-                    <div id="bar_grp">
-                        <div id="bar_content" class="d-flex">
-                            <span id="title">모임</span>
-                            <div class="progress-bar">
-                                <div class="progress-10"></div>
-                            </div>
-                            <span id="content">10%</span>
-                        </div>
-                        <div id="bar_content" class="d-flex">
-                            <span id="title">맛집</span>
-                            <div class="progress-bar">
-                                <div class="progress-20"></div>
-                            </div>
-                            <span id="content">40%</span>
-                        </div>
-                        <div id="bar_content" class="d-flex">
-                            <span id="title">운동</span>
-                            <div class="progress-bar">
-                                <div class="progress-30"></div>
-                            </div>
-                            <span id="content">30%</span>
-                        </div>
-                        <div id="bar_content" class="d-flex">
-                            <span id="title">여행</span>
-                            <div class="progress-bar">
-                                <div class="progress-40"></div>
-                            </div>
-                            <span id="content">15%</span>
-                        </div>
-                        <div id="bar_content" class="d-flex">
-                            <span id="title">스터디</span>
-                            <div class="progress-bar">
-                                <div class="progress-50"></div>
-                            </div>
-                            <span id="content">5%</span>
-                        </div>
-                    </div>
-                    <div id="circle_grp">
-                        <div>
-                            <div id="circle_title">
-                                모임
-                                <span
-                                    ><i style="color: #6f4fff" class="bi bi-square-fill"></i
-                                ></span>
-                            </div>
-                            <div id="circle_title">
-                                맛집
-                                <span
-                                    ><i style="color: #4f98ff" class="bi bi-square-fill"></i
-                                ></span>
-                            </div>
-                            <div id="circle_title">
-                                운동
-                                <span
-                                    ><i style="color: #e76fff" class="bi bi-square-fill"></i
-                                ></span>
-                            </div>
-                            <div id="circle_title">
-                                여행
-                                <span
-                                    ><i style="color: #5ace8e" class="bi bi-square-fill"></i
-                                ></span>
-                            </div>
-                            <div id="circle_title">
-                                스터디
-                                <span
-                                    ><i style="color: #e5ff72" class="bi bi-square-fill"></i
-                                ></span>
+                <div id="box_content">
+                    <div class="d-flex">
+                        <div id="bar_grp" class="d-flex flex-column ms-4">
+                            <div
+                                id="bar_content"
+                                v-for="(ct, index) in cts"
+                                :key="index"
+                                class="d-flex flex-column my-1"
+                            >
+                                <span id="title">{{ ct.ctname }} </span>
                             </div>
                         </div>
-                        <div id="pie2"></div>
+                        <div style="width: 80%">
+                            <div
+                                class="d-flex flex-column my-1 mb-2"
+                                v-for="(ct, index) in cts"
+                                :key="index"
+                            >
+                                <div class="progress-bar">
+                                    <div class="progress" :style="{ width: per[index] + '%' }">
+                                        {{ cate[index] }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,7 +56,7 @@
         <div class="d-flex justify-content-center mt-5">
             <div id="box">
                 <div class="d-flex">
-                    <span id="socialtxt">전체 리뷰</span>
+                    <span id="socialtxt">리뷰</span>
                     <span id="socialcnt">200</span>
                 </div>
                 <table class="table table-bordered text-center">
@@ -233,7 +148,59 @@
         </div>
     </div>
 </template>
-<script setup></script>
+<script setup>
+import adminAPI from "@/apis/adminAPI";
+import { ref } from "vue";
+const all = ref(0);
+const male = ref(0);
+const female = ref(0);
+const member = ref([]);
+const social = ref([]);
+const cate = ref([0, 0, 0, 0, 0]);
+const per = ref([0, 0, 0, 0, 0]);
+const cts = ref([]);
+async function getMemberAll() {
+    const response = await adminAPI.getMemberAll();
+    member.value = response.data;
+
+    // 성별을 기준으로 멤버를 분류
+    all.value = member.value.length;
+    male.value = member.value.filter((person) => person.msex === "남").length;
+    female.value = member.value.filter((person) => person.msex === "여").length;
+
+    console.log(all.value);
+    console.log(male.value);
+    console.log(female.value);
+}
+async function getSocialAll() {
+    const response = await adminAPI.getSocialAll();
+
+    social.value = response.data;
+    cate.value[0] = social.value.filter((social) => social.ctno == 1).length;
+    cate.value[1] = social.value.filter((social) => social.ctno == 2).length;
+    cate.value[2] = social.value.filter((social) => social.ctno == 3).length;
+    cate.value[3] = social.value.filter((social) => social.ctno == 4).length;
+    cate.value[4] = social.value.filter((social) => social.ctno == 5).length;
+
+    console.log(cate.value[0]);
+    getPer();
+    console.log(per.value);
+}
+function getPer() {
+    for (let i = 0; i < 5; i++) {
+        per.value[i] = (cate.value[i] / social.value.length) * 100;
+    }
+}
+async function getCategoryName() {
+    const response = await adminAPI.getCategoryName();
+    cts.value = response.data;
+    console.log(cts.value);
+}
+
+getMemberAll();
+getSocialAll();
+getCategoryName();
+</script>
 <style scoped>
 #dash {
     display: flex;
@@ -247,11 +214,10 @@
     border: solid;
 }
 #box_content {
-    height: 80%;
 }
 #membertxt {
     color: #558ccf;
-    font-size: 20px;
+    font-size: 35px;
     font-weight: 900;
     margin-left: 10px;
 }
@@ -264,14 +230,8 @@
 
 #bar_grp {
     display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 40%;
-    margin: auto;
 }
 #bar_content {
-    margin: auto;
-    width: 100%;
 }
 #circle_grp {
     width: 50%;
@@ -301,7 +261,7 @@
 }
 #socialtxt {
     color: #558ccf;
-    font-size: 20px;
+    font-size: 35px;
     font-weight: 900;
     margin-left: 10px;
 }
@@ -312,8 +272,8 @@
     margin-left: 10px;
 }
 .progress-bar {
-    width: 60%;
-    height: 15px;
+    width: 100%;
+    height: 27px;
     background-color: #eeeeee;
     border-radius: 4px;
     font-weight: 600;
@@ -321,53 +281,19 @@
     margin: auto 0;
     margin-left: 5px;
 }
-.progress-bar .progress-10 {
-    width: 10%;
-    height: 15px;
+.progress-bar .progress {
+    width: 100%;
+    height: 27px;
     padding: 0;
     text-align: center;
     background-color: #4f98ff;
     border-radius: 4px;
     color: #111;
 }
-.progress-bar .progress-20 {
-    width: 40%;
-    height: 15px;
-    padding: 0;
-    text-align: center;
-    background-color: #4f98ff;
-    border-radius: 4px;
-    color: #111;
-}
-.progress-bar .progress-30 {
-    width: 30%;
-    height: 15px;
-    padding: 0;
-    text-align: center;
-    background-color: #4f98ff;
-    border-radius: 4px;
-    color: #111;
-}
-.progress-bar .progress-40 {
-    width: 10%;
-    height: 15px;
-    padding: 0;
-    text-align: center;
-    background-color: #4f98ff;
-    border-radius: 4px;
-    color: #111;
-}
-.progress-bar .progress-50 {
-    width: 5%;
-    height: 15px;
-    padding: 0;
-    text-align: center;
-    background-color: #4f98ff;
-    border-radius: 4px;
-    color: #111;
-}
+
 #title {
     font-weight: 700;
+    font-size: 19px;
 }
 #content {
     font-weight: 500;
@@ -383,5 +309,16 @@
 }
 #table_title {
     text-decoration: none;
+}
+#all {
+    font-size: 90px;
+}
+#male {
+    font-size: 90px;
+    color: #558ccf;
+}
+#female {
+    font-size: 90px;
+    color: #5ace8e;
 }
 </style>
