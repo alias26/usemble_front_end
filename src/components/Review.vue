@@ -8,9 +8,9 @@
                     ><p class="theme-color-text mb-2 me-2">{{ props.review.stitle }}</p></RouterLink
                 >
                 <div class="d-flex" v-if="isReview">
-                    <span @click="showUpdateReviewModal">수정하기</span>
+                    <span style="cursor: pointer" @click="showUpdateReviewModal">수정하기</span>
                     <span>&nbsp;|&nbsp;</span>
-                    <span @click="showDeleteReviewModal">삭제하기</span>
+                    <span style="cursor: pointer" @click="showDeleteReviewModal">삭제하기</span>
                 </div>
             </div>
             <p class="subtext">
