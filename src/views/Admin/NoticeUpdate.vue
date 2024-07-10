@@ -5,7 +5,14 @@
             <div class="form-group row">
                 <label for="ntitle" class="col-sm-2 col-form-label">제목</label>
                 <div class="col-sm-10">
-                    <input id="ntitle" type="text" class="form-control" v-model="notice.ntitle" />
+                    <input
+                        id="ntitle"
+                        type="text"
+                        class="form-control"
+                        v-model="notice.ntitle"
+                        @change="validateTitle"
+                    />
+                    <div id="title_warning" class="text-danger" style="font-size: 13px"></div>
                 </div>
             </div>
             <div class="form-group row mt-3">
@@ -16,7 +23,9 @@
                         ref="quill"
                         :content="notice.ncontent"
                         contentType="html"
+                        @change="validateContent"
                     />
+                    <div id="content_warning" class="text-danger" style="font-size: 13px"></div>
                 </div>
             </div>
             <div class="form-group row mt-3">
@@ -56,18 +65,46 @@ getNotice(nno.value);
 function handleCancel() {
     router.push(`/admin/NoticeTable?pageNo=${pageNo.value}`);
 }
+function validateTitle() {
+    let flag = true;
+    const title_warning = document.getElementById("title_warning");
+    if (!notice.value.ntitle) {
+        flag = false;
+        title_warning.innerHTML = "공지사항 제목을 입력해 주세요.";
+    } else {
+        flag = true;
+        title_warning.innerHTML = " ";
+    }
+    console.log(flag);
+    return flag;
+}
+function validateContent() {
+    let content = quill.value.getContent().textContent;
+    const content_warning = document.getElementById("content_warning");
+    let flag = true;
+    if (content == "null" || content.replace(/\s/g, "") == "") {
+        flag = false;
+        content_warning.innerHTML = "공지사항 내용을 입력해 주세요.";
+    } else {
+        flag = true;
+        content_warning.innerHTML = " ";
+    }
+    return flag;
+}
 
 const quill = ref(null);
 
 async function handleSubmit() {
-    let content = quill.value.getContent().cloneNode(true).outerHTML;
-    notice.value.ncontent = content;
-    console.log(notice.value);
-    try {
-        await adminAPI.noticeUpdate(JSON.parse(JSON.stringify(notice.value)));
-        router.push(`/admin/NoticeRead?nno=${nno.value}&pageNo=${pageNo.value}`);
-    } catch (error) {
-        console.log(error);
+    if (validateTitle() & validateContent()) {
+        let content = quill.value.getContent().cloneNode(true).outerHTML;
+        notice.value.ncontent = content;
+        console.log(notice.value);
+        try {
+            await adminAPI.noticeUpdate(JSON.parse(JSON.stringify(notice.value)));
+            router.push(`/admin/NoticeRead?nno=${nno.value}&pageNo=${pageNo.value}`);
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 </script>
