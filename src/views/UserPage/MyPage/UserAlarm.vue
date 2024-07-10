@@ -14,10 +14,10 @@
                 </li>
             </ul>
 
-            <div class="bg-light like-space">
+            <div class="bg-light alarm-space">
                 <div class="hr"></div>
                 <div class="text-secondary">
-                    <div class="like-empty" v-if="alarmPage.alarmList.length == 0">
+                    <div class="alarm-empty" v-if="alarmPage.alarmList.length == 0">
                         <div>받은 알림이 존재하지 않습니다.</div>
                     </div>
                     <div class="p-2">
@@ -142,30 +142,9 @@ watch(route, (newRoute, oldRoute) => {
     width: 100%;
     margin: 0 auto;
 }
-#txt {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
 .hr {
     border-bottom: 1px solid lightgray;
-}
-
-#host-info {
-    width: 90%;
-    overflow: auto;
-    text-overflow: ellipsis;
-}
-
-#like-btn {
-    justify-content: center;
-    align-items: center;
-    border-color: lightgray;
-    width: 120px;
-    height: 40px;
 }
 
 .nav-link {
@@ -173,12 +152,12 @@ watch(route, (newRoute, oldRoute) => {
     color: gray;
 }
 
-.like-space {
-    height: 470px;
+.alarm-space {
+    height: 410px;
     position: relative;
 }
 
-.like-empty {
+.alarm-empty {
     font-size: 14px;
     text-align: center;
     position: absolute;
