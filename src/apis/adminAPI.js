@@ -78,6 +78,9 @@ function getSocialAll() {
 function getCategoryName() {
     return axios.get("/admin/getCateName");
 }
+function getNotices() {
+    return axios.get("/admin/getNotice");
+}
 export default {
     getMemberList,
     getSocialList,
@@ -99,4 +102,5 @@ export default {
     getMemberAll,
     getSocialAll,
     getCategoryName,
+    getNotices,
 };

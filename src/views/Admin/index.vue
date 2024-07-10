@@ -12,5 +12,6 @@ import AdminTab from "./AdminTab.vue";
 #admincontent {
     width: 80%;
     margin: 0 auto;
+    min-width: 1500px;
 }
 </style>

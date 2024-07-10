@@ -110,37 +110,15 @@
                     <table class="table table-bordered text-center">
                         <tr style="height: 50px">
                             <th style="width: 40px">번호</th>
-                            <th style="width: 220px">제목</th>
-                            <th style="width: 40px">날짜</th>
+                            <th style="width: 120px">제목</th>
+                            <th style="width: 50px">날짜</th>
                             <th style="width: 40px">작성자</th>
                         </tr>
-                        <tr style="height: 35px">
-                            <td>1</td>
-                            <td>
-                                <RouterLink to="" id="table_title"
-                                    >후기 작성 및 이벤트 참여 관련</RouterLink
-                                >
-                            </td>
-                            <td>24.06.17</td>
-                            <td>user1@naver.com</td>
-                        </tr>
-                        <tr style="height: 35px">
-                            <td>2</td>
-                            <td><RouterLink to="" id="table_title">결제 관련</RouterLink></td>
-                            <td>24.06.18</td>
-                            <td>user1@naver.com</td>
-                        </tr>
-                        <tr style="height: 35px">
-                            <td>3</td>
-                            <td><RouterLink to="" id="table_title">호스트 관련</RouterLink></td>
-                            <td>24.06.19</td>
-                            <td>user1@naver.com</td>
-                        </tr>
-                        <tr style="height: 35px">
-                            <td>4</td>
-                            <td><RouterLink to="" id="table_title">문의 관련</RouterLink></td>
-                            <td>24.06.20</td>
-                            <td>user1@naver.com</td>
+                        <tr style="height: 35px" v-for="notice in notices" :key="notice.nno">
+                            <td>{{ notice.nno }}</td>
+                            <td>{{ notice.ntitle }}</td>
+                            <td>{{ formatDate(notice.ndate) }}</td>
+                            <td>{{ notice.mid }}</td>
                         </tr>
                     </table>
                 </div>
@@ -159,6 +137,7 @@ const social = ref([]);
 const cate = ref([0, 0, 0, 0, 0]);
 const per = ref([0, 0, 0, 0, 0]);
 const cts = ref([]);
+const notices = ref([]);
 async function getMemberAll() {
     const response = await adminAPI.getMemberAll();
     member.value = response.data;
@@ -167,10 +146,6 @@ async function getMemberAll() {
     all.value = member.value.length;
     male.value = member.value.filter((person) => person.msex === "남").length;
     female.value = member.value.filter((person) => person.msex === "여").length;
-
-    console.log(all.value);
-    console.log(male.value);
-    console.log(female.value);
 }
 async function getSocialAll() {
     const response = await adminAPI.getSocialAll();
@@ -182,9 +157,7 @@ async function getSocialAll() {
     cate.value[3] = social.value.filter((social) => social.ctno == 4).length;
     cate.value[4] = social.value.filter((social) => social.ctno == 5).length;
 
-    console.log(cate.value[0]);
     getPer();
-    console.log(per.value);
 }
 function getPer() {
     for (let i = 0; i < 5; i++) {
@@ -194,12 +167,22 @@ function getPer() {
 async function getCategoryName() {
     const response = await adminAPI.getCategoryName();
     cts.value = response.data;
-    console.log(cts.value);
+}
+
+async function getNotice() {
+    const response = await adminAPI.getNotices();
+    notices.value = response.data;
 }
 
 getMemberAll();
 getSocialAll();
 getCategoryName();
+getNotice();
+function formatDate(dateString) {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("ko-KR", options).format(date);
+}
 </script>
 <style scoped>
 #dash {
