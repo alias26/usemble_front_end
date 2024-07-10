@@ -67,13 +67,13 @@ import { RouterLink } from "vue-router";
 #navbar {
     width: 300px;
     height: 100%;
-    min-height: 900px;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
     background-color: rgb(20, 70, 0);
-    position: absolute;
+    position: fixed;
     left: -240px;
 }
 #navbar:hover {

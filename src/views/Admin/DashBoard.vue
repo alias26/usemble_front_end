@@ -36,15 +36,16 @@
                                 <span id="title">{{ ct.ctname }} </span>
                             </div>
                         </div>
-                        <div style="width: 80%">
-                            <div
-                                class="d-flex flex-column my-1 mb-2"
-                                v-for="(ct, index) in cts"
-                                :key="index"
-                            >
+                        <div
+                            class="ms-2 d-flex flex-column justify-content-between"
+                            style="width: 80%"
+                        >
+                            <div class="d-flex flex-column" v-for="(ct, index) in cts" :key="index">
                                 <div class="progress-bar">
                                     <div class="progress" :style="{ width: per[index] + '%' }">
-                                        {{ cate[index] }}
+                                        <span class="ms-2" style="font-size: 16px; color: white"
+                                            >{{ cate[index] }} 개</span
+                                        >
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +58,6 @@
             <div id="box">
                 <div class="d-flex">
                     <span id="socialtxt">리뷰</span>
-                    <span id="socialcnt">200</span>
                 </div>
                 <table class="table table-bordered text-center">
                     <tr style="height: 50px">
