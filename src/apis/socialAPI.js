@@ -81,8 +81,8 @@ function getSearchList(keyword, pageNo) {
     return axios.get("/social/search?", { params: { keyword: keyword, pageNo: pageNo } });
 }
 
-function inprograss(mid) {
-    return axios.get("/social/inprograss?mid=" + mid);
+function inprograss(mid, pageNo, ctno, sort) {
+    return axios.get("/social/inprograss?mid=" + mid + "&pageNo=" + pageNo + "&ctno=" + ctno + "&sort=" + sort);
 }
 
 function prograssed(mid) {
