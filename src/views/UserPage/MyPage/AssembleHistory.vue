@@ -336,6 +336,10 @@ async function deleteJoinHistory() {
     try {
         await socialAPI.cancelSocialJoin(store.state.mid, selectSno.value);
         await reviewAPI.deleteReview(store.state.mid, selectSno.value);
+        if (joinHistoryPage.value.joinHistory.length == 1 && route.query.jPageNo > 1) {
+            router.replace({ query: { jPageNo: route.query.jPageNo - 1 } });
+            jPageNo.value = jPageNo.value - 1;
+        }
         getJoinHistoryPage(jPageNo.value, store.state.mid);
         hideDeleteJoinHistoryModal();
     } catch (error) {
@@ -346,6 +350,10 @@ async function deleteJoinHistory() {
 async function cancelSocialJoin() {
     try {
         await socialAPI.cancelSocialJoin(store.state.mid, selectSno.value);
+        if (joinHistoryPage.value.joinHistory.length == 1 && route.query.jPageNo > 1) {
+            router.replace({ query: { jPageNo: route.query.jPageNo - 1 } });
+            jPageNo.value = jPageNo.value - 1;
+        }
         getJoinHistoryPage(jPageNo.value, store.state.mid);
         hideCancelSocialJoinModal();
     } catch (error) {
@@ -356,6 +364,10 @@ async function cancelSocialJoin() {
 async function cancelSocial() {
     try {
         await socialAPI.deleteSocial(selectSno.value);
+        if (recruitHistoryPage.value.recruitHistory.length == 1 && route.query.rPageNo > 1) {
+            router.replace({ query: { rPageNo: route.query.rPageNo - 1 } });
+            rPageNo.value = rPageNo.value - 1;
+        }
         getRecruitHistoryPage(rPageNo.value, store.state.mid);
         hideCancelSocialModal();
     } catch (error) {

@@ -50,7 +50,7 @@
                 <button
                     v-if="alarmPage.pager.startPageNo > 1"
                     class="btn page-btn btn-sm me-1"
-                    @click="changePageNo(alarmPage.pager.startPageNo - 1, $store.state.mid)"
+                    @click="changePageNo(alarmPage.pager.startPageNo - 1)"
                 >
                     이전
                 </button>
@@ -59,14 +59,14 @@
                     :key="pageNo"
                     :class="alarmPage.pager.pageNo == pageNo ? 'cur-page' : ''"
                     class="btn page-btn btn-sm me-1"
-                    @click="changePageNo(pageNo, $store.state.mid)"
+                    @click="changePageNo(pageNo)"
                 >
                     {{ pageNo }}
                 </button>
                 <button
                     v-if="alarmPage.pager.groupNo < alarmPage.pager.totalGroupNo"
                     class="btn page-btn btn-sm me-1"
-                    @click="changePageNo(alarmPage.pager.endPageNo + 1, $store.state.mid)"
+                    @click="changePageNo(alarmPage.pager.endPageNo + 1)"
                 >
                     다음
                 </button>
@@ -76,7 +76,6 @@
 </template>
 
 <script setup>
-import UserProfile from "@/components/UserProfile.vue";
 import memberAPI from "@/apis/memberAPI";
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -109,6 +108,10 @@ async function checkAlarm(mid, ano) {
     document.getElementById("alarm" + ano).remove();
     try {
         const response = await memberAPI.checkAlarm(ano);
+        if (alarmPage.value.alarmList.length == 1 && route.query.pageNo > 1) {
+            router.replace({ query: { pageNo: route.query.pageNo - 1 } });
+            pageNo.value = pageNo.value - 1;
+        }
         getAlarmList(pageNo.value, store.state.mid);
 
         const isAlarmResponse = await memberAPI.isAlarm(mid);
@@ -121,8 +124,8 @@ async function checkAlarm(mid, ano) {
 const router = useRouter();
 
 //페이지 이동
-function changePageNo(argPageNo, mid) {
-    router.push(`/mypage/alarm?mid=${mid}&pageNo=${argPageNo}`);
+function changePageNo(argPageNo) {
+    router.push(`/mypage/alarm?pageNo=${argPageNo}`);
 }
 
 //요청 경로의 변경을 감시

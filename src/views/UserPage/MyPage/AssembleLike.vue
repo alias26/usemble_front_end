@@ -102,6 +102,10 @@ getUserLikeList(pageNo.value, store.state.mid);
 //좋아요 삭제 시 컴포넌트 삭제
 function handleLikeHistory(index) {
     document.getElementById("profile" + index).remove();
+    if (likeList.value.mids.length == 1 && route.query.pageNo > 1) {
+        router.replace({ query: { pageNo: route.query.pageNo - 1 } });
+        pageNo.value = pageNo.value - 1;
+    }
     getUserLikeList(pageNo.value, store.state.mid);
 }
 

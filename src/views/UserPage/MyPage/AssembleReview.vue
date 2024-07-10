@@ -200,10 +200,6 @@ async function getLeaveReviewList(pageNo, mid) {
 
 getLeaveReviewList(lPageNo.value, store.state.mid);
 
-function reloadLeaveReviewList() {
-    getLeaveReviewList(lPageNo.value, store.state.mid);
-}
-
 function goAssembleList() {
     router.push("/list");
 }
@@ -271,6 +267,10 @@ provide("review", review);
 async function deleteReview() {
     try {
         await reviewAPI.deleteReview(store.state.mid, selectSno.value);
+        if (leaveReviewPage.value.reviewList.length == 1 && route.query.lPageNo > 1) {
+            router.replace({ query: { pageNo: route.query.pageNo - 1 } });
+            lPageNo.value = lPageNo.value - 1;
+        }
         getLeaveReviewList(lPageNo.value, store.state.mid);
         hideDeleteReviewModal();
     } catch (error) {
