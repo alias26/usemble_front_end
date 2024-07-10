@@ -5,13 +5,21 @@
             <div class="form-group row">
                 <label for="ntitle" class="col-sm-2 col-form-label">제목</label>
                 <div class="col-sm-10">
-                    <input id="ntitle" type="text" class="form-control" v-model="notice.ntitle" />
+                    <input
+                        id="ntitle"
+                        type="text"
+                        class="form-control"
+                        v-model="notice.ntitle"
+                        @change="validateTitle"
+                    />
+                    <div id="title_warning" class="text-danger" style="font-size: 13px"></div>
                 </div>
             </div>
             <div class="form-group row mt-3">
                 <label for="ncontent" class="col-sm-2 col-form-label">내용</label>
                 <div class="col-sm-10">
-                    <WyswygEditor ref="quill" />
+                    <WyswygEditor ref="quill" @change="validateContent" />
+                    <div id="content_warning" class="text-danger" style="font-size: 13px"></div>
                 </div>
             </div>
             <div class="form-group row mt-3">
@@ -44,15 +52,43 @@ const notice = ref({
 
 const router = useRouter();
 const quill = ref(null);
+function validateTitle() {
+    let flag = true;
+    const title_warning = document.getElementById("title_warning");
+    if (!notice.value.ntitle) {
+        flag = false;
+        title_warning.innerHTML = "공지사항 제목을 입력해 주세요.";
+    } else {
+        flag = true;
+        title_warning.innerHTML = " ";
+    }
+    console.log(flag);
+    return flag;
+}
+function validateContent() {
+    let content = quill.value.getContent().textContent;
+    const content_warning = document.getElementById("content_warning");
+    let flag = true;
+    if (content == "null" || content.replace(/\s/g, "") == "") {
+        flag = false;
+        content_warning.innerHTML = "공지사항 내용을 입력해 주세요.";
+    } else {
+        flag = true;
+        content_warning.innerHTML = " ";
+    }
+    return flag;
+}
 
 function handleCancel() {
     router.back();
 }
 async function handleSubmit() {
-    notice.value.ncontent = quill.value.getContent().innerHTML;
-    const response = await adminAPI.writeNotice(notice.value);
-    console.log("Success:", response.data);
-    router.push("/admin/noticeTable");
+    if (validateTitle() & validateContent()) {
+        notice.value.ncontent = quill.value.getContent().innerHTML;
+        const response = await adminAPI.writeNotice(notice.value);
+        console.log("Success:", response.data);
+        router.push("/admin/noticeTable");
+    }
 }
 </script>
 
