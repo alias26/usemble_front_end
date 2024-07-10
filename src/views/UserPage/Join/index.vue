@@ -53,7 +53,14 @@
                             @change="validateEmail"
                         />
                     </div>
-                    <button type="button" class="btn btn-secondary" id="check-btn" @click="IdCheck">
+
+                    <button
+                        type="button"
+                        :class="idCheckBtn"
+                        :style="idCheckBtnStyle"
+                        id="check-btn"
+                        @click="IdCheck"
+                    >
                         중복 확인
                     </button>
                 </div>
@@ -457,6 +464,8 @@ watch(
 
 // 이미지 미리보기
 function loadThumb() {
+    //이미지 삭제
+    document.getElementById("thumbnail").src = "";
     let flag = true;
     const img_warning = document.getElementById("img_warning");
     const input = document.getElementById("file");
@@ -470,6 +479,7 @@ function loadThumb() {
         flag = true;
     } else {
         img_warning.innerHTML = "프로필 이미지를 설정해주세요.";
+
         flag = false;
     }
     console.log(flag);
@@ -494,6 +504,8 @@ function validateEmail() {
 const emailCheckFlag = ref(false);
 const idCheckResult = ref(null);
 const idWarningClass = ref("text-danger");
+const idCheckBtn = ref("btn btn-secondary");
+const idCheckBtnStyle = ref("opacity = '0.4'");
 async function IdCheck() {
     const response = await memberAPI.idCheck(member.value.mid);
     const id_warning = document.getElementById("id_warning");
@@ -502,14 +514,20 @@ async function IdCheck() {
         emailCheckFlag.value = true;
         id_warning.innerHTML = "사용 가능한 아이디 입니다.";
         idWarningClass.value = "text-success";
+        idCheckBtn.value = "btn btn-dark";
+        idCheckBtnStyle.value = "opacity = '1.0'";
     } else if (idCheckResult.value == 0 && (validateEmail() & true) == false) {
         emailCheckFlag.value = false;
         id_warning.innerHTML = "아이디(메일)형식을 지켜서 입력해주세요.";
         idWarningClass.value = "text-danger";
+        idCheckBtn.value = "btn btn-secondary";
+        idCheckBtnStyle.value = "opacity = '0.4'";
     } else {
         emailCheckFlag.value = false;
         id_warning.innerHTML = "이미 존재하는 아이디 입니다.";
         idWarningClass.value = "text-danger";
+        idCheckBtn.value = "btn btn-secondary";
+        idCheckBtnStyle.value = "opacity = '0.4'";
     }
     console.log(emailCheckFlag.value);
 }
@@ -788,8 +806,6 @@ input::placeholder {
 }
 
 #check-btn {
-    background-color: #b6b3af;
-    opacity: 70%;
     border: none;
     width: 100px;
     height: 50px;

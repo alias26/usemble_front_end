@@ -87,16 +87,20 @@ const pageNo = ref(route.query.pageNo || 1);
 async function getNoticeList(pageNo) {
     try {
         const response = await adminAPI.getNoticeList(pageNo);
-        page.value.notices = response.data.notices;
-        page.value.pager = response.data.pager;
-        //page.value = response.data;
+        if (response.data.notices.length === 0 && pageNo > 1) {
+            const newPageNo = response.data.pager.totalPageNo || 1;
+            changePageNo(newPageNo);
+        } else {
+            page.value.notices = response.data.notices;
+            page.value.pager = response.data.pager;
+        }
     } catch (error) {
         console.log(error);
     }
 }
 
 function formatDate(dateString) {
-    const options = { year: "numeric", month: "long", day: "numeric", weekday: "long" };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("ko-KR", options).format(date);
 }
@@ -120,7 +124,6 @@ async function handleRemove(nno) {
     try {
         await adminAPI.noticeDelete(nno);
         await getNoticeList(pageNo.value);
-        router.push("/admin/NoticeTable");
     } catch (error) {
         console.log(error);
     }
