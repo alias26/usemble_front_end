@@ -21,7 +21,7 @@
         <div>
             <div v-if="new Date(props.application.sdeadline) <= new Date()">
                 <button
-                    v-if="!isReview"
+                    v-if="!props.application.review"
                     class="d-flex btn me-4"
                     id="review-btn"
                     @click="showWriteReviewModal"
@@ -29,7 +29,7 @@
                     리뷰작성
                 </button>
                 <button
-                    v-if="isReview"
+                    v-if="props.application.review"
                     class="d-flex btn me-4"
                     id="review-btn"
                     @click="showUpdateReviewModal"
@@ -54,159 +54,57 @@
                 </button>
             </div>
         </div>
-        <WriteReviewModal
-            v-if="props.application.sno != null"
-            :id="'writeReviewModal' + props.application.sno"
-            @close="hideWriteReviewModal"
-        />
-        <UpdateReviewModal
-            v-if="props.application.sno != null"
-            :id="'updateReviewModal' + props.application.sno"
-            @close="hideUpdateReviewModal"
-        />
-        <DeleteJoinHistoryModal
-            v-if="props.application.sno != null"
-            :id="'deleteJoinHistoryModal' + props.application.sno"
-            @close="hideDeleteJoinHistoryModal"
-            @delete="deleteJoinHistory"
-        />
-        <CancelSocialJoinModal
-            v-if="props.application.sno != null"
-            :id="'cancelSocialJoinModal' + props.application.sno"
-            @close="hideCancelSocialJoinModal"
-            @cancel="cancelSocialJoin"
-        />
     </div>
     <hr class="mx-3" />
 </template>
 <script setup>
-import { Modal } from "bootstrap";
-import WriteReviewModal from "./WriteReviewModal.vue";
-import UpdateReviewModal from "./UpdateReviewModal.vue";
-import DeleteJoinHistoryModal from "./DeleteJoinHistoryModal.vue";
-import CancelSocialJoinModal from "@/components/Social/CancelSocialJoinModal.vue";
 import axios from "axios";
-import socialAPI from "@/apis/socialAPI";
-import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { onMounted, ref, provide } from "vue";
+import { inject } from "vue";
 import reviewAPI from "@/apis/reviewAPI";
 
 const props = defineProps(["application"]);
-const emit = defineEmits(["reload"]);
-const router = useRouter();
+const emit = defineEmits([
+    "reload",
+    "showWriteReviewModal",
+    "showUpdateReviewModal",
+    "showDeleteJoinHistoryModal",
+    "showCancelSocialJoinModal",
+]);
+
 const store = useStore();
-
-let writeReviewModal = null;
-let updateReviewModal = null;
-let deleteJoinHistoryModal = null;
-let cancelSocialJoinModal = null;
-
-const isReview = ref(false);
-
-onMounted(() => {
-    writeReviewModal = new Modal(
-        document.getElementById("writeReviewModal" + props.application.sno)
-    );
-    updateReviewModal = new Modal(
-        document.getElementById("updateReviewModal" + props.application.sno)
-    );
-    deleteJoinHistoryModal = new Modal(
-        document.getElementById("deleteJoinHistoryModal" + props.application.sno)
-    );
-    cancelSocialJoinModal = new Modal(
-        document.getElementById("cancelSocialJoinModal" + props.application.sno)
-    );
-});
-
-function showWriteReviewModal() {
-    writeReviewModal.show();
-}
-
-function hideWriteReviewModal() {
-    writeReviewModal.hide();
-}
-
-function showDeleteJoinHistoryModal() {
-    deleteJoinHistoryModal.show();
-}
-
-function hideDeleteJoinHistoryModal() {
-    deleteJoinHistoryModal.hide();
-}
-
-function showUpdateReviewModal() {
-    updateReviewModal.show();
-}
-
-function hideUpdateReviewModal() {
-    updateReviewModal.hide();
-}
-
-function showCancelSocialJoinModal() {
-    cancelSocialJoinModal.show();
-}
-
-function hideCancelSocialJoinModal() {
-    cancelSocialJoinModal.hide();
-}
-
-async function cancelSocialJoin() {
-    try {
-        await socialAPI.cancelSocialJoin(store.state.mid, props.application.sno);
-        emit("reload");
-        cancelSocialJoinModal.hide();
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-async function deleteJoinHistory() {
-    try {
-        await socialAPI.cancelSocialJoin(review.value.mid, review.value.sno);
-        if (isReview.value) {
-            await reviewAPI.deleteReview(review.value.mid, review.value.sno);
-            isReview.value = !isReview.value;
-        }
-        emit("reload");
-        deleteJoinHistoryModal.hide();
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-async function getIsReview() {
-    try {
-        const response = await reviewAPI.getIsReview(store.state.mid, props.application.sno);
-        isReview.value = response.data.isReview;
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-getIsReview();
-
-const review = ref({
-    mid: store.state.mid,
-    sno: props.application.sno,
-    rcontent: "",
-});
-
-provide("review", review);
-provide("isReview", isReview);
+const selectSno = inject("selectSno");
+const review = inject("review");
 
 async function getReview() {
     try {
-        const response = await reviewAPI.getReview(review.value.mid, review.value.sno);
-        if (response.data.review != null) {
-            review.value.rcontent = response.data.review.rcontent || "";
-        }
+        const response = await reviewAPI.getReview(store.state.mid, selectSno.value);
+        review.value = response.data.review;
     } catch (error) {
         console.log(error);
     }
 }
 
-getReview();
+function showWriteReviewModal() {
+    selectSno.value = props.application.sno;
+    emit("showWriteReviewModal");
+}
+
+function showCancelSocialJoinModal() {
+    selectSno.value = props.application.sno;
+    emit("showCancelSocialJoinModal");
+}
+
+function showDeleteJoinHistoryModal() {
+    selectSno.value = props.application.sno;
+    emit("showDeleteJoinHistoryModal");
+}
+
+function showUpdateReviewModal() {
+    selectSno.value = props.application.sno;
+    getReview();
+    emit("showUpdateReviewModal");
+}
 </script>
 <style scoped>
 img {

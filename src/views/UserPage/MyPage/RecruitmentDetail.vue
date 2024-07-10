@@ -29,56 +29,28 @@
                 v-if="new Date(props.recruitment.sdeadline) > new Date()"
                 class="d-flex btn me-4"
                 id="host-btn"
-                @click="showCancelSocialModal"
+                @click="showSelectRecruitModal()"
             >
                 취소하기
             </button>
         </div>
-        <CancelSocialModal
-            :id="'cancelSocialModal' + props.recruitment.sno"
-            @close="hideCancelSocialModal"
-            @cancel="cancelSocial"
-        />
     </div>
     <hr class="mx-3" />
 </template>
 
 <script setup>
-import { onMounted } from "vue";
-import CancelSocialModal from "@/components/Social/CancelSocialModal.vue";
-import { Modal } from "bootstrap";
 import axios from "axios";
+import { inject } from "vue";
 import { useRouter } from "vue-router";
-import socialAPI from "@/apis/socialAPI";
 
 const props = defineProps(["recruitment"]);
-const emit = defineEmits(["reload"]);
+const emit = defineEmits(["showModal"]);
 const router = useRouter();
+const selectSno = inject("selectSno");
 
-let cancelSocialModal = null;
-
-onMounted(() => {
-    cancelSocialModal = new Modal(
-        document.getElementById("cancelSocialModal" + props.recruitment.sno)
-    );
-});
-
-function showCancelSocialModal() {
-    cancelSocialModal.show();
-}
-
-function hideCancelSocialModal() {
-    cancelSocialModal.hide();
-}
-
-async function cancelSocial() {
-    try {
-        await socialAPI.deleteSocial(props.recruitment.sno);
-        emit("reload");
-        cancelSocialModal.hide();
-    } catch (error) {
-        console.log(error);
-    }
+function showSelectRecruitModal() {
+    selectSno.value = props.recruitment.sno;
+    emit("showModal");
 }
 </script>
 
@@ -109,9 +81,6 @@ img {
     font-size: 13px;
     font-weight: 500;
     color: grey;
-}
-
-#socialprice {
 }
 
 #host-btn {

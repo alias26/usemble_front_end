@@ -131,8 +131,6 @@ const mattach = ref(null);
 const category = ref([]);
 const mcategory = ref([]);
 const mctname = ref([]);
-// const selected = ref([category.value.map((cat) => mcategory.value.includes(cat.ctno))]);
-// const cnt = ref(0);
 
 //유저 프로필 가져오기
 async function getUserProfile(mid) {
@@ -196,7 +194,7 @@ watchEffect(() => {
     }
 });
 
-function updateMcategory(updatedMcategories) {
+async function updateMcategory(updatedMcategories) {
     mcategory.value = updatedMcategories;
     mctname.value = mcategory.value
         .map((mcat) => {
@@ -209,14 +207,7 @@ function updateMcategory(updatedMcategories) {
         mid: store.state.mid,
         ctno: mcat.ctno,
     }));
-    memberAPI
-        .updateMcategory(resultcate)
-        .then(() => {
-            console.log("Mcategory updated successfully");
-        })
-        .catch((error) => {
-            console.error("Error updating Mcategory", error);
-        });
+    await memberAPI.updateMcategory(resultcate);
 }
 
 // 신청한 어셈블 가져오기
@@ -225,7 +216,6 @@ async function getApplyAssemble(mid) {
     try {
         const response = await socialAPI.applyAssemble(mid);
         applyList.value = response.data;
-        console.log(applyList.value);
     } catch (error) {
         console.log(error);
     }

@@ -3,7 +3,7 @@
         <template v-slot:header><span class="header fs-4">리뷰 작성</span></template>
         <template v-slot:body>
             <textarea
-                :id="'rcontent' + review.sno"
+                id="rcontent"
                 class="p-3"
                 placeholder="리뷰를 작성해주세요."
                 v-model="review.rcontent"
@@ -28,18 +28,29 @@
 import ModalTemplate from "@/components/ModalTemplate.vue";
 import { inject, ref } from "vue";
 import reviewAPI from "@/apis/reviewAPI";
+import { useStore } from "vuex";
 
 const emit = defineEmits(["close", "reload"]);
-const review = inject("review");
-const isReview = inject("isReview");
+const selectSno = inject("selectSno");
 const warning = ref(false);
 const warnMessage = ref("");
+
+const store = useStore();
+
+const review = ref({
+    sno: 0,
+    mid: "",
+    rconent: "",
+});
 
 async function writeReview() {
     try {
         if (validateReview()) {
+            review.value.sno = selectSno.value;
+            review.value.mid = store.state.mid;
             await reviewAPI.writeReview(JSON.parse(JSON.stringify(review.value)));
-            isReview.value = !isReview.value;
+            review.value.rcontent = "";
+            emit("reload");
             emit("close");
         }
     } catch (error) {
@@ -51,7 +62,7 @@ function validateReview() {
     const hyperLink = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/gi;
     const reviewCopy = { ...review.value };
 
-    if (reviewCopy.rcontent.replace(/[^a-zA-Z가-힣]/g, "").length == 0) {
+    if (reviewCopy.rcontent.replace(/[^a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "").length == 0) {
         warning.value = true;
         warnMessage.value = "한글 또는 영어를 이용해서 리뷰를 작성해주세요.";
         return false;
@@ -73,6 +84,8 @@ function validateReview() {
 function closeModal() {
     warning.value = false;
     warnMessage.value = "";
+    review.value.rconent = "";
+
     emit("close");
 }
 </script>

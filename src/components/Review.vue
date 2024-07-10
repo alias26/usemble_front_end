@@ -20,70 +20,28 @@
         </div>
         <pre class="review-text">{{ props.review.rcontent }}</pre>
         <hr />
-        <UpdateReviewModal
-            v-if="props.review.sno != null && isReview"
-            :id="'updateReviewModal' + props.review.sno"
-            @close="hideUpdateReviewModal"
-        />
-        <DeleteReviewModal
-            v-if="props.review.sno != null && isReview"
-            :id="'deleteReviewModal' + props.review.sno"
-            @close="hideDeleteReviewModal"
-            @delete="deleteReview"
-        />
     </div>
 </template>
 
 <script setup>
-import { onMounted, provide, ref } from "vue";
-import { Modal } from "bootstrap";
-import UpdateReviewModal from "@/views/UserPage/MyPage/UpdateReviewInReviewModal.vue";
-import reviewAPI from "@/apis/reviewAPI";
-import DeleteReviewModal from "@/views/UserPage/MyPage/DeleteReviewModal.vue";
+import { inject, ref } from "vue";
 
 const props = defineProps(["review", "isReview"]);
-const emit = defineEmits(["reload"]);
+const emit = defineEmits(["showUpdateReviewModal", "showDeleteReviewModal"]);
 
-let updateReviewModal = null;
-let deleteReviewModal = null;
+const selectSno = inject("selectSno", () => 0);
+const review = inject("review");
 const isReview = ref(props.isReview || false);
-provide("review", ref(props.review));
-
-onMounted(() => {
-    if (isReview.value) {
-        updateReviewModal = new Modal(
-            document.getElementById("updateReviewModal" + props.review.sno)
-        );
-        deleteReviewModal = new Modal(
-            document.getElementById("deleteReviewModal" + props.review.sno)
-        );
-    }
-});
 
 function showUpdateReviewModal() {
-    updateReviewModal.show();
-}
-
-function hideUpdateReviewModal() {
-    updateReviewModal.hide();
+    selectSno.value = props.review.sno;
+    review.value = props.review;
+    emit("showUpdateReviewModal");
 }
 
 function showDeleteReviewModal() {
-    deleteReviewModal.show();
-}
-
-function hideDeleteReviewModal() {
-    deleteReviewModal.hide();
-}
-
-async function deleteReview() {
-    try {
-        await reviewAPI.deleteReview(props.review.mid, props.review.sno);
-        emit("reload");
-        hideDeleteReviewModal();
-    } catch (error) {
-        console.log(error);
-    }
+    selectSno.value = props.review.sno;
+    emit("showDeleteReviewModal");
 }
 </script>
 

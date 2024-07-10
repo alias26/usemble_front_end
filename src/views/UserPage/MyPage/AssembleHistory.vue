@@ -42,6 +42,10 @@
                             :key="join.sno"
                             :application="join"
                             @reload="reloadApplication"
+                            @showWriteReviewModal="showWriteReviewModal"
+                            @showUpdateReviewModal="showUpdateReviewModal"
+                            @showDeleteJoinHistoryModal="showDeleteJoinHistoryModal"
+                            @showCancelSocialJoinModal="showCancelSocialJoinModal"
                         />
                     </div>
                     <div v-if="recruit">
@@ -63,7 +67,7 @@
                             v-for="recruitment in recruitHistoryPage.recruitHistory"
                             :key="recruitment.sno"
                             :recruitment="recruitment"
-                            @reload="getRecruitHistoryPage(jPageNo, store.state.mid)"
+                            @showModal="showCancelSocialModal"
                         />
                     </div>
                 </div>
@@ -127,6 +131,31 @@
                 </button>
             </div>
         </div>
+        <CancelSocialModal
+            id="cancelSocialModal"
+            @close="hideCancelSocialModal"
+            @cancel="cancelSocial"
+        />
+        <WriteReviewModal
+            id="writeReviewModal"
+            @close="hideWriteReviewModal"
+            @reload="getJoinHistoryPage(jPageNo, store.state.mid)"
+        />
+        <UpdateReviewModal
+            id="updateReviewModal"
+            @close="hideUpdateReviewModal"
+            @reload="getJoinHistoryPage(jPageNo, store.state.mid)"
+        />
+        <CancelSocialJoinModal
+            id="cancelSocialJoinModal"
+            @close="hideCancelSocialJoinModal"
+            @cancel="cancelSocialJoin"
+        />
+        <DeleteJoinHistoryModal
+            id="deleteJoinHistoryModal"
+            @close="hideDeleteJoinHistoryModal"
+            @delete="deleteJoinHistory"
+        />
     </div>
 </template>
 
@@ -134,9 +163,16 @@
 import socialAPI from "@/apis/socialAPI";
 import ApplicationDetail from "./ApplicationDetail.vue";
 import RecruitmentDedatil from "./RecruitmentDetail.vue";
-import { onMounted, ref, watch } from "vue";
+import CancelSocialModal from "@/components/Social/CancelSocialModal.vue";
+import CancelSocialJoinModal from "@/components/Social/CancelSocialJoinModal.vue";
+import { onMounted, provide, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { Modal } from "bootstrap";
+import DeleteJoinHistoryModal from "./DeleteJoinHistoryModal.vue";
+import reviewAPI from "@/apis/reviewAPI";
+import WriteReviewModal from "./WriteReviewModal.vue";
+import UpdateReviewModal from "./UpdateReviewModal.vue";
 
 // 신청 내역이 활성화 되어 있는 상태
 const apply = ref(true);
@@ -232,6 +268,100 @@ watch(route, (newRoute, oldRoute) => {
         rPageNo.value = 1;
     }
 });
+
+let cancelSocialModal = null;
+let updateReviewModal = null;
+let writeReviewModal = null;
+let cancelSocialJoinModal = null;
+let deleteJoinHistoryModal = null;
+
+const selectSno = ref(0);
+const review = ref({
+    mid: store.state.mid,
+    sno: 0,
+    rcontent: "",
+});
+provide("selectSno", selectSno);
+provide("review", review);
+
+onMounted(() => {
+    cancelSocialModal = new Modal(document.getElementById("cancelSocialModal"));
+    writeReviewModal = new Modal(document.getElementById("writeReviewModal"));
+    updateReviewModal = new Modal(document.getElementById("updateReviewModal"));
+    cancelSocialJoinModal = new Modal(document.getElementById("cancelSocialJoinModal"));
+    deleteJoinHistoryModal = new Modal(document.getElementById("deleteJoinHistoryModal"));
+});
+
+function showCancelSocialModal() {
+    cancelSocialModal.show();
+}
+
+function hideCancelSocialModal() {
+    cancelSocialModal.hide();
+}
+
+function showWriteReviewModal() {
+    writeReviewModal.show();
+}
+
+function hideWriteReviewModal() {
+    writeReviewModal.hide();
+}
+
+function showUpdateReviewModal() {
+    updateReviewModal.show();
+}
+
+function hideUpdateReviewModal() {
+    updateReviewModal.hide();
+}
+
+function showCancelSocialJoinModal() {
+    cancelSocialJoinModal.show();
+}
+
+function hideCancelSocialJoinModal() {
+    cancelSocialJoinModal.hide();
+}
+
+function showDeleteJoinHistoryModal() {
+    deleteJoinHistoryModal.show();
+}
+
+function hideDeleteJoinHistoryModal() {
+    deleteJoinHistoryModal.hide();
+}
+
+async function deleteJoinHistory() {
+    try {
+        await socialAPI.cancelSocialJoin(store.state.mid, selectSno.value);
+        await reviewAPI.deleteReview(store.state.mid, selectSno.value);
+        getJoinHistoryPage(jPageNo.value, store.state.mid);
+        hideDeleteJoinHistoryModal();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function cancelSocialJoin() {
+    try {
+        await socialAPI.cancelSocialJoin(store.state.mid, selectSno.value);
+        getJoinHistoryPage(jPageNo.value, store.state.mid);
+        hideCancelSocialJoinModal();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function cancelSocial() {
+    try {
+        await socialAPI.deleteSocial(selectSno.value);
+        getRecruitHistoryPage(rPageNo.value, store.state.mid);
+        hideCancelSocialModal();
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>
 
 <style scoped>

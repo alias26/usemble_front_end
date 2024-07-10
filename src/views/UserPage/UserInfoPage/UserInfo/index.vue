@@ -252,7 +252,6 @@ async function getRecruitAssemble(mid) {
     try {
         const response = await socialAPI.recruitAssemble(mid);
         recruitList.value = response.data;
-        console.log(recruitList.value);
     } catch (error) {
         console.log(error);
     }
@@ -264,7 +263,6 @@ async function getRecruitedAssemble(mid) {
     try {
         const response = await socialAPI.recruitedAssemble(mid);
         recruitedList.value = response.data;
-        console.log(recruitedList.value);
     } catch (error) {
         console.log(error);
     }

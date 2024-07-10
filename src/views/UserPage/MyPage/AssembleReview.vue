@@ -60,7 +60,8 @@
                             :key="fromMeReview.sno"
                             :isReview="true"
                             :review="fromMeReview"
-                            @reload="reloadLeaveReviewList"
+                            @showUpdateReviewModal="showUpdateReviewModal"
+                            @showDeleteReviewModal="showDeleteReviewModal"
                         />
                     </div>
                 </div>
@@ -124,15 +125,24 @@
                 </button>
             </div>
         </div>
+        <UpdateReviewModal id="updateReviewModal" @close="hideUpdateReviewModal" />
+        <DeleteReviewModal
+            id="deleteReviewModal"
+            @close="hideDeleteReviewModal"
+            @delete="deleteReview"
+        />
     </div>
 </template>
 
 <script setup>
 import reviewAPI from "@/apis/reviewAPI";
 import Review from "@/components/Review.vue";
-import { ref, watch } from "vue";
+import { onMounted, provide, ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
+import DeleteReviewModal from "./DeleteReviewModal.vue";
+import { Modal } from "bootstrap";
+import UpdateReviewModal from "./UpdateReviewInReviewModal.vue";
 
 const store = useStore();
 const route = useRoute();
@@ -227,6 +237,46 @@ watch(route, (newRoute, oldRoute) => {
         rPageNo.value = 1;
     }
 });
+
+let updateReviewModal = null;
+let deleteReviewModal = null;
+
+onMounted(() => {
+    updateReviewModal = new Modal(document.getElementById("updateReviewModal"));
+    deleteReviewModal = new Modal(document.getElementById("deleteReviewModal"));
+});
+
+function showUpdateReviewModal() {
+    updateReviewModal.show();
+}
+
+function hideUpdateReviewModal() {
+    updateReviewModal.hide();
+}
+
+function showDeleteReviewModal() {
+    deleteReviewModal.show();
+}
+
+function hideDeleteReviewModal() {
+    deleteReviewModal.hide();
+}
+
+const selectSno = ref(0);
+provide("selectSno", selectSno);
+
+const review = ref({ sno: 0, rcontent: "", mid: "" });
+provide("review", review);
+
+async function deleteReview() {
+    try {
+        await reviewAPI.deleteReview(store.state.mid, selectSno.value);
+        getLeaveReviewList(lPageNo.value, store.state.mid);
+        hideDeleteReviewModal();
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>
 
 <style scoped>

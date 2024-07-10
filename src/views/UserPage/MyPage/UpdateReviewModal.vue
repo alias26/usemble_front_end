@@ -3,7 +3,7 @@
         <template v-slot:header><span class="header fs-4">리뷰 수정</span></template>
         <template v-slot:body>
             <textarea
-                :id="'rcontent' + review.sno"
+                id="rcontent"
                 class="p-3"
                 placeholder="리뷰를 작성해주세요."
                 v-model="review.rcontent"
@@ -30,17 +30,16 @@ import ModalTemplate from "@/components/ModalTemplate.vue";
 import reviewAPI from "@/apis/reviewAPI";
 import { inject, ref } from "vue";
 
-const emit = defineEmits(["close"]);
-const review = inject("review");
-const isReview = inject("isReview");
+const emit = defineEmits(["close", "reload"]);
 const warning = ref(false);
 const warnMessage = ref("");
+const review = inject("review");
 
 async function deleteReview() {
     try {
         await reviewAPI.deleteReview(review.value.mid, review.value.sno);
         review.value.rcontent = "";
-        isReview.value = !isReview.value;
+        emit("reload");
         emit("close");
     } catch (error) {
         console.log(error);
@@ -62,7 +61,7 @@ function validateReview() {
     const hyperLink = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/gi;
     const reviewCopy = { ...review.value };
 
-    if (reviewCopy.rcontent.replace(/[^a-zA-Z\uAC00-\uD7A3]/g, "").length == 0) {
+    if (reviewCopy.rcontent.replace(/[^a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "").length == 0) {
         warning.value = true;
         warnMessage.value = "한글 또는 영어를 이용해서 리뷰를 작성해주세요.";
         return false;
