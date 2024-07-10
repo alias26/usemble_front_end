@@ -110,6 +110,11 @@ async function handleLike(mid, fmid) {
         return;
     }
 
+    if (store.state.mrole == "ROLE_ADMIN") {
+        alert("관리자는 좋아요를 할 수 없습니다.");
+        return;
+    }
+
     like.value = !like.value;
     const likeEl = document.getElementById("like" + props.idx);
 

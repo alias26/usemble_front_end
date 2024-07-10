@@ -55,7 +55,7 @@
         <div class="card mt-4">
             <div class="card-body review-space">
                 <div class="review-empty" v-if="recruitList.length == 0">
-                    <h5>{{ member.mname}}님이 진행 중인 어셈블</h5>
+                    <h5>{{ member.mname }}님이 진행 중인 어셈블</h5>
                     <span class="review-empty-text">아직 진행 중인 어셈블이 없습니다.</span>
                 </div>
                 <UserSocialList
@@ -70,7 +70,7 @@
         <div class="card mt-4">
             <div class="card-body review-space">
                 <div class="review-empty" v-if="recruitedList.length == 0">
-                    <h5>{{ member.mname}}님이 진행한 어셈블</h5>
+                    <h5>{{ member.mname }}님이 진행한 어셈블</h5>
                     <span class="review-empty-text">아직 진행한 어셈블이 없습니다.</span>
                 </div>
                 <UserSocialList
@@ -217,6 +217,12 @@ async function handleLike(mid, fmid) {
         alert("스스로를 좋아요할 수 없습니다.");
         return;
     }
+
+    if (store.state.mrole == "ROLE_ADMIN") {
+        alert("관리자는 좋아요를 할 수 없습니다.");
+        return;
+    }
+
     like.value = !like.value;
 
     //좋아요 했을 시
