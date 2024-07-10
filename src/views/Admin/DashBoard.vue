@@ -63,13 +63,13 @@
                     <tr style="height: 50px">
                         <th style="width: 40px">번호</th>
                         <th style="width: 100px">내용</th>
-                        <th style="width: 40px">날짜</th>
+                        <th style="width: 100px">날짜</th>
                         <th style="width: 40px">작성자</th>
                     </tr>
                     <tr style="height: 35px" v-for="(review, index) in reviews" :key="index">
                         <td>{{ index + 1 }}</td>
-                        <td>{{ review.rcontent }}</td>
-                        <td>{{ review.rdate }}</td>
+                        <td id="rcontent">{{ review.rcontent }}</td>
+                        <td>{{ formatDate(review.rdate) }}</td>
                         <td>{{ review.mid }}</td>
                     </tr>
                 </table>
@@ -282,5 +282,10 @@ getReview();
 #female {
     font-size: 90px;
     color: #5ace8e;
+}
+#rcontent {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 </style>
