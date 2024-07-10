@@ -81,12 +81,16 @@ function getSearchList(keyword, pageNo) {
     return axios.get("/social/search?", { params: { keyword: keyword, pageNo: pageNo } });
 }
 
-function inprograss(mid, pageNo, ctno, sort) {
-    return axios.get("/social/inprograss?mid=" + mid + "&pageNo=" + pageNo + "&ctno=" + ctno + "&sort=" + sort);
+function inprogress(mid, pageNo, ctno, sort) {
+    return axios.get(
+        "/social/inprogress?mid=" + mid + "&pageNo=" + pageNo + "&ctno=" + ctno + "&sort=" + sort
+    );
 }
 
-function prograssed(mid) {
-    return axios.get("/social/prograssed?mid=" + mid);
+function progressed(mid, pageNo, ctno, sort) {
+    return axios.get(
+        "/social/progressed?mid=" + mid + "&pageNo=" + pageNo + "&ctno=" + ctno + "&sort=" + sort
+    );
 }
 export default {
     writeSocial,
@@ -109,6 +113,6 @@ export default {
     mainCateSocial,
     getSearchList,
     recruitedAssemble,
-    inprograss,
-    prograssed,
+    inprogress,
+    progressed,
 };
