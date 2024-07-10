@@ -81,6 +81,9 @@ function getCategoryName() {
 function getNotices() {
     return axios.get("/admin/getNotice");
 }
+function getReview() {
+    return axios.get("/admin/getReview");
+}
 export default {
     getMemberList,
     getSocialList,
@@ -103,4 +106,5 @@ export default {
     getSocialAll,
     getCategoryName,
     getNotices,
+    getReview,
 };

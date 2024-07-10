@@ -30,7 +30,7 @@ onUnmounted(() => {});
 function loadScript() {
     const script = document.createElement("script");
     script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,drawing,clusterer&autoload=false";
+        "//dapi.kakao.com/v2/maps/sdk.js?appkey=fd22b8373e05aa5aa7768394cefe8b29&libraries=services,drawing,clusterer&autoload=false";
     script.onload = () =>
         window.kakao.maps.load(() => {
             loadMap();

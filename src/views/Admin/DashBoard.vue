@@ -66,39 +66,11 @@
                         <th style="width: 40px">날짜</th>
                         <th style="width: 40px">작성자</th>
                     </tr>
-                    <tr style="height: 35px">
-                        <td>1</td>
-                        <td><RouterLink to="" id="table_title">너무 재밌었어요~</RouterLink></td>
-                        <td>24.06.17</td>
-                        <td>김명환</td>
-                    </tr>
-                    <tr style="height: 35px">
-                        <td>1</td>
-                        <td>
-                            <RouterLink to="" id="table_title"
-                                >다양한 사람들을 볼수 있어요</RouterLink
-                            >
-                        </td>
-                        <td>24.06.17</td>
-                        <td>김명환</td>
-                    </tr>
-                    <tr style="height: 35px">
-                        <td>1</td>
-                        <td>
-                            <RouterLink to="" id="table_title"
-                                >흥미로운 주제 추천합니다.</RouterLink
-                            >
-                        </td>
-                        <td>24.06.17</td>
-                        <td>김명환</td>
-                    </tr>
-                    <tr style="height: 35px">
-                        <td>1</td>
-                        <td>
-                            <RouterLink to="" id="table_title">생각보다 재미 없었어요</RouterLink>
-                        </td>
-                        <td>24.06.17</td>
-                        <td>김명환</td>
+                    <tr style="height: 35px" v-for="(review, index) in reviews" :key="index">
+                        <td>{{ index + 1 }}</td>
+                        <td>{{ review.rcontent }}</td>
+                        <td>{{ review.rdate }}</td>
+                        <td>{{ review.mid }}</td>
                     </tr>
                 </table>
             </div>
@@ -138,6 +110,7 @@ const cate = ref([0, 0, 0, 0, 0]);
 const per = ref([0, 0, 0, 0, 0]);
 const cts = ref([]);
 const notices = ref([]);
+const reviews = ref([]);
 async function getMemberAll() {
     const response = await adminAPI.getMemberAll();
     member.value = response.data;
@@ -173,6 +146,11 @@ async function getNotice() {
     const response = await adminAPI.getNotices();
     notices.value = response.data;
 }
+async function getReview() {
+    const response = await adminAPI.getReview();
+    reviews.value = response.data;
+    console.log(reviews.value);
+}
 
 getMemberAll();
 getSocialAll();
@@ -183,6 +161,7 @@ function formatDate(dateString) {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("ko-KR", options).format(date);
 }
+getReview();
 </script>
 <style scoped>
 #dash {

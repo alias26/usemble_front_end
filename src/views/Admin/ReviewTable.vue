@@ -85,6 +85,8 @@ async function getReviewList(pageNo) {
         const response = await adminAPI.getReviewList(pageNo);
         page.value.reviews = response.data.reviews;
         page.value.pager = response.data.pager;
+        console.log(page.value.reviews);
+        //page.value = response.data;
     } catch (error) {
         console.log(error);
     }
@@ -111,7 +113,6 @@ watch(route, (newRoute, oldRoute) => {
         pageNo.value = 1;
     }
 });
-
 getReviewList(pageNo.value);
 
 let reviewModal = null;
@@ -143,5 +144,19 @@ img {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 200px; /* Adjust the max-width as needed */
+}
+
+.btn-success {
+    /* 기본 버튼 스타일 */
+    background-color: #227e36;
+    border-color: #218838;
+    color: white;
+}
+
+.btn-danger {
+    /* 기본 버튼 스타일 */
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
 }
 </style>
