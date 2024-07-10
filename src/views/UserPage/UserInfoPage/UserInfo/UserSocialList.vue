@@ -1,5 +1,5 @@
 <template>
-    <div class="card mt-4">
+    <div>
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <h5>{{ title }}</h5>

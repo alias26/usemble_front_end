@@ -52,18 +52,36 @@
                 </div>
             </div>
         </div>
-        <UserSocialList
-            v-if="recruitList.length != 0"
-            :title="member.mname + '님이 진행 중인 어셈블'"
-            :link="`/user/recruit?mid=${member.mid}`"
-            :socials="recruitList"
-        />
-        <UserSocialList
-            v-if="recruitedList.length != 0"
-            :title="member.mname + '님이 진행한 어셈블'"
-            :link="`/user/recruited?mid=${member.mid}`"
-            :socials="recruitedList"
-        />
+        <div class="card mt-4">
+            <div class="card-body review-space">
+                <div class="review-empty" v-if="recruitList.length == 0">
+                    <h5>{{ member.mname}}님이 진행 중인 어셈블</h5>
+                    <span class="review-empty-text">아직 진행 중인 어셈블이 없습니다.</span>
+                </div>
+                <UserSocialList
+                    v-if="recruitList.length != 0"
+                    :title="member.mname + '님이 진행 중인 어셈블'"
+                    :link="`/user/recruit?mid=${member.mid}`"
+                    :socials="recruitList"
+                />
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body review-space">
+                <div class="review-empty" v-if="recruitedList.length == 0">
+                    <h5>{{ member.mname}}님이 진행한 어셈블</h5>
+                    <span class="review-empty-text">아직 진행한 어셈블이 없습니다.</span>
+                </div>
+                <UserSocialList
+                    v-if="recruitedList.length != 0"
+                    :title="member.mname + '님이 진행한 어셈블'"
+                    :link="`/user/recruited?mid=${member.mid}`"
+                    :socials="recruitedList"
+                />
+            </div>
+        </div>
+
         <div class="card mt-4">
             <div class="card-body review-space">
                 <h5>함께한 분들의 후기 {{ member.reviewCnt }}</h5>
