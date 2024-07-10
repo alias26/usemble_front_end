@@ -30,7 +30,7 @@ const props = defineProps(["review", "isReview"]);
 const emit = defineEmits(["showUpdateReviewModal", "showDeleteReviewModal"]);
 
 const selectSno = inject("selectSno", () => 0);
-const review = inject("review");
+const review = inject("review", () => {});
 const isReview = ref(props.isReview || false);
 
 function showUpdateReviewModal() {
