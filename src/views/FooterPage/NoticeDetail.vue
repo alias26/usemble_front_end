@@ -2,12 +2,12 @@
     <div class="mt-5 ms-auto me-auto" style="width: 70%">
         <span class="headline">공지사항</span>
         <div class="notice-detail-title">
-            <div class="notice-detail-name mb-2">{{ noticeDetail.ntitle }}</div>
-            <div class="notice-detail-date mb-2">{{ noticeDetail.ndate }}</div>
+            <div class="notice-detail-name mb-2">{{ notice.ntitle }}</div>
+            <div class="notice-detail-date">
+                {{ new Date(notice.ndate).toLocaleDateString() }}
+            </div>
         </div>
-        <div class="notice-detail-content">
-            <span>{{ noticeDetail.ncontent }}</span>
-        </div>
+        <div class="notice-detail-content" id="noticeContent"></div>
         <div class="d-flex justify-content-center mt-5">
             <button @click="goNoticeList" class="rounded listbtn">목록으로</button>
         </div>
@@ -15,27 +15,34 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
+import commonAPI from "@/apis/commonAPI";
 
+//상태 정의
+const route = useRoute();
 const router = useRouter();
+const notice = ref({});
 
 function goNoticeList() {
     router.back();
 }
 
-function getNoticeDetail() {
-    const noticeDetail = ref({
-        nno: "1",
-        ntitle: "남의집 착한 수수료정책 (3월시행)",
-        ndate: "2023년 02월 02일 (목)",
-        ncontent: "수수료 정책",
-    });
-
-    return noticeDetail;
+// 공지사항 세부 내용을 불러오는 함수
+async function getNoticeDetail(nno) {
+    try {
+        const response = await commonAPI.getNoticeDetail(nno);
+        notice.value = response.data;
+        document.getElementById("noticeContent").innerHTML = notice.value.ncontent;
+    } catch (error) {
+        console.error(error);
+    }
 }
 
-const noticeDetail = getNoticeDetail();
+// 컴포넌트가 마운트될 때 실행
+const nno = route.query.nno; // URL 파라미터에서 nno 가져오기
+
+getNoticeDetail(nno); // 해당 nno에 해당하는 공지사항 세부 내용 불러오기
 </script>
 
 <style scoped>

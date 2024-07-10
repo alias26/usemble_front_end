@@ -5,49 +5,106 @@
             <span class="headline">새로운 어셈블 소식을 확인해보세요.</span>
         </div>
         <div class="notice-container">
-            <div v-for="(notice, index) in noticeList" :key="index">
+            <div v-for="(notice, index) in page.noticeList" :key="notice.nno">
                 <RouterLink
                     v-if="index === 0"
                     class="notice-item pinned no-underline"
-                    to="/notice/detail"
+                    :to="`/notice/detail?nno=${notice.nno}`"
                 >
                     <div class="notice-item-title">{{ notice.ntitle }}</div>
-                    <div class="notice-item-date">{{ notice.ndate }}</div>
+                    <div class="notice-item-date">
+                        {{ new Date(notice.ndate).toLocaleDateString() }}
+                    </div>
                 </RouterLink>
-                <RouterLink v-else class="notice-item no-underline" to="/notice/detail">
+                <RouterLink
+                    v-else
+                    class="notice-item no-underline"
+                    :to="`/notice/detail?nno=${notice.nno}`"
+                >
                     <div class="notice-item-title">{{ notice.ntitle }}</div>
-                    <div class="notice-item-date">{{ notice.ndate }}</div>
+                    <div class="notice-item-date">
+                        {{ new Date(notice.ndate).toLocaleDateString() }}
+                    </div>
                 </RouterLink>
+            </div>
+            <div v-if="page.noticeList.length != 0" class="d-flex justify-content-center mt-4">
+                <button
+                    v-if="page.pager.startPageNo > 1"
+                    class="btn page-btn btn-sm me-1"
+                    @click="changePageNo(page.pager.startPageNo - 1)"
+                >
+                    이전
+                </button>
+                <button
+                    v-for="pageNo in page.pager.pageArray"
+                    :key="pageNo"
+                    :class="page.pager.pageNo == pageNo ? 'cur-page' : ''"
+                    class="btn page-btn btn-sm me-1"
+                    @click="changePageNo(pageNo)"
+                >
+                    {{ pageNo }}
+                </button>
+                <button
+                    v-if="page.pager.groupNo < page.pager.totalGroupNo"
+                    class="btn page-btn btn-sm me-1"
+                    @click="changePageNo(page.pager.endPageNo + 1)"
+                >
+                    다음
+                </button>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import commonAPI from "@/apis/commonAPI";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 
-function getNoticeList() {
-    const noticeList = ref([
-        {
-            nno: "1",
-            ntitle: "어셈블 착한 수수료정책 (3월시행)",
-            ndate: "2023년 02월 02일 (목)",
-        },
-        {
-            nno: "2",
-            ntitle: "공지사항 1",
-            ndate: "2023년 02월 02일 (목)",
-        },
-        {
-            nno: "3",
-            ntitle: "공지사항 2",
-            ndate: "2023년 02월 02일 (목)",
-        },
-    ]);
-    return noticeList;
+const route = useRoute();
+const router = useRouter();
+
+const pageNo = ref(route.query.pageNo || 1);
+const page = ref({
+    noticeList: [],
+    pager: {},
+});
+
+async function getNoticeList(pageNo) {
+    try {
+        const response = await commonAPI.getNoticeList(pageNo);
+        page.value.noticeList = response.data.noticeList;
+        page.value.pager = response.data.pager;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-const noticeList = getNoticeList();
+getNoticeList(pageNo.value);
+
+function changePageNo(pageNo) {
+    router.replace({
+        query: { pageNo: pageNo },
+    });
+}
+
+const store = useStore();
+
+watch(
+    () => route.query.pageNo,
+    (newPageNo, oldPageNo) => {
+        if (store.state.activeWatch) {
+            if (newPageNo) {
+                getNoticeList(newPageNo);
+                pageNo.value = newPageNo;
+            } else {
+                getNoticeList(1);
+                pageNo.value = 1;
+            }
+        }
+    }
+);
 </script>
 
 <style scoped>
@@ -90,5 +147,20 @@ h4 {
 
 .no-underline {
     text-decoration: none;
+}
+
+.cur-page {
+    font-weight: 800;
+    color: #558ccf;
+}
+
+.page-btn {
+    border: none;
+    outline: none;
+}
+
+.cur-page:focus {
+    border: none;
+    outline: none;
 }
 </style>
