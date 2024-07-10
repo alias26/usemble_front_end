@@ -10,7 +10,7 @@ function getNoticeList(pageNo) {
 }
 
 function getNoticeDetail(nno) {
-    return axios.get("/notice/detail/" + nno);
+    return axios.get("/notice/read/" + nno);
 }
 
 export default {
