@@ -85,7 +85,7 @@ function handleCancel() {
 async function handleSubmit() {
     if (validateTitle() & validateContent()) {
         notice.value.ncontent = quill.value.getContent().innerHTML;
-        const response = await adminAPI.writeNotice(notice.value);
+        const response = await adminAPI.writeNotice(JSON.parse(JSON.stringify(notice.value)));
         console.log("Success:", response.data);
         router.push("/admin/noticeTable");
     }
