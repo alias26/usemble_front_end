@@ -87,7 +87,7 @@
                         </RouterLink>
                     </div>
                 </div>
-                <div class="d-flex row">
+                <div class="d-flex row" v-if="applyList.length != 0">
                     <SocialCard
                         class="me-3 col-4"
                         id="social-card"
@@ -95,6 +95,11 @@
                         :key="index"
                         :social="social"
                     />
+                </div>
+                <div class="d-flex row" v-if="applyList.length == 0">
+                    <div class="apply-empty">
+                        <div>아직 신청한 어셈블이 없으시네요!</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,7 +114,7 @@ import { Modal } from "bootstrap";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
 import socialAPI from "@/apis/socialAPI";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps(["socials"]);
 
@@ -118,6 +123,11 @@ onMounted(() => {
 });
 
 const route = useRoute();
+const router = useRouter();
+
+function goAssembleList() {
+    router.push("../../list")
+}
 
 let categoryModal = null;
 
@@ -267,5 +277,15 @@ p {
 
 #update-btn:hover {
     color: black;
+}
+
+.apply-empty {
+    padding: 100px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.btn-outline-secondary:hover {
+    background-color: white
 }
 </style>
