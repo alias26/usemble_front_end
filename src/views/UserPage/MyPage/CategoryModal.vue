@@ -24,6 +24,7 @@
                     </div>
                 </div>
             </div>
+            <div id="cate_warning" class="text-danger" style="font-size: 13px"></div>
         </template>
 
         <template v-slot:footer>
@@ -120,9 +121,15 @@ watch(
 );
 
 function confirmSelection() {
+    const cate_warning = document.getElementById("cate_warning");
     const selectedCategories = modalCategory.value.filter((cat, index) => selected.value[index]);
-    emit("change", selectedCategories);
-    emit("close");
+    if (selectedCategories.length != 0) {
+        emit("change", selectedCategories);
+        emit("close");
+        cate_warning.innerHTML = "";
+    } else {
+        cate_warning.innerHTML = "취향에 맞는 카테고리를 최소 1개 이상 골라주세요.";
+    }
 }
 </script>
 
