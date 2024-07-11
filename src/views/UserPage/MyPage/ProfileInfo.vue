@@ -23,7 +23,7 @@
 
             <div class="d-flex">
                 <img id="proimg" alt="" :src="mattach" />
-                <div class="d-flex flex-column mb-2 ps-4" style="width: 100%">
+                <div class="d-flex flex-column mb-2 ps-4" style="width: 80%">
                     <div class="d-flex">
                         <div class="d-flex me-1" v-for="ctname in mctname" :key="ctname">
                             <div class="me-1 rounded-pill fw-bold" id="ct-btn">{{ ctname }}</div>
