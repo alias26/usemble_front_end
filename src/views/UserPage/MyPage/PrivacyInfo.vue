@@ -320,7 +320,9 @@ async function updatePrivacy() {
     //바뀐 전화번호 Concat
     if ((validateAccount() & validateBank() & validatePhone1()) == true) {
         member.value.mphone = mphone1.value + mphone2.value + mphone3.value;
-        await memberAPI.updatePrivacy(JSON.parse(JSON.stringify(member.value)));
+        await memberAPI
+            .updatePrivacy(JSON.parse(JSON.stringify(member.value)))
+            .then(() => alert("회원정보 수정이 완료되었습니다."));
     }
 }
 
