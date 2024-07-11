@@ -48,7 +48,7 @@
 import socialAPI from "@/apis/socialAPI";
 import SocialCard from "@/components/Social/SocialCard.vue";
 import SocialHeader from "@/components/Social/SocialHeader.vue";
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 
@@ -58,6 +58,7 @@ const router = useRouter();
 const pageNo = ref(route.query.pageNo || 1);
 const ctno = ref(route.query.ctno || 0);
 const sort = ref(route.query.sort || null);
+const isChangedPageNo = ref(false);
 
 const page = ref({
     socialList: [],
@@ -74,9 +75,12 @@ async function getSocialList(pageNo, ctno, sort) {
     }
 }
 
-getSocialList(pageNo.value, ctno.value, sort.value);
+onMounted(() => {
+    getSocialList(pageNo.value, ctno.value, sort.value);
+});
 
 function changePageNo(pageNo) {
+    isChangedPageNo.value = true;
     router.replace({
         query: { pageNo: pageNo, ctno: route.query.ctno, sort: route.query.sort },
     });
@@ -100,12 +104,15 @@ watch(
     () => route.query.pageNo,
     (newPageNo, oldPageNo) => {
         if (store.state.activeWatch) {
-            if (newPageNo) {
-                getSocialList(newPageNo, ctno.value, sort.value);
-                pageNo.value = newPageNo;
-            } else {
-                getSocialList(1, ctno.value, sort.value);
-                pageNo.value = 1;
+            if (isChangedPageNo.value == true) {
+                if (newPageNo) {
+                    getSocialList(newPageNo, ctno.value, sort.value);
+                    pageNo.value = newPageNo;
+                } else {
+                    getSocialList(1, ctno.value, sort.value);
+                    pageNo.value = 1;
+                }
+                isChangedPageNo.value = false;
             }
         }
     }

@@ -70,6 +70,8 @@ async function getMember(mid) {
     }
 }
 
+const isChangedPageNo = ref(false);
+
 getMember(route.query.mid);
 
 // 마감한 어셈블 전체 가져오기
@@ -96,6 +98,7 @@ async function getRecuited(mid, pageNo, ctno, sort) {
 getRecuited(mid.value, pageNo.value, ctno.value, sort.value);
 
 function changePageNo(pageNo) {
+    isChangedPageNo.value = true;
     router.replace({
         query: {
             mid: route.query.mid,
@@ -123,12 +126,15 @@ watch(
     () => route.query.pageNo,
     (newPageNo, oldPageNo) => {
         if (store.state.activeWatch) {
-            if (newPageNo) {
-                getRecuited(mid.value, newPageNo, ctno.value, sort.value);
-                pageNo.value = newPageNo;
-            } else {
-                getRecuited(mid.value, 1, ctno.value, sort.value);
-                pageNo.value = 1;
+            if (isChangedPageNo.value == true) {
+                if (newPageNo) {
+                    getRecuited(mid.value, newPageNo, ctno.value, sort.value);
+                    pageNo.value = newPageNo;
+                } else {
+                    getRecuited(mid.value, 1, ctno.value, sort.value);
+                    pageNo.value = 1;
+                }
+                isChangedPageNo.value = false;
             }
         }
     }

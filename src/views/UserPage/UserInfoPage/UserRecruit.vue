@@ -48,7 +48,7 @@
 <script setup>
 import SocialCard from "@/components/Social/SocialCard.vue";
 import SocialHeader from "@/components/Social/SocialHeader.vue";
-import {  ref, watch } from "vue";
+import { ref, watch } from "vue";
 import socialAPI from "@/apis/socialAPI";
 import { useRoute, useRouter } from "vue-router";
 import memberAPI from "@/apis/memberAPI";
@@ -56,6 +56,7 @@ import { useStore } from "vuex";
 
 const route = useRoute();
 const router = useRouter();
+const isChangedPageNo = ref(false);
 
 // 쿼리스트링으로 받은 mid로 mname 받기
 const member = ref({
@@ -97,6 +98,7 @@ async function getRecruit(mid, pageNo, ctno, sort) {
 getRecruit(mid.value, pageNo.value, ctno.value, sort.value);
 
 function changePageNo(pageNo) {
+    isChangedPageNo.value = true;
     router.replace({
         query: {
             mid: route.query.mid,
@@ -134,12 +136,15 @@ watch(
     () => route.query.pageNo,
     (newPageNo, oldPageNo) => {
         if (store.state.activeWatch) {
-            if (newPageNo) {
-                getRecruit(mid.value, newPageNo, ctno.value, sort.value);
-                pageNo.value = newPageNo;
-            } else {
-                getRecruit(mid.value, 1, ctno.value, sort.value);
-                pageNo.value = 1;
+            if (isChangedPageNo.value) {
+                if (newPageNo) {
+                    getRecruit(mid.value, newPageNo, ctno.value, sort.value);
+                    pageNo.value = newPageNo;
+                } else {
+                    getRecruit(mid.value, 1, ctno.value, sort.value);
+                    pageNo.value = 1;
+                }
+                isChangedPageNo.value = false;
             }
         }
     }
