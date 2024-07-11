@@ -88,11 +88,7 @@
                                 취소하기
                             </button>
                             <button
-                                v-if="
-                                    isDeadline ||
-                                    social.sstatus == 'cancel' ||
-                                    social.sstatus == 'delete'
-                                "
+                                v-if="isDeadline || social.sstatus == 'cancel'"
                                 id="btn_us"
                                 class="btn mb-3"
                                 disabled
@@ -101,8 +97,21 @@
                             </button>
                         </div>
                         <div id="usbtn" v-if="$store.state.mrole == 'ROLE_ADMIN'">
-                            <button id="btn_us" class="btn mb-3" @click="cancelSocialAdmin">
+                            <button
+                                id="btn_us"
+                                class="btn mb-3"
+                                v-if="social.sstatus != 'cancel'"
+                                @click="cancelSocialAdmin(social.sno)"
+                            >
                                 취소하기
+                            </button>
+                            <button
+                                id="btn_us"
+                                class="btn mb-3"
+                                v-if="social.sstatus == 'cancel'"
+                                disabled
+                            >
+                                이미 취소된 어셈블입니다.
                             </button>
                         </div>
                     </div>
@@ -296,7 +305,7 @@ async function cancelSocialJoin() {
     } catch (error) {
         console.log(error);
     }
-    router.push("/");
+    router.go();
 }
 
 async function cancelSocial() {
@@ -306,7 +315,7 @@ async function cancelSocial() {
     } catch (error) {
         console.log(error);
     }
-    router.push("/");
+    router.go();
 }
 
 async function cancelSocialAdmin(sno) {
@@ -315,6 +324,7 @@ async function cancelSocialAdmin(sno) {
     } catch (error) {
         console.log(error);
     }
+    router.go();
 }
 </script>
 
