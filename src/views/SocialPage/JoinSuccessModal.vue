@@ -9,7 +9,7 @@
             <div><h5>성공적으로 어셈블에 참여했습니다!</h5></div>
         </template>
         <template v-slot:footer>
-            <button class="btn" @click="goUrlHome" data-bs-dismiss="modal">닫기</button>
+            <button class="btn" @click="goUrlBack" data-bs-dismiss="modal">닫기</button>
         </template>
     </ModalTemplate>
 </template>
@@ -21,9 +21,9 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const emit = defineEmits(["close"]);
 
-function goUrlHome() {
+function goUrlBack() {
     emit("close");
-    router.push("/");
+    router.back();
 }
 </script>
 
