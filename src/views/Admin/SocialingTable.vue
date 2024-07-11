@@ -31,10 +31,17 @@
                 <td @click="detailmember(social.mid)">{{ social.mid }}</td>
                 <td>{{ formatDate(social.swriteDate) }}</td>
                 <td>
-                    <button class="btn btn-sm me-1" @click="changeStatus(social)">
-                        <!-- social.sstatus 값에 따라 버튼 텍스트 변경 -->
-                        {{ social.sstatus === "cancel" ? "취소" : "취소 가능" }}
-                    </button>
+                    <div>
+                        <button
+                            class="btn btn-sm me-1"
+                            @click="changeStatus(social)"
+                            :class="social.sstatus === 'cancel' ? 'btn-danger' : 'btn-success'"
+                            :disabled="social.sstatus === 'cancel'"
+                        >
+                            <!-- social.sstatus 값에 따라 버튼 텍스트 변경 -->
+                            {{ social.sstatus === "cancel" ? "취소" : "취소 가능" }}
+                        </button>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -97,7 +104,7 @@ async function getSocialList(pageNo) {
     }
 }
 function formatDate(dateString) {
-    const options = { year: "numeric", month: "long", day: "numeric", weekday: "long" };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("ko-KR", options).format(date);
 }

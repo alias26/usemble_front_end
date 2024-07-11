@@ -1,9 +1,15 @@
 <template>
-    <div class="mb-5" id="dash">
+    <div id="dash">
+        <div class="mx-auto">
+            <img class="me-4" style="width: 150px" src="../../assets/logo.png" alt="" />
+        </div>
         <div class="d-flex justify-content-center mt-5">
             <div id="box">
-                <div class="d-flex" id="member_left">
+                <div class="d-flex justify-content-between" id="member_left">
                     <span id="membertxt">회원</span>
+                    <RouterLink id="link" class="mt-2 me-2" to="/admin/memberTable"
+                        ><span>더보기</span></RouterLink
+                    >
                 </div>
                 <div id="box_content" class="d-flex justify-content-evenly">
                     <div class="d-flex flex-column" style="text-align: center">
@@ -21,8 +27,11 @@
                 </div>
             </div>
             <div id="box">
-                <div class="d-flex" id="social_left">
+                <div class="d-flex justify-content-between" id="social_left">
                     <span id="socialtxt">소셜링</span>
+                    <RouterLink id="link" class="mt-2 me-2" to="/admin/socialingTable"
+                        ><span>더보기</span></RouterLink
+                    >
                 </div>
                 <div id="box_content">
                     <div class="d-flex">
@@ -56,8 +65,11 @@
         </div>
         <div class="d-flex justify-content-center mt-5">
             <div id="box">
-                <div class="d-flex">
+                <div class="d-flex justify-content-between">
                     <span id="socialtxt">리뷰</span>
+                    <RouterLink id="link" class="mt-2 me-2" to="/admin/reviewTable"
+                        ><span>더보기</span></RouterLink
+                    >
                 </div>
                 <table class="table table-bordered text-center">
                     <tr style="height: 50px">
@@ -75,8 +87,11 @@
                 </table>
             </div>
             <div id="box">
-                <div class="d-flex">
+                <div class="d-flex justify-content-between">
                     <span id="socialtxt">공지사항</span>
+                    <RouterLink id="link" class="mt-2 me-2" to="/admin/noticeTable"
+                        ><span>더보기</span></RouterLink
+                    >
                 </div>
                 <div>
                     <table class="table table-bordered text-center">
@@ -166,9 +181,14 @@ getReview();
 </script>
 
 <style scoped>
+#link {
+    text-decoration: none;
+    color: #afaeae;
+}
 #dash {
     display: flex;
     flex-direction: column;
+    padding-top: 20px;
 }
 #box {
     width: 50%;
@@ -180,9 +200,10 @@ getReview();
 
 #membertxt {
     color: #558ccf;
-    font-size: 35px;
+    font-size: 27px;
     font-weight: 900;
     margin-left: 10px;
+    padding-left: 5px;
 }
 #membercnt {
     color: black;
@@ -195,37 +216,14 @@ getReview();
     display: flex;
 }
 
-#circle_grp {
-    width: 50%;
-    display: flex;
-}
-#pie {
-    display: inline-block;
-    width: 180px;
-    height: 180px;
-    margin: 0 auto;
-    background: conic-gradient(#4f98ff 0% 65%, #5ace8e 65% 100%);
-    border-radius: 50%;
-}
-#pie2 {
-    display: inline-block;
-    width: 180px;
-    height: 180px;
-    margin: 0 auto;
-    background: conic-gradient(
-        #6f4fff 0% 10%,
-        #4f98ff 10% 50%,
-        #e76fff 50% 80%,
-        #5ace8e 80% 95%,
-        #e5ff72 95% 100%
-    );
-    border-radius: 50%;
-}
+
+
 #socialtxt {
     color: #558ccf;
-    font-size: 35px;
+    font-size: 27px;
     font-weight: 900;
     margin-left: 10px;
+    padding-left: 5px;
 }
 #socialcnt {
     color: black;

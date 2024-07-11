@@ -80,6 +80,7 @@
                                 <button
                                     class="btn btn-sm btn-danger"
                                     @click="cancelSocial(social.sno)"
+                                    :disabled="social.sstatus === 'cancel'"
                                 >
                                     취소
                                 </button>
