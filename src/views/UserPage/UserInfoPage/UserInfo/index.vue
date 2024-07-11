@@ -233,8 +233,10 @@ async function handleLike(mid, fmid) {
     //좋아요 했을 시
     if (like.value) {
         const response = await memberAPI.insertLike(mid, fmid);
+        getLikeCnt(fmid);
     } else {
         const response = await memberAPI.deleteLike(mid, fmid);
+        getLikeCnt(fmid);
     }
 }
 
@@ -409,7 +411,7 @@ h5 {
 }
 
 .review-space {
-    padding: 16px
+    padding: 16px;
 }
 
 .review-empty {
