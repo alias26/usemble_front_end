@@ -409,6 +409,7 @@ h5 {
 }
 
 .review-space {
+    padding: 16px
 }
 
 .review-empty {

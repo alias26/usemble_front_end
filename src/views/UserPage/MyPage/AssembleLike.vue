@@ -18,7 +18,7 @@
                 <div class="hr"></div>
                 <div class="text-secondary">
                     <div class="like-empty" v-if="likeList.mids.length == 0">
-                        <div>관심 있는 호스트를 찾아보세요.</div>
+                        <div class="mb-4">관심 있는 호스트를 찾아보세요.</div>
                         <button
                             class="p-3 bg-black text-white rounded-1 fw-bold"
                             style="font-size: 14px; border: none"

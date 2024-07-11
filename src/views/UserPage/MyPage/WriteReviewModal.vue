@@ -105,6 +105,6 @@ textarea {
 
 .btn-delete {
     color: white;
-    background-color: rgb(254, 100, 100);
+    background-color: #57b17f;
 }
 </style>
