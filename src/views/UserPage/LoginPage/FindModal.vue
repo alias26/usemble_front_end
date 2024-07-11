@@ -33,7 +33,6 @@
 
 <script setup>
 import ModalTemplate from "@/components/ModalTemplate.vue";
-import FindPassword from "./FindPassword.vue";
 import { useRouter } from "vue-router";
 
 const props = defineProps(["mpassword"]);

@@ -104,7 +104,7 @@
 <script setup>
 import SocialCard from "@/components/Social/SocialCard.vue";
 import CategoryModal from "./CategoryModal.vue";
-import { onMounted, ref, watchEffect, watch } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import { Modal } from "bootstrap";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";

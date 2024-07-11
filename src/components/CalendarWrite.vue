@@ -14,9 +14,8 @@
     </div>
 </template>
 <script setup>
-// import { ref } from "vue";
 import "v-calendar/style.css";
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 
 const selectedDate = ref(null);
 

@@ -16,7 +16,7 @@
 
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import commonAPI from "@/apis/commonAPI";
 
 //상태 정의

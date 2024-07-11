@@ -30,8 +30,6 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
 import memberAPI from "@/apis/memberAPI";
 import FindModal from "./FindModal.vue";

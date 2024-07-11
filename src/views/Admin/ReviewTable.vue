@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-import { onMounted, provide, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import adminAPI from "@/apis/adminAPI";
 import { useRoute, useRouter } from "vue-router";
 import ReviewModal from "./ReviewModal.vue";

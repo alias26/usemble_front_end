@@ -101,6 +101,7 @@
 <script setup>
 import adminAPI from "@/apis/adminAPI";
 import { ref } from "vue";
+
 const all = ref(0);
 const male = ref(0);
 const female = ref(0);
@@ -163,6 +164,7 @@ function formatDate(dateString) {
 }
 getReview();
 </script>
+
 <style scoped>
 #dash {
     display: flex;
@@ -175,8 +177,7 @@ getReview();
     margin-right: 20px;
     border: solid;
 }
-#box_content {
-}
+
 #membertxt {
     color: #558ccf;
     font-size: 35px;
@@ -193,8 +194,7 @@ getReview();
 #bar_grp {
     display: flex;
 }
-#bar_content {
-}
+
 #circle_grp {
     width: 50%;
     display: flex;

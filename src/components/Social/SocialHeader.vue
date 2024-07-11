@@ -42,7 +42,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 
 const props = defineProps(["title"]);
 const emit = defineEmits(["handleCategory", "handleSort"]);

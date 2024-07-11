@@ -14,7 +14,6 @@
 
 <script setup>
 import SocialCard from "@/components/Social/SocialCard.vue";
-import { defineProps } from "vue";
 
 const prop = defineProps(["searchList"]);
 </script>

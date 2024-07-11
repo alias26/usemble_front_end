@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import Quill from "quill";
 import commonAPI from "@/apis/commonAPI";
 import axios from "axios";

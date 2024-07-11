@@ -44,11 +44,11 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
-
+import { ref } from "vue";
 import adminAPI from "@/apis/adminAPI";
 import WyswygEditor from "@/components/WyswygEditor.vue";
 import { useRouter, useRoute } from "vue-router";
+
 const route = useRoute();
 const router = useRouter();
 

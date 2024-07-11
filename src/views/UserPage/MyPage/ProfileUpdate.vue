@@ -46,7 +46,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import memberAPI from "@/apis/memberAPI";
 import router from "@/router";
