@@ -28,7 +28,9 @@
                             placeholder="예) OOO에서 그래픽 디자이너로 일하고 있습니다. 일상의 무료함을 달래며 영감을 얻기 위해 어셈블을 시작하게 됐어요! 좋은 분들을 만나 즐거운 시간을 보낼 수 있었으면 좋겠습니다."
                             v-model="member.mintroduce"
                             @change="validateIntroduce"
+                            @input="limitText"
                         />
+                        <div>{{ member.mintroduce.length }}/500</div>
                     </div>
                     <div
                         id="intro_warning"
@@ -56,6 +58,12 @@ const member = ref({
     mid: "",
     mintroduce: "",
 });
+
+const limitText = () => {
+    if (member.value.mintroduce.length > 500) {
+        member.value.mintroduce = member.value.mintroduce.slice(0, 500);
+    }
+};
 
 //유저 프로필 가져오기
 async function getUserProfile(mid) {

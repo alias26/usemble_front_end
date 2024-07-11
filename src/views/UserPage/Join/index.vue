@@ -36,8 +36,10 @@
                         placeholder="예) OOO에서 그래픽 디자이너로 일하고 있습니다. 일상의 무료함을 달래며 영감을 얻기 위해 어셈블을 시작하게 됐어요! 좋은 분들을 만나 즐거운 시간을 보낼 수 있었으면 좋겠습니다."
                         v-model="member.mintroduce"
                         @change="validateIntro"
+                        @input="limitText"
                     />
                 </div>
+                <div>{{ member.mintroduce.length }}/500</div>
                 <div id="intro_warning" class="text-danger" style="font-size: 13px"></div>
             </div>
             <div class="mb-3 mt-3 fs-6 fw-bold">아이디/비밀번호 입력</div>
@@ -363,6 +365,11 @@ const member = ref({
     mpayAccount: "",
     mintroduce: "",
 });
+const limitText = () => {
+    if (member.value.mintroduce.length > 500) {
+        member.value.mintroduce = member.value.mintroduce.slice(0, 500);
+    }
+};
 
 watch([() => mph.value.m1, () => mph.value.m2, () => mph.value.m3], ([newM1, newM2, newM3]) => {
     member.value.mphone = newM1 + newM2 + newM3;
