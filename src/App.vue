@@ -27,6 +27,7 @@ import TopButton from "@/components/TopButton.vue";
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* viewport의 전체 높이를 차지 */
+    min-width: 1400px;
 }
 
 .wrap {
