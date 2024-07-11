@@ -328,7 +328,7 @@ async function deleteReview() {
 }
 
 .review-space {
-    height: 650px;
+    height: 600px;
     position: relative;
 }
 
