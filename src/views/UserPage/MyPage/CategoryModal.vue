@@ -8,8 +8,8 @@
         </template>
 
         <template v-slot:body>
-            <div class="d-flex justify-content-center">
-                <div class="d-flex me-1">
+            <div class="d-flex justify-content-center" style="width: 100%">
+                <div class="d-flex ms-2">
                     <div v-for="(cate, index) in modalCategory" :key="index">
                         <input
                             type="button"
