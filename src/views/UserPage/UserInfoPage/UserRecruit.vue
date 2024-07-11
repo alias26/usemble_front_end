@@ -155,7 +155,8 @@ watch(
     (newCtno, oldCtno) => {
         if (store.state.activeWatch) {
             if (newCtno) {
-                getRecruit(mid.value, pageNo.value, newCtno, sort.value);
+                getRecruit(mid.value, 1, newCtno, sort.value);
+                pageNo.value = 1;
                 ctno.value = newCtno;
             } else {
                 getRecruit(mid.value, 1, 0, sort.value);
@@ -172,7 +173,8 @@ watch(
     (newSort, oldSort) => {
         if (store.state.activeWatch) {
             if (newSort) {
-                getRecruit(mid.value, pageNo.value, route.query.ctno, newSort);
+                getRecruit(mid.value, 1, route.query.ctno, newSort);
+                pageNo.value = 1;
                 sort.value = newSort;
             } else {
                 getRecruit(route.query.mid, 1, route.query.ctno, null);

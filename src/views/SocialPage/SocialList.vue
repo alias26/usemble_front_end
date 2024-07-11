@@ -123,7 +123,8 @@ watch(
     (newCtno, oldCtno) => {
         if (store.state.activeWatch) {
             if (newCtno) {
-                getSocialList(pageNo.value, newCtno, sort.value);
+                getSocialList(1, newCtno, sort.value);
+                pageNo.value = 1;
                 ctno.value = newCtno;
             } else {
                 getSocialList(1, 0, sort.value);
@@ -139,7 +140,8 @@ watch(
     (newSort, oldSort) => {
         if (store.state.activeWatch) {
             if (newSort) {
-                getSocialList(pageNo.value, ctno.value, newSort);
+                getSocialList(1, ctno.value, newSort);
+                pageNo.value = 1;
                 sort.value = newSort;
             } else {
                 getSocialList(1, ctno.value, null);

@@ -145,7 +145,8 @@ watch(
     (newCtno, oldCtno) => {
         if (store.state.activeWatch) {
             if (newCtno) {
-                getRecuited(mid.value, pageNo.value, newCtno, sort.value);
+                getRecuited(mid.value, 1, newCtno, sort.value);
+                pageNo.value = 1;
                 ctno.value = newCtno;
             } else {
                 getRecuited(mid.value, 1, 0, sort.value);
@@ -162,7 +163,8 @@ watch(
     (newSort, oldSort) => {
         if (store.state.activeWatch) {
             if (newSort) {
-                getRecuited(mid.value, pageNo.value, ctno.value, newSort);
+                getRecuited(mid.value, 1, ctno.value, newSort);
+                pageNo.value = 1;
                 sort.value = newSort;
             } else {
                 getRecuited(mid.value, 1, ctno.value, null);
