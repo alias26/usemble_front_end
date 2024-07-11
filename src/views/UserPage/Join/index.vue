@@ -477,6 +477,14 @@ function loadThumb() {
     const input = document.getElementById("file");
 
     if (input.files && input.files[0]) {
+        const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+        if (!validImageTypes.includes(input.files[0].type)) {
+            img_warning.innerHTML = "프로필 이미지를 이미지 파일로 등록해주세요.(gif/jpeg/png)";
+            input.value = "";
+            return;
+        } else {
+            img_warning.innerHTML = "";
+        }
         const reader = new FileReader();
         reader.onload = (e) => {
             thumbnailSrc.value = e.target.result;
