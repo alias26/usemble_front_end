@@ -420,6 +420,7 @@ const resultcate = ref([]);
 
 function putMcategory() {
     let flag = true;
+    const mcategory_warning = document.getElementById("mcategory_warning");
 
     for (let i = 0; i < mcategory.value.length; i++) {
         let mcate = { mid: "", ctno: "" };
@@ -430,8 +431,10 @@ function putMcategory() {
 
     if (resultcate.value.length == 0) {
         flag = false;
+        mcategory_warning.innerHTML = "최소 1개 이상의 카테고리를 골라주세요.";
     } else {
         flag = true;
+        mcategory_warning.innerHTML = " ";
     }
     return flag;
 }
@@ -628,17 +631,16 @@ function validateSex() {
 }
 function validatePhone() {
     let flag = true;
-    const validate_phone = /(02|010)/;
+    const validate_phone = /(010)/;
     const phone_warning = document.getElementById("phone_warning");
 
     if (!validate_phone.test(mph.value.m1) || !mph.value.m1) {
         flag = false;
-        phone_warning.innerHTML = "형식(02/010)에 맞게 입력하세요.";
+        phone_warning.innerHTML = "형식(010)에 맞게 입력하세요.";
     } else {
         flag = true;
         phone_warning.innerHTML = " ";
     }
-    console.log(flag);
     return flag;
 }
 
@@ -759,8 +761,11 @@ function isModalVisible() {
 
 //가입 버튼 클릭시 실행
 async function handleSubmit() {
-    const mcategory_warning = document.getElementById("mcategory_warning");
-    if (validateAgree() == true) {
+    let flag = true;
+    flag &= putMcategory();
+    flag &= validateAgree();
+
+    if (flag) {
         const formData = new FormData();
         formData.append("mid", member.value.mid);
         formData.append("mname", member.value.mname);
@@ -773,25 +778,21 @@ async function handleSubmit() {
         formData.append("mintroduce", member.value.mintroduce);
         formData.append("agree", agree.value.agree3);
 
-        if (putMcategory() == true) {
-            const elMattach = document.getElementById("file");
-            if (elMattach.files.length != 0) {
-                formData.append("mattach", elMattach.files[0]);
-            }
-            try {
-                const response = await memberAPI.join(formData);
-                const response_cate = await memberAPI.putMcategory(
-                    JSON.parse(JSON.stringify(resultcate.value))
-                );
-                mcategory_warning.innerHTML = "";
-                showJoinModal();
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            mcategory_warning.innerHTML = " 최소 1개 이상의 카테고리를 골라주세요.";
-            return;
+        const elMattach = document.getElementById("file");
+        if (elMattach.files.length != 0) {
+            formData.append("mattach", elMattach.files[0]);
         }
+        try {
+            const response = await memberAPI.join(formData);
+            const response_cate = await memberAPI.putMcategory(
+                JSON.parse(JSON.stringify(resultcate.value))
+            );
+            showJoinModal();
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        resultcate.value = [];
     }
 }
 </script>
