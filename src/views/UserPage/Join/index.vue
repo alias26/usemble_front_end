@@ -250,12 +250,13 @@
                                 'ct-btn-select': selected[index],
                             }"
                             @click="selectCategory(index)"
+                            @change="validateMcategory"
                         />
                     </div>
                 </div>
             </div>
-
-            <div class="mb-5" id="ct-select">*최대 3개({{ cnt }}/3)</div>
+            <div id="ct-select">*최대 3개({{ cnt }}/3)</div>
+            <div id="mcategory_warning" class="text-danger" style="font-size: 13px"></div>
 
             <div class="mt-5 mb-5">
                 <div class="form-check mb-4">
@@ -306,7 +307,7 @@
                 <div id="agree_warning" class="text-danger" style="font-size: 13px"></div>
             </div>
             <div class="text-center">
-                <button type="submit" id="join-btn" @click="showJoinModal">
+                <button type="submit" id="join-btn">
                     <strong>가입하기</strong>
                 </button>
                 <JoinModal id="joinModal" v-if="isModalVisible" @close="hideJoinModal" />
@@ -412,22 +413,27 @@ function selectCategory(index) {
             mcategory.value.splice(delValue, 1);
         }
     }
-    console.log(mcategory.value);
 }
 
 getCategoryList();
 const resultcate = ref([]);
 
 function putMcategory() {
+    let flag = true;
+
     for (let i = 0; i < mcategory.value.length; i++) {
         let mcate = { mid: "", ctno: "" };
         mcate.mid = member.value.mid;
         mcate.ctno = mcategory.value[i];
         resultcate.value.push(mcate);
-        console.log(mcate.ctno);
-        console.log(mcate.mid);
     }
-    console.log(resultcate.value);
+
+    if (resultcate.value.length == 0) {
+        flag = false;
+    } else {
+        flag = true;
+    }
+    return flag;
 }
 
 const agree = ref({
@@ -457,10 +463,8 @@ watch(
     ([check1, check2, check3]) => {
         if (check1 && check2 && check3 == true) {
             agreeAll.value = !agreeAll.value;
-            console.log(agree.value);
         } else {
             agreeAll.value = false;
-            console.log(agree.value);
         }
     }
 );
@@ -497,8 +501,6 @@ function loadThumb() {
         img_warning.innerHTML = "프로필 이미지를 설정해주세요.";
         flag = false;
     }
-
-    console.log(flag);
     return flag;
 }
 function validateEmail() {
@@ -512,7 +514,6 @@ function validateEmail() {
         flag = true;
         id_warning.innerHTML = " ";
     }
-    console.log(flag);
     return flag;
 }
 
@@ -544,7 +545,6 @@ async function IdCheck() {
         idCheckBtn.value = "btn btn-secondary";
         idCheckBtnStyle.value = "opacity = '0.4'";
     }
-    console.log(emailCheckFlag.value);
 }
 function validateIntro() {
     let flag = true;
@@ -556,7 +556,6 @@ function validateIntro() {
         flag = true;
         intro_warning.innerHTML = " ";
     }
-    console.log(flag);
     return flag;
 }
 function validatePwd1() {
@@ -571,7 +570,7 @@ function validatePwd1() {
         flag = true;
         pwd_warning.innerHTML = " ";
     }
-    console.log(flag);
+
     return flag;
 }
 function validatePwd2() {
@@ -584,7 +583,7 @@ function validatePwd2() {
         flag = true;
         pwd2_warning.innerHTML = " ";
     }
-    console.log(flag);
+
     return flag;
 }
 function validateName() {
@@ -598,7 +597,6 @@ function validateName() {
         flag = true;
         name_warning.innerHTML = " ";
     }
-    console.log(flag);
     return flag;
 }
 function validateBirth() {
@@ -612,7 +610,6 @@ function validateBirth() {
         flag = true;
         birth_warning.innerHTML = " ";
     }
-    console.log(flag);
     return flag;
 }
 function validateSex() {
@@ -627,7 +624,6 @@ function validateSex() {
         flag = true;
         sex_warning.innerHTML = " ";
     }
-    console.log(flag);
     return flag;
 }
 function validatePhone() {
@@ -658,7 +654,6 @@ function validatePhone1() {
         flag = true;
         phone_warning1.innerHTML = " ";
     }
-    console.log(flag);
     return flag;
 }
 function validatePhone2() {
@@ -674,7 +669,6 @@ function validatePhone2() {
         flag = true;
         phone_warning2.innerHTML = " ";
     }
-    console.log(flag);
     return flag;
 }
 function validateBank() {
@@ -688,7 +682,6 @@ function validateBank() {
         flag = true;
         bank_warning.innerHTML = " ";
     }
-    console.log(flag);
     return flag;
 }
 function validateAccount() {
@@ -702,7 +695,6 @@ function validateAccount() {
         flag = true;
         account_warning.innerHTML = " ";
     }
-    console.log(flag);
     return flag;
 }
 
@@ -734,6 +726,7 @@ function nextStep() {
         }
     }
 }
+
 function validateAgree() {
     let flag = true;
     const agree_warning = document.getElementById("agree_warning");
@@ -766,6 +759,7 @@ function isModalVisible() {
 
 //가입 버튼 클릭시 실행
 async function handleSubmit() {
+    const mcategory_warning = document.getElementById("mcategory_warning");
     if (validateAgree() == true) {
         const formData = new FormData();
         formData.append("mid", member.value.mid);
@@ -778,24 +772,26 @@ async function handleSubmit() {
         formData.append("mpayAccount", member.value.mpayAccount);
         formData.append("mintroduce", member.value.mintroduce);
         formData.append("agree", agree.value.agree3);
-        putMcategory();
 
-        const elMattach = document.getElementById("file");
-        if (elMattach.files.length != 0) {
-            formData.append("mattach", elMattach.files[0]);
+        if (putMcategory() == true) {
+            const elMattach = document.getElementById("file");
+            if (elMattach.files.length != 0) {
+                formData.append("mattach", elMattach.files[0]);
+            }
+            try {
+                const response = await memberAPI.join(formData);
+                const response_cate = await memberAPI.putMcategory(
+                    JSON.parse(JSON.stringify(resultcate.value))
+                );
+                mcategory_warning.innerHTML = "";
+                showJoinModal();
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            mcategory_warning.innerHTML = " 최소 1개 이상의 카테고리를 골라주세요.";
+            return;
         }
-        try {
-            const response = await memberAPI.join(formData);
-            console.log(agree.value.agree3);
-            const response_cate = await memberAPI.putMcategory(
-                JSON.parse(JSON.stringify(resultcate.value))
-            );
-            console.log("회원가입 완료");
-        } catch (error) {
-            console.log(error);
-        }
-    } else {
-        isModalVisible();
     }
 }
 </script>
