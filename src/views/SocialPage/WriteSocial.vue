@@ -178,7 +178,14 @@ const social = ref({
 //썸네일 미리보기
 function loadThumb() {
     const input = document.getElementById("file");
+    const validImageTypes = ["image/jpeg", "image/png"];
+
     if (input.files && input.files[0]) {
+        if (!validImageTypes.includes(input.files[0].type)) {
+            alert("(jpg, png) 이미지 파일만 업로드할 수 있습니다.");
+            input.value = "";
+            return;
+        }
         const reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById("thumbnail").src = e.target.result;

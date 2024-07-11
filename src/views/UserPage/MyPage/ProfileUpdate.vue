@@ -91,19 +91,21 @@ function loadProfileImg() {
 
     //파일이 추가됐을 때
     if (input.files && input.files[0]) {
+        const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+        if (!validImageTypes.includes(input.files[0].type)) {
+            img_warning.innerHTML = "프로필 이미지를 이미지 파일로 등록해주세요.(gif/jpeg/png)";
+            input.value = "";
+            return;
+        } else {
+            img_warning.innerHTML = "";
+        }
         //이미지 예시 보여주기
         const reader = new FileReader();
         const file = input.files[0];
-        const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
         reader.onload = function (e) {
             document.getElementById("proimg").src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
-        if (!validImageTypes.includes(file.type)) {
-            img_warning.innerHTML = "프로필 이미지를 이미지 파일로 등록해주세요.(gif/jpeg/png)";
-        } else {
-            img_warning.innerHTML = "";
-        }
     } else {
         //이미지 삭제
         document.getElementById("proimg").src = "";
