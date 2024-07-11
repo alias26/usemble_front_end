@@ -20,7 +20,7 @@
 
                 <input id="file" type="file" @change="loadThumb" />
                 <label class="mb-2" for="file">
-                    <img type="button" src="@/assets/admin.png" class="thumbnail" id="thumbnail" />
+                    <img type="button" :src="thumbnailSrc" class="thumbnail" id="thumbnail" />
                     <div type="button" id="camera">
                         <i id="camicon" class="bi bi-camera-fill text-white"></i>
                     </div>
@@ -159,8 +159,10 @@
                                 id="form-input"
                                 name="form-mphone"
                                 v-model="mph.m1"
+                                @change="validatePhone"
                             />
                         </span>
+                        <div id="phone_warning" class="text-danger" style="font-size: 13px"></div>
                     </div>
                     <div class="me-2">
                         <span
@@ -325,6 +327,7 @@ let joinModal = null;
 
 onMounted(() => {
     joinModal = new Modal(document.querySelector("#joinModal"));
+    thumbnailSrc.value = defaultImg;
 });
 function showJoinModal() {
     joinModal.show();
@@ -463,29 +466,33 @@ watch(
 );
 
 // 이미지 미리보기
+// Define reactive properties
+const defaultImg = require("@/assets/admin.png");
+const thumbnailSrc = ref(defaultImg);
+
+// Method to load thumbnail
 function loadThumb() {
-    //이미지 삭제
-    document.getElementById("thumbnail").src = "";
     let flag = true;
     const img_warning = document.getElementById("img_warning");
     const input = document.getElementById("file");
+
     if (input.files && input.files[0]) {
         const reader = new FileReader();
-        reader.onload = function (e) {
-            document.getElementById("thumbnail").src = e.target.result;
+        reader.onload = (e) => {
+            thumbnailSrc.value = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
         img_warning.innerHTML = " ";
         flag = true;
     } else {
+        thumbnailSrc.value = defaultImg;
         img_warning.innerHTML = "프로필 이미지를 설정해주세요.";
-
         flag = false;
     }
+
     console.log(flag);
     return flag;
 }
-
 function validateEmail() {
     let flag = true;
     const id_warning = document.getElementById("id_warning");
@@ -615,6 +622,22 @@ function validateSex() {
     console.log(flag);
     return flag;
 }
+function validatePhone() {
+    let flag = true;
+    const validate_phone = /(02|010)/;
+    const phone_warning = document.getElementById("phone_warning");
+
+    if (!validate_phone.test(mph.value.m1) || !mph.value.m1) {
+        flag = false;
+        phone_warning.innerHTML = "형식(02/010)에 맞게 입력하세요.";
+    } else {
+        flag = true;
+        phone_warning.innerHTML = " ";
+    }
+    console.log(flag);
+    return flag;
+}
+
 function validatePhone1() {
     let flag = true;
     const validate_phone = /^[0-9]{4}$/;
@@ -686,6 +709,7 @@ function nextStep() {
             validateEmail() &
             validateBank() &
             validateBirth() &
+            validatePhone() &
             validatePhone1() &
             validatePhone2() &
             validatePwd1() &
