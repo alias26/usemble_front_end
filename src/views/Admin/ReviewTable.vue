@@ -9,7 +9,7 @@
                 <th style="width: 40px">작성자</th>
                 <th style="width: 40px">관리</th>
             </tr>
-            <tr v-for="review in page.reviews" :key="review.mid">
+            <tr style="height: 50px" v-for="review in page.reviews" :key="review.mid">
                 <!-- <td>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="1" />
@@ -20,9 +20,14 @@
                 <td>{{ formatDate(review.rdate) }}</td>
                 <td>{{ review.mid }}</td>
                 <td>
-                    <button class="btn btn-sm btn-outline-success" @click="showReviewModal(review)">
-                        상세보기
-                    </button>
+                    <div>
+                        <button
+                            class="btn btn-md btn-outline-success"
+                            @click="showReviewModal(review)"
+                        >
+                            상세보기
+                        </button>
+                    </div>
                 </td>
             </tr>
             <tr>

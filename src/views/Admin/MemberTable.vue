@@ -17,7 +17,7 @@
             </div>
         </div>
         <table class="table table-bordered text-center">
-            <tr style="height: 50px">
+            <tr  >
                 <th style="width: 40px">이름</th>
                 <th style="width: 80px">아이디</th>
                 <th style="width: 40px">성별</th>

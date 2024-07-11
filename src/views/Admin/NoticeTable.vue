@@ -15,12 +15,16 @@
                 <td>{{ formatDate(notice.ndate) }}</td>
                 <td>{{ notice.mid }}</td>
                 <td class="d-flex justify-content-center">
-                    <button
-                        class="btn btn-outline-success btn-md"
-                        @click="handleupdate(notice.nno)"
-                    >
-                        수정하기
-                    </button>
+                    <div>
+                        <button
+                            class="btn btn-outline-success btn-md"
+                            @click="handleupdate(notice.nno)"
+                            style="border-width: 1px"
+                        >
+                            수정하기
+                        </button>
+                    </div>
+
                     <div>
                         <button
                             class="btn btn-outline-danger btn-md"
