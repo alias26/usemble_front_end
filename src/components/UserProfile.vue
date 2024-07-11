@@ -115,6 +115,11 @@ async function handleLike(mid, fmid) {
         return;
     }
 
+    if (store.state.mid == "") {
+        router.push("/login");
+        return;
+    }
+
     like.value = !like.value;
     const likeEl = document.getElementById("like" + props.idx);
 

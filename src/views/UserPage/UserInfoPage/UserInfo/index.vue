@@ -223,6 +223,11 @@ async function handleLike(mid, fmid) {
         return;
     }
 
+    if (store.state.mid == "") {
+        router.push("/login");
+        return;
+    }
+
     like.value = !like.value;
 
     //좋아요 했을 시
