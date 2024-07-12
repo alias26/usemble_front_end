@@ -1,7 +1,7 @@
 <template>
     <div id="navbar">
         <div id="adminProfile" class="d-flex mb-5">
-            <img id="adminImg" src="../../assets/admin.png" alt="" />
+            <img id="adminImg" src="../../../public/images/admin.png" alt="" />
             <span id="adminId">관리자</span>
         </div>
         <div id="menu" class="d-flex flex-column">

@@ -6,7 +6,9 @@
             >
             <RouterLink id="usemble" class="mx-4" to="/social/write">어셈블!</RouterLink>
         </div>
-        <RouterLink to="/"><img id="logoimg" alt="Vue logo" src="@/assets/logo.png" /></RouterLink>
+        <RouterLink to="/"
+            ><img id="logoimg" alt="Vue logo" src="../../../public/images/logo.png"
+        /></RouterLink>
         <div id="rightmenu">
             <RouterLink to="/search">
                 <button class="btn" style="border: none; outline: none">

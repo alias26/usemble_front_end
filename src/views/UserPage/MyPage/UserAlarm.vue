@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex">
-        <div class="like">
+        <div class="alarm">
             <div class="mb-5 text-center fw-bold fs-5">
                 <i class="bi bi-bell me-1 fw-bold" style="font-size: 40px"></i>
                 <p>알림</p>
@@ -141,7 +141,7 @@ watch(route, (newRoute, oldRoute) => {
 </script>
 
 <style scoped>
-.like {
+.alarm {
     width: 100%;
     margin: 0 auto;
 }

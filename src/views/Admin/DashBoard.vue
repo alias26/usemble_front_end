@@ -1,7 +1,7 @@
 <template>
     <div id="dash">
         <div class="mx-auto">
-            <img class="me-4" style="width: 150px" src="../../assets/logo.png" alt="" />
+            <img class="me-4" style="width: 150px" src="../../../public/images/logo.png" alt="" />
         </div>
         <div class="d-flex justify-content-center mt-5">
             <div id="box">
@@ -215,8 +215,6 @@ getReview();
 #bar_grp {
     display: flex;
 }
-
-
 
 #socialtxt {
     color: #558ccf;

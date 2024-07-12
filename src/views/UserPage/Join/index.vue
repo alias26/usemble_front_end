@@ -481,7 +481,7 @@ watch(
 
 // 이미지 미리보기
 // Define reactive properties
-const defaultImg = require("@/assets/admin.png");
+const defaultImg = require("../../../../public/images/admin.png");
 const thumbnailSrc = ref(defaultImg);
 
 // Method to load thumbnail

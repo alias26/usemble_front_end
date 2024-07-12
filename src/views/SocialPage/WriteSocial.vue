@@ -23,7 +23,7 @@
                             <img
                                 id="thumbnail"
                                 class="thumbnail"
-                                src="@/assets/empty_thumbnail.png"
+                                src="../../../public/images/empty_thumbnail.png"
                             />
                         </label>
                     </div>
@@ -48,7 +48,7 @@
                 <div class="form-group image border rounded mt-4 mb-2">
                     <div class="d-flex m-2">
                         <img
-                            src="@/assets/empty_thumbnail.png"
+                            src="../../../public/images/empty_thumbnail.png"
                             id="thumbnail2"
                             width="170px"
                             height="107px"

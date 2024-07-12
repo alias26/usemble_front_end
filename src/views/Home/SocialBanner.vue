@@ -1,26 +1,26 @@
 <template>
     <div class="ms-auto me-auto" style="width: 70%; min-width: 800px">
         <div class="main-img" style="text-align: center">
-            <img src="@/assets/usemble.jpg" width="100%" />
+            <img src="../../../public/images/usemble.jpg" width="100%" />
         </div>
         <div class="category container d-flex">
             <RouterLink class="main_category" to="list?ctno=1"
-                ><img src="@/assets/category/eat.png" />맛집</RouterLink
+                ><img src="../../../public/images/category/eat.png" />맛집</RouterLink
             >
             <RouterLink class="main_category" to="list?ctno=2"
-                ><img src="@/assets/category/exercise.png" />운동</RouterLink
+                ><img src="../../../public/images/category/exercise.png" />운동</RouterLink
             >
             <RouterLink class="main_category" to="list?ctno=3"
-                ><img src="@/assets/category/study.png" />스터디</RouterLink
+                ><img src="../../../public/images/category/study.png" />스터디</RouterLink
             >
             <RouterLink class="main_category" to="list?ctno=4"
-                ><img src="@/assets/category/friendship.png" />친목</RouterLink
+                ><img src="../../../public/images/category/friendship.png" />친목</RouterLink
             >
             <RouterLink class="main_category" to="list?ctno=5"
-                ><img src="@/assets/category/art.png" />문화예술</RouterLink
+                ><img src="../../../public/images/category/art.png" />문화예술</RouterLink
             >
             <RouterLink class="main_category" to="list"
-                ><img src="@/assets/category/all.png" />전체보기</RouterLink
+                ><img src="../../../public/images/category/all.png" />전체보기</RouterLink
             >
         </div>
     </div>
