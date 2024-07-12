@@ -272,7 +272,7 @@ function showContent() {
 }
 
 function joinSocial() {
-    router.push("/social/pay?sno=" + sno.value);
+    router.push("/social/payinfo?sno=" + sno.value);
 }
 
 let cancelSocialJoinModal = null;

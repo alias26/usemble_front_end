@@ -19,7 +19,7 @@ const routes = [
             import(/* webpackChunkName: "SocialPage" */ "../views/SocialPage/SocialDetail.vue"),
     },
     {
-        path: "/social/pay",
+        path: "/social/payinfo",
         name: "socialpay",
         meta: { authorization: ["ROLE_USER"] },
         component: () =>
