@@ -9,7 +9,7 @@
                 <RouterLink
                     v-if="index === 0"
                     class="notice-item pinned no-underline"
-                    :to="`/notice/detail?nno=${notice.nno}`"
+                    :to="`/notices/detail?nno=${notice.nno}`"
                 >
                     <div class="notice-item-title">{{ notice.ntitle }}</div>
                     <div class="notice-item-date">
@@ -19,7 +19,7 @@
                 <RouterLink
                     v-else
                     class="notice-item no-underline"
-                    :to="`/notice/detail?nno=${notice.nno}`"
+                    :to="`/notices/detail?nno=${notice.nno}`"
                 >
                     <div class="notice-item-title">{{ notice.ntitle }}</div>
                     <div class="notice-item-date">

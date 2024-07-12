@@ -7,7 +7,7 @@
         <div id="inner">
             <div id="inner-left" style="margin-left: 50px">
                 <div id="footer-header">
-                    <RouterLink to="/notice" class="footer-message">공지사항</RouterLink>
+                    <RouterLink to="/notices" class="footer-message">공지사항</RouterLink>
                     <RouterLink to="/guide" class="footer-message">이용가이드</RouterLink>
                     <RouterLink to="/policy/usage" class="footer-message">이용약관</RouterLink>
                     <RouterLink to="/policy/privacy" class="footer-message"

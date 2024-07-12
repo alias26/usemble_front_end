@@ -1,10 +1,7 @@
 <template>
     <div id="container">
         <div id="detail_content">
-            <img
-                class="sthumbImage"
-                :src="`${axios.defaults.baseURL}/social/sthumb/${social.sno}`"
-            />
+            <img class="sthumbImage" id="sthumb" :src="``" />
             <div id="title">{{ social.stitle }}</div>
             <div id="address">{{ social.saddress }}</div>
             <div id="date">{{ socialDate.date }} {{ socialDate.time }}</div>
@@ -213,6 +210,10 @@ async function getSocialDetail(sno) {
         social.value.smemberCount = response.data.social.smemberCount;
         social.value.sstatus = response.data.social.sstatus;
         social.value.saddress = response.data.social.saddress;
+
+        document.getElementById(
+            "sthumb"
+        ).src = `${axios.defaults.baseURL}/social/sthumb/${social.value.sno}`;
 
         sjoin.value.mid = store.state.mid;
         sjoin.value.sno = social.value.sno;

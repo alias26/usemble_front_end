@@ -24,7 +24,7 @@ const routes = [
         component: GuideList,
     },
     {
-        path: "/notice",
+        path: "/notices",
         name: "notice",
         component: NoticeList,
     },
