@@ -29,7 +29,7 @@ const routes = [
         component: NoticeList,
     },
     {
-        path: "/notice/detail",
+        path: "/notices/detail",
         name: "noticeDetail",
         component: NoticeDetail,
     },
