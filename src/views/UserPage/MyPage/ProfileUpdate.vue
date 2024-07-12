@@ -30,7 +30,7 @@
                             @change="validateIntroduce"
                             @input="limitText"
                         />
-                        <div>{{ member.mintroduce.length }}/500</div>
+                        <div id="intro-box">{{ member.mintroduce.length }}/250</div>
                     </div>
                     <div
                         id="intro_warning"
@@ -60,8 +60,8 @@ const member = ref({
 });
 
 const limitText = () => {
-    if (member.value.mintroduce.length > 500) {
-        member.value.mintroduce = member.value.mintroduce.slice(0, 500);
+    if (member.value.mintroduce.length > 250) {
+        member.value.mintroduce = member.value.mintroduce.slice(0, 250);
     }
 };
 
@@ -197,5 +197,9 @@ function validateIntroduce() {
 
 textarea {
     resize: none;
+}
+
+#intro-box {
+    word-break: keep-all;
 }
 </style>

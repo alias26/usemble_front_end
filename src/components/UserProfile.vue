@@ -173,6 +173,7 @@ img {
     font-size: 14px;
     font-weight: 500;
     color: grey;
+    word-break: break-all;
 }
 
 .mypage-like {

@@ -264,6 +264,7 @@ getApplyAssemble(store.state.mid);
 }
 #intro_box {
     width: 100%;
+    word-break: break-all
 }
 
 p {

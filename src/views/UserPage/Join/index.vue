@@ -39,7 +39,7 @@
                         @input="limitText"
                     />
                 </div>
-                <div>{{ member.mintroduce.length }}/500</div>
+                <div>{{ member.mintroduce.length }}/250</div>
                 <div id="intro_warning" class="text-danger" style="font-size: 13px"></div>
             </div>
             <div class="mb-3 mt-3 fs-6 fw-bold">아이디/비밀번호 입력</div>
@@ -366,8 +366,8 @@ const member = ref({
     mintroduce: "",
 });
 const limitText = () => {
-    if (member.value.mintroduce.length > 500) {
-        member.value.mintroduce = member.value.mintroduce.slice(0, 500);
+    if (member.value.mintroduce.length > 250) {
+        member.value.mintroduce = member.value.mintroduce.slice(0, 250);
     }
 };
 
