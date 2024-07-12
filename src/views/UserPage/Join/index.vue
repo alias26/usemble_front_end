@@ -252,7 +252,6 @@
                                 'ct-btn-select': selected[index],
                             }"
                             @click="selectCategory(index)"
-                            @change="validateMcategory"
                         />
                     </div>
                 </div>
