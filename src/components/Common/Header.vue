@@ -4,7 +4,7 @@
             <RouterLink class="mx-4 nav_text" @click="reloadList" to="/list"
                 >어셈블 둘러보기</RouterLink
             >
-            <RouterLink id="usemble" class="mx-4" to="/social/write">어셈블!</RouterLink>
+            <RouterLink id="usemble" class="mx-4" to="/write">어셈블!</RouterLink>
         </div>
         <RouterLink to="/"
             ><img id="logoimg" alt="Vue logo" src="../../../public/images/logo.png"
