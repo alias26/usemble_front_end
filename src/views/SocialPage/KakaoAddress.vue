@@ -39,8 +39,10 @@ onMounted(() => {
 
 function loadScript() {
     const script = document.createElement("script");
-    script.src = "http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
-    script.onload = () => {};
+    script.src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+    script.onload = () => {
+        new Promise((resolve) => window.daum.postcode.load(resolve));
+    };
 
     document.head.appendChild(script);
 }
