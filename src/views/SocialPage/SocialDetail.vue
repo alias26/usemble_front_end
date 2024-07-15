@@ -77,7 +77,7 @@
                                 취소하기
                             </button>
                             <button
-                                v-if="!isDeadline && isWriter"
+                                v-if="!isDeadline && isWriter && social.sstatus != 'cancel'"
                                 id="btn_us"
                                 class="btn mb-3"
                                 @click="showCancelSocialModal"
