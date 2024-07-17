@@ -156,11 +156,8 @@ img {
     height: 55px;
     border-radius: 50%;
 }
-#ntitle_link {
-    text-decoration: none;
-}
+
 #ntitle {
-    border-style: none;
     text-decoration: none;
 }
 </style>

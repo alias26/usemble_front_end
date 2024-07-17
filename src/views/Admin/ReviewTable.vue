@@ -16,7 +16,7 @@
                     </div>
                 </td> -->
                 <td>{{ review.stitle }}</td>
-                <td class="rcontent">{{ review.rcontent }}</td>
+                <td id="rcontent">{{ review.rcontent }}</td>
                 <td>{{ formatDate(review.rdate) }}</td>
                 <td>{{ review.mid }}</td>
                 <td>
@@ -144,10 +144,11 @@ img {
     height: 55px;
     border-radius: 50%;
 }
-.rcontent {
+#rcontent {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    word-break: break-all;
     max-width: 200px; /* Adjust the max-width as needed */
 }
 

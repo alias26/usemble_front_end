@@ -72,10 +72,10 @@
                     >
                 </div>
                 <table class="table table-bordered text-center">
-                    <tr style="height: 50px">
+                    <tr style="height: 40px">
                         <th style="width: 40px">번호</th>
-                        <th style="width: 100px">내용</th>
-                        <th style="width: 100px">날짜</th>
+                        <th style="width: 120px">내용</th>
+                        <th style="width: 80px">날짜</th>
                         <th style="width: 40px">작성자</th>
                     </tr>
                     <tr style="height: 35px" v-for="(review, index) in reviews" :key="index">
@@ -280,8 +280,10 @@ getReview();
     color: #5ace8e;
 }
 #rcontent {
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    max-width: 120px;
 }
 </style>
